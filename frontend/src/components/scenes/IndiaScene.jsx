@@ -1,31 +1,3 @@
-// "use client";
-// import { useEffect, useRef } from "react";
-// import gsap from "gsap";
-
-// export default function IndiaScene() {
-//   const meshRef = useRef();
-
-//   useEffect(() => {
-//     // Fade in the map after the globe rotation and camera zoom are mostly done
-//     gsap.to(meshRef.current.material, {
-//       opacity: 1,
-//       duration: 2,
-//       delay: 1.5, // Sync this with your camera/globe animation duration
-//     });
-//   }, []);
-
-//   return (
-//     <mesh ref={meshRef} position={[0, 0, 105]} rotation={[0, 0, 0]}>
-//       {/* Use a Plane instead of a Box to avoid the "line" look */}
-//       <planeGeometry args={[150, 150]} /> 
-//       <meshStandardMaterial 
-//         color="#f6f3ef" 
-//         transparent 
-//         opacity={0} // Start invisible
-//       />
-//     </mesh>
-//   );
-// }
 
 
 
@@ -38,8 +10,6 @@ import gsap from "gsap";
 
 export default function IndiaScene() {
   const groupRef = useRef();
-
-  // Create a "Dummy" India Shape (Procedural)
   const indiaShape = useMemo(() => {
     const shape = new THREE.Shape();
     shape.moveTo(0, 15);   
@@ -54,8 +24,6 @@ export default function IndiaScene() {
     if (groupRef.current) {
       // 1. Start invisible (to avoid white flash)
       groupRef.current.scale.set(0.1, 0.1, 0.1); 
-      
-      // 2. Animate IN after the delay
       // Delay = 2.5s (Zoom time) + 1s (Pause time) = 3.5s
       gsap.to(groupRef.current.scale, {
         x: 0.5, y: 0.5, z: 0.5, // Target scale

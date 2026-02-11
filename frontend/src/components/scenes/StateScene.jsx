@@ -1,19 +1,3 @@
-// "use client";
-
-// import StateMap from "@/components/map/StateMap";
-// import { useAppStore } from "@/store/useAppStore";
-
-// export default function StateScene() {
-//   const view = useAppStore((s) => s.view);
-
-//   // We pass the 'view' to StateMap so it knows when to fade itself in
-//   return <StateMap view={view} />;
-// }
-
-
-
-
-
 
 "use client";
 import { useEffect, useRef } from "react";

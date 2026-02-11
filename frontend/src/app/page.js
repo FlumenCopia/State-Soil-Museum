@@ -5,6 +5,7 @@ import Herosection from "@/components/Herosection";
 import Stats from "@/components/Home/Stats";
 import Portals from "@/components/Home/Portals";
 import Footer from "@/components/Footer";
+import GobalMap from "@/components/Home/GobalMap";
 
 export default function Home() {
   return (
@@ -13,7 +14,7 @@ export default function Home() {
 <Herosection />
 <Stats />
 <Portals />
-
+<GobalMap />
 <Footer />
     </div>
   );

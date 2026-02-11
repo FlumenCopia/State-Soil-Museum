@@ -13,15 +13,12 @@ export default function GobalMap() {
   return (
     <>
      <CanvasWrapper>
-      {/* ALWAYS keep the globe visible so it doesn't "vanish" */}
       <GlobeScene />
       
-      {/* Layer the maps on top of the globe when their state is active */}
       {view === "india" && <IndiaScene />}
       {view === "kerala" && <StateScene />}
     </CanvasWrapper>
 
-      {/* Temporary controls for testing */}
       <div style={{
         position: "fixed",
         bottom: 20,
