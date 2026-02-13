@@ -1,5 +1,3 @@
-
-
 "use client";
 
 import { Canvas } from "@react-three/fiber";
@@ -10,7 +8,15 @@ import MovingStars from "./MovingStars";
 
 export default function CanvasWrapper({ children }) {
   return (
-    <div style={{ width: "100%", height: "100%" }}>
+    <section
+      style={{
+        width: "100vw",
+        height: "100vh",
+        position: "relative",
+        background: "black", // 👈 makes section clearly visible
+        overflow: "hidden",
+      }}
+    >
       <Canvas
         dpr={[1, 2]}
         camera={{ fov: 45, near: 0.1, far: 5000, position: [0, 0, 320] }}
@@ -22,6 +28,6 @@ export default function CanvasWrapper({ children }) {
           {children}
         </Suspense>
       </Canvas>
-    </div>
+    </section>
   );
 }

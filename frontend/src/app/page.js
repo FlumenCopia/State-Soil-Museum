@@ -10,9 +10,9 @@ import GobalMap from "@/components/Home/GobalMap";
 export default function Home() {
   return (
     <div >
-  <Navbar />
+  {/* <Navbar /> */}
 <Herosection />
-<Stats />
+{/* <Stats /> */}
 <Portals />
 <GobalMap />
 <Footer />
