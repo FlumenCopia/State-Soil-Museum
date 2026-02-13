@@ -30,7 +30,6 @@ export default function GobalMap() {
           zIndex: 10,
         }}
       >
-        <button onClick={() => setView("globe")}>Globe</button>
         <button onClick={() => setView("india")}>India</button>
         <button onClick={() => setView("kerala")}>Kerala</button>
       </div>
