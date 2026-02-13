@@ -1,13 +1,9 @@
 
-
-
 "use client";
-
 import React, { useRef, useMemo, useEffect } from "react";
 import * as THREE from "three";
 import { Extrude } from "@react-three/drei";
 import gsap from "gsap";
-
 export default function IndiaScene() {
   const groupRef = useRef();
   const indiaShape = useMemo(() => {
@@ -45,6 +41,8 @@ export default function IndiaScene() {
             opacity={1} 
         />
       </Extrude>
+
+      {/* <img  src='/images/map image/indiasoilmap.png' /> */}
     </group>
   );
 }
