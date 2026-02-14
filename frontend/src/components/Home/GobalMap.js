@@ -1,35 +1,28 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import CanvasWrapper from "@/components/canvas/CanvasWrapper";
 import GlobeScene from "@/components/scenes/GlobeScene";
 import IndiaScene from "@/components/scenes/IndiaScene";
-import StateScene from "@/components/scenes/StateScene";
 import { useAppStore } from "@/store/useAppStore";
+import Indiasoilmap2 from "./Indiasoilmap2";
 
 export default function GobalMap() {
   const sectionRef = useRef(null);
-
   const view = useAppStore((s) => s.view);
   const setView = useAppStore((s) => s.setView);
 
-  const [showButtons, setShowButtons] = useState(false);
-
-  // 👇 Scroll Detection
+  // ✅ Scroll detection
   useEffect(() => {
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
-          setView("india");      // When visible → show India
-          setShowButtons(true);  // Show buttons
+          setView("india"); // first show 3D India
         } else {
-          setShowButtons(false); // Hide buttons
-          setView("globe");      // Back to Globe
+          setView("globe");
         }
       },
-      {
-        threshold: 0.6, // 60% visible
-      }
+      { threshold: 0.6 }
     );
 
     if (sectionRef.current) {
@@ -38,6 +31,17 @@ export default function GobalMap() {
 
     return () => observer.disconnect();
   }, [setView]);
+
+  // ✅ After 2 seconds of India → show 2nd image
+  useEffect(() => {
+    if (view === "india") {
+      const timer = setTimeout(() => {
+        setView("indiaImage");
+      }, 2000);
+
+      return () => clearTimeout(timer);
+    }
+  }, [view, setView]);
 
   return (
     <section
@@ -49,53 +53,49 @@ export default function GobalMap() {
         overflow: "hidden",
       }}
     >
-      {/* 3D Canvas */}
-      <CanvasWrapper>
-        {/* Always load globe */}
-        <GlobeScene />
+      {/* 🔵 3D Canvas */}
+      <div
+        style={{
+          position: "absolute",
+          inset: 0,
+          opacity: view === "indiaImage" ? 0 : 1,
+          transition: "opacity 1.5s ease",
+        }}
+      >
+        <CanvasWrapper>
+          <GlobeScene />
+          {view === "india" && <IndiaScene />}
+        </CanvasWrapper>
+      </div>
 
-        {/* Conditional Scenes */}
-        {view === "india" && <IndiaScene />}
-        {view === "kerala" && <StateScene />}
-      </CanvasWrapper>
 
-      {/* UI Buttons */}
-      {showButtons && (
-        <div
-          style={{
+      {/* 🟢 2nd Image */}
+      {view === "indiaImage" && (
+         <div
+style={{
             position: "absolute",
-            bottom: 40,
-            left: "50%",
-            transform: "translateX(-50%)",
+            inset: 0,
             display: "flex",
-            gap: 15,
-            zIndex: 10,
-          }}
+            alignItems: "center",
+            justifyContent: "center",
+            background: "black",
+            animation: "fadeIn 1.5s forwards",
+        }}
         >
-          <button
-            style={buttonStyle}
-            onClick={() => setView("india")}
-          >
-            India
-          </button>
 
-          <button
-            style={buttonStyle}
-            onClick={() => setView("kerala")}
-          >
-            Kerala
-          </button>
-        </div>
+       <Indiasoilmap2 />
+       </div>
       )}
+
+
+
+      {/* Animation */}
+      <style jsx global>{`
+        @keyframes fadeIn {
+          from { opacity: 0; }
+          to { opacity: 1; }
+        }
+      `}</style>
     </section>
   );
 }
-
-const buttonStyle = {
-  padding: "10px 20px",
-  borderRadius: "8px",
-  border: "none",
-  background: "#ffffff",
-  cursor: "pointer",
-  fontWeight: 600,
-};
