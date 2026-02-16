@@ -1,7 +1,7 @@
 "use client";
 import { useRef } from "react";
 
-export default function KeralaSoilMap() {
+export default function Indiasoilmap2() {
   const svgRef = useRef(null);
 
   const handleMouseEnter = (e) => {

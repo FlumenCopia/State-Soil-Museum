@@ -6,6 +6,7 @@ import GlobeScene from "@/components/scenes/GlobeScene";
 import IndiaScene from "@/components/scenes/IndiaScene";
 import { useAppStore } from "@/store/useAppStore";
 import Indiasoilmap2 from "./Indiasoilmap2";
+import Mapsection from "./Mapsection";
 
 export default function GobalMap() {
   const sectionRef = useRef(null);
@@ -75,15 +76,12 @@ export default function GobalMap() {
 style={{
             position: "absolute",
             inset: 0,
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            background: "black",
-            animation: "fadeIn 1.5s forwards",
+         
         }}
         >
 
-       <Indiasoilmap2 />
+       {/* <Indiasoilmap2 /> */}
+       <Mapsection />
        </div>
       )}
 

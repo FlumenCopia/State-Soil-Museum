@@ -6,6 +6,7 @@ import Stats from "@/components/Home/Stats";
 import Portals from "@/components/Home/Portals";
 import Footer from "@/components/Footer";
 import GobalMap from "@/components/Home/GobalMap";
+import Mapsection from "@/components/Home/Mapsection";
 
 export default function Home() {
   return (
@@ -13,9 +14,10 @@ export default function Home() {
   {/* <Navbar /> */}
 <Herosection />
 {/* <Stats /> */}
-<Portals />
-<GobalMap />
-<Footer />
+{/* <Portals /> */}
+{/* <GobalMap /> */}
+{/* <Mapsection /> */}
+{/* <Footer /> */}
     </div>
   );
 }

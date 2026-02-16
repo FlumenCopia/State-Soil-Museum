@@ -5,22 +5,23 @@
 const Herosection = () => (
   <section
     className="position-relative vh-100 w-100 overflow-hidden d-flex flex-column justify-content-end px-4"
-    style={{
-      minHeight: "700px",
-      paddingBottom: "5rem",
-      backgroundColor: "#0f172a", // slate-900
-    }}
+style={{
+  minHeight: "700px",
+  paddingBottom: "5rem",
+  background: "radial-gradient(circle at top left, #131f1d)"
+}}
+
   >
     {/* Background overlay image */}
     <div
       className="position-absolute top-0 start-0 w-100 h-100"
       style={{
         backgroundImage:
-          "url('https://images.unsplash.com/photo-1518173946687-a4c8a9ba332f?q=80&w=2000&auto=format&fit=crop')",
+          "url('/images/t3.png')",
         backgroundSize: "cover",
         backgroundPosition: "center",
         mixBlendMode: "overlay",
-        opacity: 0.6,
+        opacity: 0.9,
       }}
     />
 
@@ -37,13 +38,13 @@ const Herosection = () => (
     {/* Content */}
     <div className="position-relative z-3 container">
       <div className="d-flex align-items-center gap-2 mb-4">
-        <div style={{ width: "12px", height: "4px", backgroundColor: "#ea580c" }} />
+        <div style={{ width: "12px", height: "4px", backgroundColor: "white" }} />
         <span
           className="text-uppercase fw-bold"
           style={{
             fontSize: "10px",
             letterSpacing: "0.2em",
-            color: "#f97316",
+            color: "white ",
           }}
         >
           Scientific Museum Exhibit
@@ -56,18 +57,21 @@ const Herosection = () => (
           fontSize: "clamp(3rem, 8vw, 6.5rem)",
           lineHeight: 0.9,
           letterSpacing: "-0.05em",
+      textTransform: "uppercase",
+
         }}
       >
-        UNEARTHING <br />
-        THE{" "}
+State 
+         <br />
+       Soil Museum{" "}
         <span
           style={{
-            color: "#f97316",
+            color: "#2ca38b",
             fontFamily: "serif",
             fontStyle: "italic",
           }}
         >
-          FOUNDATION
+          
         </span>
       </h2>
 
@@ -86,44 +90,46 @@ const Herosection = () => (
       </p>
 
       <div className="d-flex flex-column flex-sm-row gap-3">
-        <button
+        {/* <button
           className="btn text-white d-flex align-items-center justify-content-center gap-2 text-uppercase fw-bold"
           style={{
-            backgroundColor: "#ea580c",
+            backgroundColor: "#2ca38b",
             padding: "1rem 2rem",
             fontSize: "0.75rem",
             letterSpacing: "0.15em",
           }}
         >
           <span>Explore Map</span>
-          {/* <ArrowUpRight size={16} /> */}
-        </button>
-
+    
+        </button> */}
+<a href="/Exploremap">
         <button
           className="btn text-white text-uppercase fw-bold"
           style={{
-            padding: "1rem 2rem",
-            fontSize: "0.75rem",
+            padding: "1.5rem 2.5rem",
+            fontSize: "0.85rem",
             letterSpacing: "0.15em",
             backgroundColor: "rgba(255,255,255,0.1)",
             backdropFilter: "blur(10px)",
             border: "1px solid rgba(255,255,255,0.3)",
           }}
         >
-          Virtual Tour
+         Explore Map
         </button>
+</a>
+
       </div>
     </div>
 
     {/* Bottom gradient */}
-    <div
+    {/* <div
       className="position-absolute bottom-0 start-0 w-100"
       style={{
         height: "160px",
         background:
           "linear-gradient(to top, rgba(0,0,0,1), rgba(0,0,0,0))",
       }}
-    />
+    /> */}
   </section>
 );
 
