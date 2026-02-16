@@ -172,7 +172,7 @@ export default function GobalMap() {
         }}
       />
 
-      {/* Soil map image on top of blurred background */}
+      {/* Soil indian  map image on top of blurred background  */}
       <div
         style={{
           position: "fixed",
@@ -197,7 +197,47 @@ export default function GobalMap() {
           
           <Image
             src={mapImageUrl}
-            alt={`${overlayMapView === "kerala" ? "Kerala" : "India"} soil map`}
+
+            width={980}
+            height={840}
+            priority
+            style={{
+              width: overlayWidth,
+              maxHeight: overlayMaxHeight,
+              height: "auto",
+              objectFit: "contain",
+              filter: "drop-shadow(0 14px 35px rgba(0, 0, 0, 0.35))",
+            }}
+          />
+        </div>
+        
+      </div>
+
+      {/* Soil kerala  map image on top of blurred background  */}
+      <div
+        style={{
+          position: "fixed",
+          inset: 0,
+          zIndex: 30,
+          pointerEvents: "none",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          transform: `translate(${overlayOffsetX}px, ${overlayOffsetY}px)`,
+        }}
+      >
+        <div
+          ref={mapOverlayRef}
+          style={{
+            opacity: 0,
+            transform: `scale(${INDIA_OVERLAY_SCALE_OUT})`,
+            transformOrigin: "center center",
+            willChange: "opacity, transform",
+          }}
+        >
+          
+          <Image
+            src={mapImageUrl}
             width={980}
             height={840}
             priority
