@@ -69,3 +69,21 @@
 input::placeholder {
   color: #555;
 }
+/* Smooth animation */
+/* Smooth animation */
+svg path,
+svg polygon,
+svg rect {
+  transition: all 0.25s ease;
+  cursor: pointer;
+}
+
+
+.highlight {
+  stroke: red;
+  stroke-width: 2;
+  /* filter: brightness(1.4) drop-shadow(0 0 5px red); */
+  /* transform: scale(1.03); */
+  transform-box: fill-box;
+  transform-origin: center;
+}
