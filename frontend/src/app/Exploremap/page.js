@@ -2,6 +2,7 @@
 
 import Mapsection from "@/components/Home/Mapsection";
 import GobalMap from "@/components/Home/GobalMap";
+import Portals from "@/components/Home/Portals";
 
 
 

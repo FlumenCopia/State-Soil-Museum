@@ -1,4 +1,6 @@
 
+
+// src/components/canvas/MovingStars.jsx
 "use client";
 
 import { useRef } from "react";
@@ -9,7 +11,8 @@ export default function MovingStars() {
   const starsRef = useRef();
 
   useFrame((state, delta) => {
-
+    // Majestic, extremely slow rotation. 
+    // This simulates the camera moving through an orbital plane.
     if (starsRef.current) {
       starsRef.current.rotation.y += delta * 0.003; 
       starsRef.current.rotation.x += delta * 0.001;

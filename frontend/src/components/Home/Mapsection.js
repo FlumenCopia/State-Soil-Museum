@@ -30,7 +30,7 @@ export default function Mapsection() {
 
       {/* MAP SECTION */}
       <div className="map-container">
-        <img src="/images/indiasoilmap.png" alt="India Map" className="map-img" />
+        {/* <img src="/images/indiasoilmap.png" alt="India Map" className="map-img" /> */}
       </div>
 
       {/* SIDEBAR */}
