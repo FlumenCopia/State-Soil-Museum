@@ -1,6 +1,6 @@
 "use client";
 
-export default function Mapsection() {
+export default function keralamapsoil() {
   return (
     <div className="main-wrapper">
       <div className="sidebar1">
@@ -28,59 +28,8 @@ export default function Mapsection() {
 
       </div>
 
-      {/* MAP SECTION */}
-      <div className="map-container">
-        <img src="/images/indiasoilmap.png" alt="India Map" className="map-img" />
-      </div>
 
-      {/* SIDEBAR */}
-{/* RIGHT SIDEBAR */}
-<div className="sidebar">
-  <div className="soil-card">
 
-    <h2 className="heading">
-      Forest & Hill <span>Soil</span>
-    </h2>
-
-    <div className="top-section">
-      <div className="ph-box">
-        <p className="label">PH Range:</p>
-        <p className="ph"><strong>4.0</strong> - 6.0</p>
-
-        <p className="label">Textures:</p>
-        <div className="texture-bars">
-          <div className="bar"></div>
-          <div className="bar"></div>
-          <div className="bar"></div>
-          <div className="bar"></div>
-        </div>
-
-        <div className="texture-text">
-          35% sand<br />
-          25% silt<br />
-          40% clay
-        </div>
-      </div>
-
-      <img
-        src="/images/hill.jpg"
-        alt="Forest Soil"
-        className="soil-img"
-      />
-    </div>
-
-    <p className="description">
-      Forest soils are found in hilly and mountainous regions.
-      They are rich in organic matter and vary based on altitude
-      and climate conditions.
-    </p>
-
-    <p className="crops">
-      <span>Tea, Coffee,</span> Spices
-    </p>
-
-  </div>
-</div>
 
 
       <style jsx>{`

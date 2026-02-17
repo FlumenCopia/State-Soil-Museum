@@ -78,10 +78,43 @@ svg rect {
 
 
 .highlight {
-  stroke: red;
+  filter: brightness(1.4) saturate(1.4);
+  stroke:6px solid #3d0bf2 !important;
+  stroke-width: 6.5;
+  transition: all 0.2s ease;
+  cursor: pointer;
+}
+
+
+
+
+
+
+
+
+/* Hide fills initially */
+.fill-path {
+  opacity: 0;
+}
+
+
+  .cls-1{fill:#878787;}.cls-2{fill:#f805de;}
+  .cls-3{fill:#acfbfe;}.cls-4{fill:#3335b4;}
+  .cls-5{fill:#06b49f;}.cls-6{fill:#0f9700;}
+  .cls-7{fill:#d0ffcb;}.cls-8{fill:#fff60b;}
+  .cls-9{fill:#fcc8b0;}.cls-10{fill:#000;}
+  .cls-11{fill:#ca0233;}
+
+
+.cls-10 {
+  stroke: #000;
+  fill: none;
   stroke-width: 2;
-  /* filter: brightness(1.4) drop-shadow(0 0 5px red); */
-  /* transform: scale(1.03); */
-  transform-box: fill-box;
-  transform-origin: center;
+
+  /* smoother lines */
+  stroke-linecap: round;
+  stroke-linejoin: round;
+
+  /* optional small transition */
+  transition: stroke 0.3s ease;
 }

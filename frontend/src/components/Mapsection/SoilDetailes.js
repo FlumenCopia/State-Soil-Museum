@@ -1,40 +1,11 @@
 "use client";
 
-export default function Mapsection() {
+export default function SoilDetailes() {
   return (
     <div className="main-wrapper">
-      <div className="sidebar1">
-        <div className="logo">🌍 Soil Analysis</div>
 
-<div className="classification">
-  <p className="title">CLASSIFICATION</p>
 
-  <div className="item"><span className="dot redSandy"></span> Red Sandy Soils</div>
-  <div className="item"><span className="dot redLoamy"></span> Red Loamy Soils</div>
-  <div className="item"><span className="dot redYellow"></span> Red and Yellow Soils</div>
-  <div className="item"><span className="dot laterite"></span> Laterite Soils</div>
-  <div className="item"><span className="dot subMountain"></span> Sub Mountain Soils</div>
-  <div className="item"><span className="dot desert"></span> Desert Soils</div>
-  <div className="item"><span className="dot greyBrown"></span> Grey and Brown Soils</div>
-  <div className="item"><span className="dot sandyLoam"></span> Sandy Loam</div>
-  <div className="item"><span className="dot black"></span> Black Soils</div>
-  <div className="item"><span className="dot mixed"></span> Mixed Red and Black Soils</div>
-  <div className="item"><span className="dot mountain"></span> Mountain Soils</div>
-  <div className="item"><span className="dot alluvial"></span> Alluvial Soils</div>
-  <div className="item"><span className="dot terai"></span> Terai Soils</div>
-  <div className="item"><span className="dot skeletal"></span> Skeletal Soils</div>
-  <div className="item"><span className="dot glacier"></span> Glaciers</div>
-</div>
 
-      </div>
-
-      {/* MAP SECTION */}
-      <div className="map-container">
-        <img src="/images/indiasoilmap.png" alt="India Map" className="map-img" />
-      </div>
-
-      {/* SIDEBAR */}
-{/* RIGHT SIDEBAR */}
 <div className="sidebar">
   <div className="soil-card">
 
