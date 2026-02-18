@@ -1,4 +1,3 @@
-
 "use client";
 
 import { Suspense, useEffect, useRef } from "react";
@@ -13,9 +12,20 @@ import IndiaSVG from "../Svg/IndiaSVG";
 import KeralaSVG from "../Svg/KeralaSVG";
 
 /* CONSTANTS */
-
 const SCALE_IN = 1.14;
 const SCALE_OUT = 0.95;
+
+// Kerala overlay controls (position + animation timings)
+const OVERLAY_INITIAL_SCALE = 0.42;
+const OVERLAY_FINAL_SCALE = 1.1;
+const OVERLAY_POSITION_X = 0;
+const OVERLAY_POSITION_Y = 0;
+const OUTLINE_DELAY_SECONDS = 4;
+const OUTLINE_DRAW_DURATION = 1.05;
+const FILL_REVEAL_DURATION = 0.8;
+const ZOOM_DURATION = 1.05;
+const BLUR_FADE_IN_DURATION = 0.45;
+const BLUR_DELAY_AFTER_ZOOM = 0.06;
 
 const INDIA_WIDTH = "min(82vw, 770px)";
 const INDIA_HEIGHT = "87vh";
@@ -39,18 +49,14 @@ export default function GobalMap() {
 
   const indiaContainerRef = useRef(null);
   const keralaContainerRef = useRef(null);
+  const keralaAnimRef = useRef(null);
 
-
-  const showOverlay =
-    (view === "india" || view === "kerala") && indiaRevealReady;
-
+  const showOverlay = (view === "india" || view === "kerala") && indiaRevealReady;
   const isKerala = overlayMapView === "kerala";
 
   /* SCROLL TRIGGER */
-
   useEffect(() => {
     gsap.registerPlugin(ScrollTrigger);
-
     setView("globe");
 
     ScrollTrigger.create({
@@ -64,32 +70,47 @@ export default function GobalMap() {
   }, [setView]);
 
   /* BLUR + OVERLAY ANIMATION */
-
   useEffect(() => {
     const blur = blurRef.current;
     const overlay = overlayRef.current;
     if (!blur || !overlay) return;
 
     gsap.killTweensOf([blur, overlay]);
+    if (keralaAnimRef.current) {
+      keralaAnimRef.current.kill();
+      keralaAnimRef.current = null;
+    }
+
+    gsap.set(overlay, {
+      x: OVERLAY_POSITION_X,
+      y: OVERLAY_POSITION_Y,
+      transformOrigin: "50% 50%",
+    });
 
     if (showOverlay) {
-      gsap.timeline()
-        .to(blur, { opacity: 1, duration: 0.5 })
-        .fromTo(
-          overlay,
-          { opacity: 0, scale: SCALE_OUT },
-          { opacity: 1, scale: SCALE_IN, duration: 0.8 },
-          "-=0.3"
-        );
+      if (isKerala) {
+        gsap.set(blur, { opacity: 0 });
+        gsap.set(overlay, { opacity: 1, scale: OVERLAY_INITIAL_SCALE });
+      } else {
+        gsap
+          .timeline()
+          .to(blur, { opacity: 1, duration: 0.5 })
+          .fromTo(
+            overlay,
+            { opacity: 0, scale: SCALE_OUT },
+            { opacity: 1, scale: SCALE_IN, duration: 0.8 },
+            "-=0.3"
+          );
+      }
     } else {
-      gsap.timeline()
+      gsap
+        .timeline()
         .to(overlay, { opacity: 0, scale: SCALE_OUT, duration: 0.5 })
         .to(blur, { opacity: 0, duration: 0.4 }, "-=0.3");
     }
-  }, [showOverlay]);
+  }, [showOverlay, isKerala]);
 
-  /* INDIA ⇄ KERALA SWITCH */
-
+  /* INDIA/KERALA SWITCH */
   useEffect(() => {
     if (!indiaContainerRef.current || !keralaContainerRef.current) return;
 
@@ -102,20 +123,32 @@ export default function GobalMap() {
     }
   }, [isKerala]);
 
+  // Kerala sequence:
+  // small image -> wait 4s -> outline -> color + zoom -> blur background.
   useEffect(() => {
     if (!keralaSvgRef.current || !isKerala) return;
 
     const svg = keralaSvgRef.current;
     const drawPaths = svg.querySelectorAll(".cls-10");
     const fillPaths = svg.querySelectorAll(".fill-path");
+    const overlay = overlayRef.current;
+    const blur = blurRef.current;
+    if (!overlay || !blur) return;
 
-    // Hide colors first
+    gsap.killTweensOf([overlay, blur]);
+
+    gsap.set(overlay, {
+      opacity: 1,
+      scale: OVERLAY_INITIAL_SCALE,
+      x: OVERLAY_POSITION_X,
+      y: OVERLAY_POSITION_Y,
+      transformOrigin: "50% 50%",
+    });
+    gsap.set(blur, { opacity: 0 });
     gsap.set(fillPaths, { opacity: 0 });
 
     drawPaths.forEach((path) => {
       const length = path.getTotalLength();
-
-      // Prepare stroke animation
       gsap.set(path, {
         strokeDasharray: length,
         strokeDashoffset: length,
@@ -123,36 +156,44 @@ export default function GobalMap() {
     });
 
     const tl = gsap.timeline();
-
-    // 1️⃣ Small smooth draw animation
+    tl.to({}, { duration: OUTLINE_DELAY_SECONDS });
     tl.to(drawPaths, {
       strokeDashoffset: 0,
-      duration: 0.8,   // small animation
+      duration: OUTLINE_DRAW_DURATION,
       ease: "power2.out",
     });
-
-    // 2️⃣ Wait 2 seconds after drawing
-    tl.to({}, { duration: 2 });
-
-    // 3️⃣ Reveal colors
     tl.to(fillPaths, {
       opacity: 1,
-      duration: 0.8,
+      duration: FILL_REVEAL_DURATION,
       ease: "power2.out",
     });
+    tl.to(overlay, {
+      scale: OVERLAY_FINAL_SCALE,
+      duration: ZOOM_DURATION,
+      ease: "power3.out",
+    });
+    tl.to(
+      blur,
+      {
+        opacity: 1,
+        duration: BLUR_FADE_IN_DURATION,
+        ease: "power2.out",
+      },
+      `>+${BLUR_DELAY_AFTER_ZOOM}`
+    );
 
+    keralaAnimRef.current = tl;
+    return () => {
+      tl.kill();
+      keralaAnimRef.current = null;
+    };
   }, [isKerala]);
-
-
-
 
   useEffect(() => {
     const container = keralaContainerRef.current;
     if (!container) return;
 
-    const elements = container.querySelectorAll(
-      "path, polygon, rect"
-    );
+    const elements = container.querySelectorAll("path, polygon, rect");
 
     const handleEnter = (e) => {
       const group = e.target.dataset.group;
@@ -166,9 +207,7 @@ export default function GobalMap() {
     };
 
     const handleLeave = () => {
-      elements.forEach((el) =>
-        el.classList.remove("highlight")
-      );
+      elements.forEach((el) => el.classList.remove("highlight"));
     };
 
     elements.forEach((el) => {
@@ -184,23 +223,17 @@ export default function GobalMap() {
     };
   }, [overlayMapView]);
 
-
   return (
     <main ref={scrollRef} style={{ position: "relative" }}>
-
-      {/* 3D Background */}
       <div style={{ position: "fixed", inset: 0, zIndex: 0 }}>
         <CanvasWrapper>
           <Suspense fallback={null}>
             <GlobeScene />
           </Suspense>
-          <Suspense fallback={null}>
-            {view === "kerala" && <StateScene />}
-          </Suspense>
+          <Suspense fallback={null}>{view === "kerala" && <StateScene />}</Suspense>
         </CanvasWrapper>
       </div>
 
-      {/* Blur Layer */}
       <div
         ref={blurRef}
         style={{
@@ -213,7 +246,6 @@ export default function GobalMap() {
         }}
       />
 
-      {/* Overlay */}
       <div
         style={{
           position: "fixed",
@@ -225,23 +257,16 @@ export default function GobalMap() {
         }}
       >
         <div ref={overlayRef} style={{ position: "relative" }}>
-
-          {/* INDIA */}
           <div ref={indiaContainerRef} style={{ position: "absolute" }}>
-            <IndiaSVG
-              width={INDIA_WIDTH}
-              height={INDIA_HEIGHT} />
+            <IndiaSVG width={INDIA_WIDTH} height={INDIA_HEIGHT} />
           </div>
 
-          {/* KERALA */}
           <div ref={keralaContainerRef} style={{ opacity: 0 }}>
             <KeralaSVG ref={keralaSvgRef} width={KERALA_WIDTH} height={KERALA_HEIGHT} />
           </div>
-
         </div>
       </div>
 
-      {/* Buttons */}
       <div style={{ position: "fixed", bottom: 40, right: 40, zIndex: 50 }}>
         {view === "india" && (
           <button
@@ -259,16 +284,16 @@ export default function GobalMap() {
               boxShadow: "0 4px 20px rgba(46,204,113,0.4)",
               transition: "transform 0.2s, box-shadow 0.2s",
             }}
-            onMouseEnter={e => {
+            onMouseEnter={(e) => {
               e.currentTarget.style.transform = "scale(1.06)";
               e.currentTarget.style.boxShadow = "0 6px 28px rgba(46,204,113,0.6)";
             }}
-            onMouseLeave={e => {
+            onMouseLeave={(e) => {
               e.currentTarget.style.transform = "scale(1)";
               e.currentTarget.style.boxShadow = "0 4px 20px rgba(46,204,113,0.4)";
             }}
           >
-            🌿 Explore Kerala
+            Explore Kerala
           </button>
         )}
         {view === "kerala" && (
@@ -287,21 +312,20 @@ export default function GobalMap() {
               boxShadow: "0 4px 20px rgba(58,123,213,0.4)",
               transition: "transform 0.2s, box-shadow 0.2s",
             }}
-            onMouseEnter={e => {
+            onMouseEnter={(e) => {
               e.currentTarget.style.transform = "scale(1.06)";
               e.currentTarget.style.boxShadow = "0 6px 28px rgba(58,123,213,0.6)";
             }}
-            onMouseLeave={e => {
+            onMouseLeave={(e) => {
               e.currentTarget.style.transform = "scale(1)";
               e.currentTarget.style.boxShadow = "0 4px 20px rgba(58,123,213,0.4)";
             }}
           >
-            ← Back to India
+            Back to India
           </button>
         )}
       </div>
 
-      {/* Scroll Sections */}
       <div style={{ position: "relative", zIndex: 10 }}>
         <section id="globe-section" style={{ height: "100vh" }} />
         <section id="india-section" style={{ height: "200vh" }} />
@@ -310,5 +334,3 @@ export default function GobalMap() {
     </main>
   );
 }
-
-
