@@ -35,6 +35,7 @@ export default function GobalMap() {
   const scrollRef = useRef(null);
   const blurRef = useRef(null);
   const overlayRef = useRef(null);
+  const keralaSvgRef = useRef(null);
 
   const indiaContainerRef = useRef(null);
   const keralaContainerRef = useRef(null);
@@ -101,93 +102,92 @@ export default function GobalMap() {
     }
   }, [isKerala]);
 
-useEffect(() => {
-  if (!keralaSvgRef.current || !isKerala) return;
+  useEffect(() => {
+    if (!keralaSvgRef.current || !isKerala) return;
 
-  const svg = keralaSvgRef.current;
-  const drawPaths = svg.querySelectorAll(".cls-10");
-  const fillPaths = svg.querySelectorAll(".fill-path");
+    const svg = keralaSvgRef.current;
+    const drawPaths = svg.querySelectorAll(".cls-10");
+    const fillPaths = svg.querySelectorAll(".fill-path");
 
-  // Hide colors first
-  gsap.set(fillPaths, { opacity: 0 });
+    // Hide colors first
+    gsap.set(fillPaths, { opacity: 0 });
 
-  drawPaths.forEach((path) => {
-    const length = path.getTotalLength();
+    drawPaths.forEach((path) => {
+      const length = path.getTotalLength();
 
-    // Prepare stroke animation
-    gsap.set(path, {
-      strokeDasharray: length,
-      strokeDashoffset: length,
+      // Prepare stroke animation
+      gsap.set(path, {
+        strokeDasharray: length,
+        strokeDashoffset: length,
+      });
     });
-  });
 
-  const tl = gsap.timeline();
+    const tl = gsap.timeline();
 
-  // 1️⃣ Small smooth draw animation
-  tl.to(drawPaths, {
-    strokeDashoffset: 0,
-    duration: 0.8,   // small animation
-    ease: "power2.out",
-  });
-
-  // 2️⃣ Wait 2 seconds after drawing
-  tl.to({}, { duration: 2 });
-
-  // 3️⃣ Reveal colors
-  tl.to(fillPaths, {
-    opacity: 1,
-    duration: 0.8,
-    ease: "power2.out",
-  });
-
-}, [isKerala]);
-
-
-const keralaSvgRef = useRef(null);
-
-
-useEffect(() => {
-  const container = keralaContainerRef.current;
-  if (!container) return;
-
-  const elements = container.querySelectorAll(
-    "path, polygon, rect"
-  );
-
-  const handleEnter = (e) => {
-    const group = e.target.dataset.group;
-    if (!group) return;
-
-    elements.forEach((el) => {
-      if (el.dataset.group === group) {
-        el.classList.add("highlight");
-      }
+    // 1️⃣ Small smooth draw animation
+    tl.to(drawPaths, {
+      strokeDashoffset: 0,
+      duration: 0.8,   // small animation
+      ease: "power2.out",
     });
-  };
 
-  const handleLeave = () => {
-    elements.forEach((el) =>
-      el.classList.remove("highlight")
+    // 2️⃣ Wait 2 seconds after drawing
+    tl.to({}, { duration: 2 });
+
+    // 3️⃣ Reveal colors
+    tl.to(fillPaths, {
+      opacity: 1,
+      duration: 0.8,
+      ease: "power2.out",
+    });
+
+  }, [isKerala]);
+
+
+
+
+  useEffect(() => {
+    const container = keralaContainerRef.current;
+    if (!container) return;
+
+    const elements = container.querySelectorAll(
+      "path, polygon, rect"
     );
-  };
 
-  elements.forEach((el) => {
-    el.addEventListener("mouseenter", handleEnter);
-    el.addEventListener("mouseleave", handleLeave);
-  });
+    const handleEnter = (e) => {
+      const group = e.target.dataset.group;
+      if (!group) return;
 
-  return () => {
+      elements.forEach((el) => {
+        if (el.dataset.group === group) {
+          el.classList.add("highlight");
+        }
+      });
+    };
+
+    const handleLeave = () => {
+      elements.forEach((el) =>
+        el.classList.remove("highlight")
+      );
+    };
+
     elements.forEach((el) => {
-      el.removeEventListener("mouseenter", handleEnter);
-      el.removeEventListener("mouseleave", handleLeave);
+      el.addEventListener("mouseenter", handleEnter);
+      el.addEventListener("mouseleave", handleLeave);
     });
-  };
-}, [overlayMapView]);
+
+    return () => {
+      elements.forEach((el) => {
+        el.removeEventListener("mouseenter", handleEnter);
+        el.removeEventListener("mouseleave", handleLeave);
+      });
+    };
+  }, [overlayMapView]);
 
 
   return (
     <main ref={scrollRef} style={{ position: "relative" }}>
-      
+
       {/* 3D Background */}
       <div style={{ position: "fixed", inset: 0, zIndex: 0 }}>
         <CanvasWrapper>
@@ -225,12 +225,12 @@ useEffect(() => {
         }}
       >
         <div ref={overlayRef} style={{ position: "relative" }}>
-          
+
           {/* INDIA */}
           <div ref={indiaContainerRef} style={{ position: "absolute" }}>
-            <IndiaSVG 
-  width={INDIA_WIDTH}
-  height={INDIA_HEIGHT} />
+            <IndiaSVG
+              width={INDIA_WIDTH}
+              height={INDIA_HEIGHT} />
           </div>
 
           {/* KERALA */}
@@ -244,13 +244,59 @@ useEffect(() => {
       {/* Buttons */}
       <div style={{ position: "fixed", bottom: 40, right: 40, zIndex: 50 }}>
         {view === "india" && (
-          <button onClick={() => setView("kerala")}>
-            Explore Kerala
+          <button
+            onClick={() => setView("kerala")}
+            style={{
+              padding: "12px 24px",
+              background: "linear-gradient(135deg, #1a6b3c, #2ecc71)",
+              color: "#fff",
+              border: "none",
+              borderRadius: "30px",
+              fontSize: "15px",
+              fontWeight: "600",
+              letterSpacing: "0.5px",
+              cursor: "pointer",
+              boxShadow: "0 4px 20px rgba(46,204,113,0.4)",
+              transition: "transform 0.2s, box-shadow 0.2s",
+            }}
+            onMouseEnter={e => {
+              e.currentTarget.style.transform = "scale(1.06)";
+              e.currentTarget.style.boxShadow = "0 6px 28px rgba(46,204,113,0.6)";
+            }}
+            onMouseLeave={e => {
+              e.currentTarget.style.transform = "scale(1)";
+              e.currentTarget.style.boxShadow = "0 4px 20px rgba(46,204,113,0.4)";
+            }}
+          >
+            🌿 Explore Kerala
           </button>
         )}
         {view === "kerala" && (
-          <button onClick={() => setView("india")}>
-            Back to India
+          <button
+            onClick={() => setView("india")}
+            style={{
+              padding: "12px 24px",
+              background: "linear-gradient(135deg, #1a3a6b, #3a7bd5)",
+              color: "#fff",
+              border: "none",
+              borderRadius: "30px",
+              fontSize: "15px",
+              fontWeight: "600",
+              letterSpacing: "0.5px",
+              cursor: "pointer",
+              boxShadow: "0 4px 20px rgba(58,123,213,0.4)",
+              transition: "transform 0.2s, box-shadow 0.2s",
+            }}
+            onMouseEnter={e => {
+              e.currentTarget.style.transform = "scale(1.06)";
+              e.currentTarget.style.boxShadow = "0 6px 28px rgba(58,123,213,0.6)";
+            }}
+            onMouseLeave={e => {
+              e.currentTarget.style.transform = "scale(1)";
+              e.currentTarget.style.boxShadow = "0 4px 20px rgba(58,123,213,0.4)";
+            }}
+          >
+            ← Back to India
           </button>
         )}
       </div>
