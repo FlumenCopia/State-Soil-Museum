@@ -102,21 +102,17 @@ State
           <span>Explore Map</span>
     
         </button> */}
-<a href="/Exploremap">
-        <button
-          className="btn text-white text-uppercase fw-bold"
+        <a
+          href="/Exploremap"
+          className="btn text-uppercase fw-bold explore-map-btn"
           style={{
             padding: "1.5rem 2.5rem",
             fontSize: "0.85rem",
             letterSpacing: "0.15em",
-            backgroundColor: "rgba(255,255,255,0.1)",
-            backdropFilter: "blur(10px)",
-            border: "1px solid rgba(255,255,255,0.3)",
           }}
         >
-         Explore Map
-        </button>
-</a>
+          <span>Explore Map</span>
+        </a>
 
       </div>
     </div>

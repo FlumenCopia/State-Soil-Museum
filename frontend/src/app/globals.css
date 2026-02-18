@@ -7,6 +7,76 @@
   color: #fff;
 }
 
+.explore-map-btn {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff !important;
+  border: none !important;
+  border-radius: 0.9rem;
+  text-decoration: none !important;
+  isolation: isolate;
+  overflow: hidden;
+}
+
+.explore-map-btn::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  padding: 2px;
+  border-radius: inherit;
+  background: conic-gradient(
+    from 0deg,
+    rgba(255, 255, 255, 0.15),
+    rgba(44, 163, 139, 0.95),
+    rgba(255, 255, 255, 0.2),
+    rgba(44, 163, 139, 0.95),
+    rgba(255, 255, 255, 0.15)
+  );
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  mask-composite: exclude;
+  animation: exploreMapOutlineSpin 2.8s linear infinite;
+  z-index: 0;
+}
+
+.explore-map-btn::after {
+  content: "";
+  position: absolute;
+  inset: 2px;
+  border-radius: calc(0.9rem - 2px);
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(10px);
+  z-index: 0;
+}
+
+.explore-map-btn > span {
+  position: relative;
+  z-index: 1;
+}
+
+.explore-map-btn:hover {
+  color: #fff !important;
+  transform: translateY(-1px);
+}
+
+@keyframes exploreMapOutlineSpin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .explore-map-btn::before {
+    animation: none;
+  }
+}
+
 
       body {
         font-family: 'Inter', sans-serif;
