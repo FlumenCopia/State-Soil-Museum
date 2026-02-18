@@ -53,6 +53,8 @@ export default function GobalMap() {
 
   const showOverlay = (view === "india" || view === "kerala") && indiaRevealReady;
   const isKerala = overlayMapView === "kerala";
+  const shouldRenderIndiaSvg = showOverlay && !isKerala;
+  const shouldRenderKeralaSvg = showOverlay && isKerala;
 
   /* SCROLL TRIGGER */
   useEffect(() => {
@@ -126,7 +128,7 @@ export default function GobalMap() {
   // Kerala sequence:
   // small image -> wait 4s -> outline -> color + zoom -> blur background.
   useEffect(() => {
-    if (!keralaSvgRef.current || !isKerala) return;
+    if (!showOverlay || !keralaSvgRef.current || !isKerala) return;
 
     const svg = keralaSvgRef.current;
     const drawPaths = svg.querySelectorAll(".cls-10");
@@ -187,7 +189,7 @@ export default function GobalMap() {
       tl.kill();
       keralaAnimRef.current = null;
     };
-  }, [isKerala]);
+  }, [isKerala, showOverlay]);
 
   useEffect(() => {
     const container = keralaContainerRef.current;
@@ -258,11 +260,13 @@ export default function GobalMap() {
       >
         <div ref={overlayRef} style={{ position: "relative" }}>
           <div ref={indiaContainerRef} style={{ position: "absolute" }}>
-            <IndiaSVG width={INDIA_WIDTH} height={INDIA_HEIGHT} />
+            {shouldRenderIndiaSvg && <IndiaSVG width={INDIA_WIDTH} height={INDIA_HEIGHT} />}
           </div>
 
           <div ref={keralaContainerRef} style={{ opacity: 0 }}>
-            <KeralaSVG ref={keralaSvgRef} width={KERALA_WIDTH} height={KERALA_HEIGHT} />
+            {shouldRenderKeralaSvg && (
+              <KeralaSVG ref={keralaSvgRef} width={KERALA_WIDTH} height={KERALA_HEIGHT} />
+            )}
           </div>
         </div>
       </div>
