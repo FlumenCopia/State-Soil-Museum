@@ -1,6 +1,6 @@
 "use client";
 
-import { Suspense, useEffect, useRef } from "react";
+import { Suspense, useEffect, useRef, useState } from "react";
 import CanvasWrapper from "@/components/canvas/CanvasWrapper";
 import GlobeScene from "@/components/scenes/GlobeScene";
 import StateScene from "@/components/scenes/StateScene";
@@ -35,6 +35,19 @@ const KERALA_HEIGHT = "88vh";
 
 const BG_BLUR = 22;
 const BG_SATURATION = 0.72;
+const KERALA_COLOR_CLASS_PATTERN = /^cls-(10|[1-9])$/;
+const KERALA_COLOR_DETAILS = Object.freeze({
+  "cls-1": { label: "Class 1", color: "#878787", details: "Kerala zone using color class 1." },
+  "cls-2": { label: "Class 2", color: "#f805de", details: "Kerala zone using color class 2." },
+  "cls-3": { label: "Class 3", color: "#acfbfe", details: "Kerala zone using color class 3." },
+  "cls-4": { label: "Class 4", color: "#3335b4", details: "Kerala zone using color class 4." },
+  "cls-5": { label: "Class 5", color: "#06b49f", details: "Kerala zone using color class 5." },
+  "cls-6": { label: "Class 6", color: "#0f9700", details: "Kerala zone using color class 6." },
+  "cls-7": { label: "Class 7", color: "#d0ffcb", details: "Kerala zone using color class 7." },
+  "cls-8": { label: "Class 8", color: "#fff60b", details: "Kerala zone using color class 8." },
+  "cls-9": { label: "Class 9", color: "#fcc8b0", details: "Kerala zone using color class 9." },
+  "cls-10": { label: "Class 10", color: "#000", details: "Kerala zone using color class 10." },
+});
 
 export default function GobalMap() {
   const view = useAppStore((s) => s.view);
@@ -50,11 +63,17 @@ export default function GobalMap() {
   const indiaContainerRef = useRef(null);
   const keralaContainerRef = useRef(null);
   const keralaAnimRef = useRef(null);
+  const [activeColorClass, setActiveColorClass] = useState(null);
+  const [hoverColorClass, setHoverColorClass] = useState(null);
 
   const showOverlay = (view === "india" || view === "kerala") && indiaRevealReady;
   const isKerala = overlayMapView === "kerala";
   const shouldRenderIndiaSvg = showOverlay && !isKerala;
   const shouldRenderKeralaSvg = showOverlay && isKerala;
+  const selectedColorClass = hoverColorClass || activeColorClass;
+  const selectedColorDetails = selectedColorClass
+    ? KERALA_COLOR_DETAILS[selectedColorClass]
+    : null;
 
   /* SCROLL TRIGGER */
   useEffect(() => {
@@ -193,37 +212,77 @@ export default function GobalMap() {
 
   useEffect(() => {
     const container = keralaContainerRef.current;
-    if (!container) return;
+    if (!container || !showOverlay || !isKerala) return;
 
-    const elements = container.querySelectorAll("path, polygon, rect");
+    const elements = Array.from(container.querySelectorAll("path, polygon, rect"));
+    const getColorClass = (el) =>
+      Array.from(el.classList).find((name) => KERALA_COLOR_CLASS_PATTERN.test(name)) ?? null;
+    const colorElements = elements.filter((el) => getColorClass(el));
+
+    const paintHighlights = (hoverClass, clickedClass) => {
+      colorElements.forEach((el) => {
+        el.classList.remove("highlight");
+        el.classList.remove("selected-highlight");
+      });
+
+      if (clickedClass) {
+        colorElements.forEach((el) => {
+          if (el.classList.contains(clickedClass)) {
+            el.classList.add("selected-highlight");
+          }
+        });
+      }
+
+      if (hoverClass) {
+        colorElements.forEach((el) => {
+          if (el.classList.contains(hoverClass)) {
+            el.classList.add("highlight");
+          }
+        });
+      }
+    };
 
     const handleEnter = (e) => {
-      const group = e.target.dataset.group;
-      if (!group) return;
-
-      elements.forEach((el) => {
-        if (el.dataset.group === group) {
-          el.classList.add("highlight");
-        }
-      });
+      const colorClass = getColorClass(e.currentTarget);
+      if (!colorClass) return;
+      setHoverColorClass(colorClass);
+      paintHighlights(colorClass, activeColorClass);
     };
 
     const handleLeave = () => {
-      elements.forEach((el) => el.classList.remove("highlight"));
+      setHoverColorClass(null);
+      paintHighlights(null, activeColorClass);
     };
 
-    elements.forEach((el) => {
+    const handleClick = (e) => {
+      const colorClass = getColorClass(e.currentTarget);
+      if (!colorClass) return;
+      setActiveColorClass(colorClass);
+      paintHighlights(hoverColorClass, colorClass);
+    };
+
+    colorElements.forEach((el) => {
       el.addEventListener("mouseenter", handleEnter);
       el.addEventListener("mouseleave", handleLeave);
+      el.addEventListener("click", handleClick);
     });
 
+    paintHighlights(hoverColorClass, activeColorClass);
+
     return () => {
-      elements.forEach((el) => {
+      colorElements.forEach((el) => {
         el.removeEventListener("mouseenter", handleEnter);
         el.removeEventListener("mouseleave", handleLeave);
+        el.removeEventListener("click", handleClick);
       });
     };
-  }, [overlayMapView]);
+  }, [isKerala, showOverlay, activeColorClass, hoverColorClass]);
+
+  useEffect(() => {
+    if (isKerala) return;
+    setActiveColorClass(null);
+    setHoverColorClass(null);
+  }, [isKerala]);
 
   return (
     <main ref={scrollRef} style={{ position: "relative" }}>
@@ -270,6 +329,55 @@ export default function GobalMap() {
           </div>
         </div>
       </div>
+
+      {isKerala && showOverlay && (
+        <aside
+          style={{
+            position: "fixed",
+            top: "50%",
+            right: 24,
+            transform: "translateY(-50%)",
+            zIndex: 60,
+            width: "min(320px, 32vw)",
+            minWidth: 220,
+            background: "rgba(8, 14, 26, 0.8)",
+            border: "1px solid rgba(255,255,255,0.18)",
+            borderRadius: 14,
+            padding: "14px 14px 12px",
+            color: "#f8fafc",
+            backdropFilter: "blur(6px)",
+            boxShadow: "0 18px 40px rgba(0,0,0,0.35)",
+          }}
+        >
+          <div style={{ fontSize: 12, opacity: 0.8, marginBottom: 8 }}>
+            Kerala Section Details
+          </div>
+          {selectedColorDetails ? (
+            <>
+              <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 8 }}>
+                <span
+                  style={{
+                    width: 14,
+                    height: 14,
+                    borderRadius: 999,
+                    background: selectedColorDetails.color,
+                    border: "1px solid rgba(255,255,255,0.55)",
+                    display: "inline-block",
+                  }}
+                />
+                <strong style={{ fontSize: 14 }}>{selectedColorDetails.label}</strong>
+              </div>
+              <div style={{ fontSize: 13, lineHeight: 1.45, opacity: 0.95 }}>
+                {selectedColorDetails.details}
+              </div>
+            </>
+          ) : (
+            <div style={{ fontSize: 13, lineHeight: 1.45, opacity: 0.85 }}>
+              Hover or click a colored Kerala section to see details.
+            </div>
+          )}
+        </aside>
+      )}
 
       <div style={{ position: "fixed", bottom: 40, right: 40, zIndex: 50 }}>
         {view === "india" && (
