@@ -22,6 +22,8 @@ const OVERLAY_POSITION_X_BEFORE = -20;
 const OVERLAY_POSITION_Y_BEFORE = 140;
 const OVERLAY_POSITION_X_AFTER = 0;
 const OVERLAY_POSITION_Y_AFTER = 0;
+const OVERLAY_ROTATION_BEFORE = -12;
+const OVERLAY_ROTATION_AFTER = 0;
 const OUTLINE_DELAY_SECONDS = 0.30;
 const OUTLINE_DRAW_DURATION = 1.05;
 const FILL_REVEAL_DURATION = 0.8;
@@ -108,7 +110,8 @@ export default function GobalMap() {
     gsap.set(overlay, {
       x: OVERLAY_POSITION_X_BEFORE,
       y: OVERLAY_POSITION_Y_BEFORE,
-      transformOrigin: "50% 50%",
+      rotation: isKerala ? OVERLAY_ROTATION_BEFORE : OVERLAY_ROTATION_AFTER,
+      transformOrigin: isKerala ? "50% 50%" : "50% 50%",
     });
 
     if (showOverlay) {
@@ -134,6 +137,7 @@ export default function GobalMap() {
           scale: SCALE_OUT,
           x: OVERLAY_POSITION_X_BEFORE,
           y: OVERLAY_POSITION_Y_BEFORE,
+          rotation: isKerala ? OVERLAY_ROTATION_BEFORE : OVERLAY_ROTATION_AFTER,
           duration: 0.5,
         })
         .to(blur, { opacity: 0, duration: 0.4 }, "-=0.3");
@@ -172,6 +176,7 @@ export default function GobalMap() {
       scale: OVERLAY_INITIAL_SCALE,
       x: OVERLAY_POSITION_X_BEFORE,
       y: OVERLAY_POSITION_Y_BEFORE,
+      rotation: OVERLAY_ROTATION_BEFORE,
       transformOrigin: "50% 50%",
     });
     gsap.set(blur, { opacity: 0 });
@@ -201,6 +206,7 @@ export default function GobalMap() {
       scale: OVERLAY_FINAL_SCALE,
       x: OVERLAY_POSITION_X_AFTER,
       y: OVERLAY_POSITION_Y_AFTER,
+      rotation: OVERLAY_ROTATION_AFTER,
       duration: ZOOM_DURATION,
       ease: "power3.out",
     });
