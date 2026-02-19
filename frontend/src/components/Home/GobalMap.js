@@ -49,7 +49,7 @@ const KERALA_COLOR_DETAILS = Object.freeze({
   "cls-8": { label: "Class 8", color: "#fff60b", details: "Kerala zone using color class 8." },
   "cls-9": { label: "Class 9", color: "#fcc8b0", details: "Kerala zone using color class 9." },
   "cls-10": { label: "Class 10", color: "#000", details: "Kerala zone using color class 10." },
-  "cls-11": { label: "Class 11", color: "#ca0233", details: "Kerala zone using color class 11." },
+  "cls-11": { label: "Classmkdne 11", color: "#ca0233", details: "Kerala zone using color class 11." },
 });
 
 export default function GobalMap() {
