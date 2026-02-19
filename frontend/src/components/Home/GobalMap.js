@@ -54,7 +54,7 @@ const KERALA_COLOR_DETAILS = Object.freeze({
   "cls-8": { label: "Class 8", color: "#fff60b", details: "Kerala zone using color class 8." },
   "cls-9": { label: "Class 9", color: "#fcc8b0", details: "Kerala zone using color class 9." },
   "cls-10": { label: "Class 10", color: "#000", details: "Kerala zone using color class 10." },
-  "cls-11": { label: "Classmkdne 11", color: "#ca0233", details: "Kerala zone using color class 11." },
+  "cls-11": { label: "Class 11", color: "#ca0233", details: "Kerala zone using color class 11." },
 });
 
 export default function GobalMap() {
@@ -71,6 +71,9 @@ export default function GobalMap() {
   const indiaContainerRef = useRef(null);
   const keralaContainerRef = useRef(null);
   const keralaAnimRef = useRef(null);
+  const colorElementsRef = useRef([]);
+  const activeColorClassRef = useRef(null);
+  const hoverColorClassRef = useRef(null);
   const [activeColorClass, setActiveColorClass] = useState(null);
   const [hoverColorClass, setHoverColorClass] = useState(null);
   const [keralaZoomComplete, setKeralaZoomComplete] = useState(false);
@@ -95,7 +98,8 @@ export default function GobalMap() {
       trigger: "#india-section",
       start: "top bottom",
       end: "center center",
-      scrub: 2,
+      scrub: 1.2,
+      invalidateOnRefresh: true,
       onEnter: () => setView("india"),
       onLeaveBack: () => setView("globe"),
     });
@@ -155,11 +159,31 @@ export default function GobalMap() {
     if (!indiaContainerRef.current || !keralaContainerRef.current) return;
 
     if (isKerala) {
-      gsap.to(indiaContainerRef.current, { opacity: 0, duration: 0.4 });
-      gsap.to(keralaContainerRef.current, { opacity: 1, duration: 0.5 });
+      gsap.to(indiaContainerRef.current, {
+        opacity: 0,
+        duration: 0.45,
+        ease: "power2.inOut",
+        overwrite: "auto",
+      });
+      gsap.to(keralaContainerRef.current, {
+        opacity: 1,
+        duration: 0.55,
+        ease: "power2.inOut",
+        overwrite: "auto",
+      });
     } else {
-      gsap.to(keralaContainerRef.current, { opacity: 0, duration: 0.4 });
-      gsap.to(indiaContainerRef.current, { opacity: 1, duration: 0.5 });
+      gsap.to(keralaContainerRef.current, {
+        opacity: 0,
+        duration: 0.45,
+        ease: "power2.inOut",
+        overwrite: "auto",
+      });
+      gsap.to(indiaContainerRef.current, {
+        opacity: 1,
+        duration: 0.55,
+        ease: "power2.inOut",
+        overwrite: "auto",
+      });
     }
   }, [isKerala]);
 
@@ -243,15 +267,18 @@ export default function GobalMap() {
     const getColorClass = (el) =>
       Array.from(el.classList).find((name) => KERALA_COLOR_CLASS_PATTERN.test(name)) ?? null;
     const colorElements = elements.filter((el) => getColorClass(el));
+    colorElementsRef.current = colorElements;
 
-    const paintHighlights = (hoverClass, clickedClass) => {
-      colorElements.forEach((el) => {
+    const paintHighlights = () => {
+      const hoverClass = hoverColorClassRef.current;
+      const clickedClass = activeColorClassRef.current;
+      colorElementsRef.current.forEach((el) => {
         el.classList.remove("highlight");
         el.classList.remove("selected-highlight");
       });
 
       if (clickedClass) {
-        colorElements.forEach((el) => {
+        colorElementsRef.current.forEach((el) => {
           if (el.classList.contains(clickedClass)) {
             el.classList.add("selected-highlight");
           }
@@ -259,7 +286,7 @@ export default function GobalMap() {
       }
 
       if (hoverClass) {
-        colorElements.forEach((el) => {
+        colorElementsRef.current.forEach((el) => {
           if (el.classList.contains(hoverClass)) {
             el.classList.add("highlight");
           }
@@ -270,20 +297,23 @@ export default function GobalMap() {
     const handleEnter = (e) => {
       const colorClass = getColorClass(e.currentTarget);
       if (!colorClass) return;
+      hoverColorClassRef.current = colorClass;
       setHoverColorClass(colorClass);
-      paintHighlights(colorClass, activeColorClass);
+      paintHighlights();
     };
 
     const handleLeave = () => {
+      hoverColorClassRef.current = null;
       setHoverColorClass(null);
-      paintHighlights(null, activeColorClass);
+      paintHighlights();
     };
 
     const handleClick = (e) => {
       const colorClass = getColorClass(e.currentTarget);
       if (!colorClass) return;
+      activeColorClassRef.current = colorClass;
       setActiveColorClass(colorClass);
-      paintHighlights(hoverColorClass, colorClass);
+      paintHighlights();
     };
 
     colorElements.forEach((el) => {
@@ -291,8 +321,7 @@ export default function GobalMap() {
       el.addEventListener("mouseleave", handleLeave);
       el.addEventListener("click", handleClick);
     });
-
-    paintHighlights(hoverColorClass, activeColorClass);
+    paintHighlights();
 
     return () => {
       colorElements.forEach((el) => {
@@ -300,13 +329,16 @@ export default function GobalMap() {
         el.removeEventListener("mouseleave", handleLeave);
         el.removeEventListener("click", handleClick);
       });
+      colorElementsRef.current = [];
     };
-  }, [isKerala, showOverlay, activeColorClass, hoverColorClass]);
+  }, [isKerala, showOverlay]);
 
   useEffect(() => {
     if (isKerala) return;
     setActiveColorClass(null);
     setHoverColorClass(null);
+    activeColorClassRef.current = null;
+    hoverColorClassRef.current = null;
     setKeralaZoomComplete(false);
   }, [isKerala]);
 
@@ -343,7 +375,7 @@ export default function GobalMap() {
           justifyContent: "center",
         }}
       >
-        <div ref={overlayRef} style={{ position: "relative" }}>
+        <div ref={overlayRef} style={{ position: "relative", willChange: "transform, opacity" }}>
           <div ref={indiaContainerRef} style={{ position: "absolute" }}>
             {shouldRenderIndiaSvg && <IndiaSVG width={INDIA_WIDTH} height={INDIA_HEIGHT} />}
           </div>

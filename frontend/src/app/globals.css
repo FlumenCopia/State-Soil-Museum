@@ -142,7 +142,7 @@ input::placeholder {
 svg path,
 svg polygon,
 svg rect {
-  transition: all 0.25s ease;
+  transition: fill 0.3s ease, stroke 0.3s ease, stroke-width 0.3s ease, filter 0.3s ease;
   cursor: pointer;
 }
 
@@ -150,16 +150,16 @@ svg rect {
 .highlight {
   filter: brightness(1.2) saturate(1.2);
   stroke: #ff0101 !important;
-  stroke-width: 0.3 !important;
-  transition: all 0.2s ease;
+  stroke-width: 0.8 !important;
+  transition: filter 0.24s ease, stroke 0.24s ease, stroke-width 0.24s ease;
   cursor: pointer;
 }
 
 .selected-highlight {
   filter: brightness(1.15) saturate(1.28) drop-shadow(0 0 8px rgba(255, 255, 255, 0.45));
   stroke: #f90f02 !important;
-  stroke-width: 0.4 !important;
-  transition: all 0.2s ease;
+  stroke-width: 1.1 !important;
+  transition: filter 0.24s ease, stroke 0.24s ease, stroke-width 0.24s ease;
 }
 
 
@@ -187,6 +187,7 @@ svg rect {
   stroke: #000;
   fill: none;
   stroke-width: 0.60;
+  vector-effect: non-scaling-stroke;
 
   /* smoother lines */
   stroke-linecap: round;
