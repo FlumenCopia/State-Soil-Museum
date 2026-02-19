@@ -37,7 +37,7 @@ const KERALA_HEIGHT = "88vh";
 
 const BG_BLUR = 22;
 const BG_SATURATION = 0.72;
-const KERALA_COLOR_CLASS_PATTERN = /^cls-(10|[1-9])$/;
+const KERALA_COLOR_CLASS_PATTERN = /^cls-([1-9])$/;
 const KERALA_COLOR_DETAILS = Object.freeze({
   "cls-1": { label: "Class 1", color: "#878787", details: "Kerala zone using color class 1." },
   "cls-2": { label: "Class 2", color: "#f805de", details: "Kerala zone using color class 2." },
