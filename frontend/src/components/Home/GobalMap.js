@@ -16,13 +16,13 @@ const SCALE_IN = 1.14;
 const SCALE_OUT = 0.95;
 
 // Kerala overlay controls (position + animation timings)
-const OVERLAY_INITIAL_SCALE = 0.42;
+const OVERLAY_INITIAL_SCALE = 0.52;
 const OVERLAY_FINAL_SCALE = 1.1;
-const OVERLAY_POSITION_X_BEFORE = -20;
-const OVERLAY_POSITION_Y_BEFORE = 140;
+const OVERLAY_POSITION_X_BEFORE = -18;
+const OVERLAY_POSITION_Y_BEFORE = 130;
 const OVERLAY_POSITION_X_AFTER = 0;
 const OVERLAY_POSITION_Y_AFTER = 0;
-const OVERLAY_ROTATION_BEFORE = -12;
+const OVERLAY_ROTATION_BEFORE = -10;
 const OVERLAY_ROTATION_AFTER = 0;
 const OUTLINE_DELAY_SECONDS = 0.30;
 const OUTLINE_DRAW_DURATION = 1.05;
@@ -34,8 +34,11 @@ const BLUR_DELAY_AFTER_ZOOM = 0.06;
 const INDIA_WIDTH = "min(82vw, 770px)";
 const INDIA_HEIGHT = "87vh";
 
-const KERALA_WIDTH = "min(72vw, 620px)";
-const KERALA_HEIGHT = "88vh";
+const KERALA_WIDTH_BEFORE = "min(68vw, 700px)";
+const KERALA_HEIGHT_BEFORE = "82vh";
+
+const KERALA_WIDTH_AFTER = "min(92vw, 920px)";
+const KERALA_HEIGHT_AFTER = "88vh";
 
 const BG_BLUR = 22;
 const BG_SATURATION = 0.72;
@@ -70,11 +73,14 @@ export default function GobalMap() {
   const keralaAnimRef = useRef(null);
   const [activeColorClass, setActiveColorClass] = useState(null);
   const [hoverColorClass, setHoverColorClass] = useState(null);
+  const [keralaZoomComplete, setKeralaZoomComplete] = useState(false);
 
   const showOverlay = (view === "india" || view === "kerala") && indiaRevealReady;
   const isKerala = overlayMapView === "kerala";
   const shouldRenderIndiaSvg = showOverlay && !isKerala;
   const shouldRenderKeralaSvg = showOverlay && isKerala;
+  const keralaSvgWidth = keralaZoomComplete ? KERALA_WIDTH_AFTER : KERALA_WIDTH_BEFORE;
+  const keralaSvgHeight = keralaZoomComplete ? KERALA_HEIGHT_AFTER : KERALA_HEIGHT_BEFORE;
   const selectedColorClass = hoverColorClass || activeColorClass;
   const selectedColorDetails = selectedColorClass
     ? KERALA_COLOR_DETAILS[selectedColorClass]
@@ -161,6 +167,7 @@ export default function GobalMap() {
   // small image -> wait 4s -> outline -> color + zoom -> blur background.
   useEffect(() => {
     if (!showOverlay || !keralaSvgRef.current || !isKerala) return;
+    setKeralaZoomComplete(false);
 
     const svg = keralaSvgRef.current;
     const drawPaths = svg.querySelectorAll(".cls-10");
@@ -219,6 +226,7 @@ export default function GobalMap() {
       },
       `>+${BLUR_DELAY_AFTER_ZOOM}`
     );
+    tl.eventCallback("onComplete", () => setKeralaZoomComplete(true));
 
     keralaAnimRef.current = tl;
     return () => {
@@ -299,6 +307,7 @@ export default function GobalMap() {
     if (isKerala) return;
     setActiveColorClass(null);
     setHoverColorClass(null);
+    setKeralaZoomComplete(false);
   }, [isKerala]);
 
   return (
@@ -341,7 +350,7 @@ export default function GobalMap() {
 
           <div ref={keralaContainerRef} style={{ opacity: 0 }}>
             {shouldRenderKeralaSvg && (
-              <KeralaSVG ref={keralaSvgRef} width={KERALA_WIDTH} height={KERALA_HEIGHT} />
+              <KeralaSVG ref={keralaSvgRef} width={keralaSvgWidth} height={keralaSvgHeight} />
             )}
           </div>
         </div>
