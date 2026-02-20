@@ -476,13 +476,16 @@ export default function GobalMap() {
               zIndex: 60,
               width: "min(280px, 26vw)",
               minWidth: 220,
-              background: "rgba(8, 14, 26, 0.82)",
-              border: "1px solid rgba(255,255,255,0.18)",
+              background:
+                "linear-gradient(145deg, rgba(18, 35, 58, 0.52), rgba(8, 18, 34, 0.46))",
+              border: "1px solid rgba(255,255,255,0.24)",
               borderRadius: 14,
               padding: "14px 12px",
               color: "#f8fafc",
-              backdropFilter: "blur(6px)",
-              boxShadow: "0 18px 40px rgba(0,0,0,0.35)",
+              backdropFilter: "blur(18px) saturate(145%)",
+              WebkitBackdropFilter: "blur(18px) saturate(145%)",
+              boxShadow:
+                "0 18px 45px rgba(0,0,0,0.32), inset 0 1px 0 rgba(255,255,255,0.12)",
             }}
           >
             <div style={{ fontSize: 12, opacity: 0.8, marginBottom: 10 }}>Kerala Soil Types</div>
@@ -541,12 +544,16 @@ export default function GobalMap() {
               zIndex: 60,
               width: "min(340px, 32vw)",
               minWidth: 240,
-              background: "linear-gradient(145deg, #0f2d40, #081a29)",
-              border: "1px solid rgba(255,255,255,0.18)",
+              background:
+                "linear-gradient(145deg, rgba(18, 35, 58, 0.52), rgba(8, 18, 34, 0.46))",
+              border: "1px solid rgba(255,255,255,0.24)",
               borderRadius: 16,
               padding: "14px",
               color: "#f8fafc",
-              boxShadow: "0 20px 50px rgba(0,0,0,0.4)",
+              backdropFilter: "blur(18px) saturate(145%)",
+              WebkitBackdropFilter: "blur(18px) saturate(145%)",
+              boxShadow:
+                "0 18px 45px rgba(0,0,0,0.32), inset 0 1px 0 rgba(255,255,255,0.12)",
             }}
           >
             <div style={{ fontSize: 12, opacity: 0.82, marginBottom: 8 }}>Kerala Soil Data</div>
