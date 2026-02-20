@@ -40,22 +40,78 @@ const KERALA_HEIGHT_BEFORE = "82vh";
 const KERALA_WIDTH_AFTER = "min(92vw, 920px)";
 const KERALA_HEIGHT_AFTER = "88vh";
 
-const BG_BLUR = 22;
+const BG_BLUR = 52;
 const BG_SATURATION = 0.72;
 const KERALA_COLOR_CLASS_PATTERN = /^cls-(11|[1-9])$/;
 const KERALA_COLOR_DETAILS = Object.freeze({
-  "cls-1": { label: "Class 1", color: "#878787", details: "Kerala zone using color class 1." },
-  "cls-2": { label: "Class 2", color: "#f805de", details: "Kerala zone using color class 2." },
-  "cls-3": { label: "Class 3", color: "#acfbfe", details: "Kerala zone using color class 3." },
-  "cls-4": { label: "Class 4", color: "#3335b4", details: "Kerala zone using color class 4." },
-  "cls-5": { label: "Class 5", color: "#06b49f", details: "Kerala zone using color class 5." },
-  "cls-6": { label: "Class 6", color: "#0f9700", details: "Kerala zone using color class 6." },
-  "cls-7": { label: "Class 7", color: "#d0ffcb", details: "Kerala zone using color class 7." },
-  "cls-8": { label: "Class 8", color: "#fff60b", details: "Kerala zone using color class 8." },
-  "cls-9": { label: "Class 9", color: "#fcc8b0", details: "Kerala zone using color class 9." },
-  "cls-10": { label: "Class 10", color: "#000", details: "Kerala zone using color class 10." },
-  "cls-11": { label: "Class 11", color: "#ca0233", details: "Kerala zone using color class 11." },
+  "cls-1": {
+    label: "Red Sandy Soils",
+    color: "#878787",
+    details: "Well-drained coarse-textured soil seen in selected Kerala regions.",
+    image: "/images/hill.jpg",
+  },
+  "cls-2": {
+    label: "Red Loamy Soils",
+    color: "#f805de",
+    details: "Balanced loamy red soil with moderate moisture-holding capacity.",
+    image: "/images/hill.jpg",
+  },
+  "cls-3": {
+    label: "Red and Yellow Soils",
+    color: "#acfbfe",
+    details: "Mixed red-yellow profile typically requiring organic enrichment.",
+    image: "/images/hill.jpg",
+  },
+  "cls-4": {
+    label: "Laterite Soils",
+    color: "#3335b4",
+    details: "Leached lateritic soil common in high-rainfall and upland belts.",
+    image: "/images/hill.jpg",
+  },
+  "cls-5": {
+    label: "Sub Mountain Soils",
+    color: "#06b49f",
+    details: "Hill-foot and slope soils with variable depth and gravel content.",
+    image: "/images/hill.jpg",
+  },
+  "cls-6": {
+    label: "Desert Soils",
+    color: "#0f9700",
+    details: "Light-textured low-organic soils represented by this mapped class.",
+    image: "/images/hill.jpg",
+  },
+  "cls-7": {
+    label: "Grey and Brown Soils",
+    color: "#d0ffcb",
+    details: "Fine to medium-textured soils with moderate nutrient status.",
+    image: "/images/hill.jpg",
+  },
+  "cls-8": {
+    label: "Sandy Loam",
+    color: "#fff60b",
+    details: "Freely draining sandy-loam profile suitable for multiple crops.",
+    image: "/images/hill.jpg",
+  },
+  "cls-9": {
+    label: "Black Soils",
+    color: "#fcc8b0",
+    details: "Clay-rich darker soils with higher moisture retention.",
+    image: "/images/hill.jpg",
+  },
+  "cls-10": {
+    label: "Mixed Red and Black Soils",
+    color: "#000",
+    details: "Transition zones containing mixed red and black soil traits.",
+    image: "/images/hill.jpg",
+  },
+  "cls-11": {
+    label: "Mountain Soils",
+    color: "#ca0233",
+    details: "Highland soils influenced by slope, rainfall, and forest cover.",
+    image: "/images/hill.jpg",
+  },
 });
+const KERALA_CLASS_ORDER = Object.keys(KERALA_COLOR_DETAILS);
 
 export default function GobalMap() {
   const view = useAppStore((s) => s.view);
@@ -334,6 +390,21 @@ export default function GobalMap() {
   }, [isKerala, showOverlay]);
 
   useEffect(() => {
+    const selectedClass = activeColorClassRef.current;
+    const hoveredClass = hoverColorClassRef.current;
+    colorElementsRef.current.forEach((el) => {
+      el.classList.remove("highlight");
+      el.classList.remove("selected-highlight");
+      if (selectedClass && el.classList.contains(selectedClass)) {
+        el.classList.add("selected-highlight");
+      }
+      if (hoveredClass && el.classList.contains(hoveredClass)) {
+        el.classList.add("highlight");
+      }
+    });
+  }, [activeColorClass, hoverColorClass]);
+
+  useEffect(() => {
     if (isKerala) return;
     setActiveColorClass(null);
     setHoverColorClass(null);
@@ -389,52 +460,128 @@ export default function GobalMap() {
       </div>
 
       {isKerala && showOverlay && (
-        <aside
-          style={{
-            position: "fixed",
-            top: "50%",
-            right: 24,
-            transform: "translateY(-50%)",
-            zIndex: 60,
-            width: "min(320px, 32vw)",
-            minWidth: 220,
-            background: "rgba(8, 14, 26, 0.8)",
-            border: "1px solid rgba(255,255,255,0.18)",
-            borderRadius: 14,
-            padding: "14px 14px 12px",
-            color: "#f8fafc",
-            backdropFilter: "blur(6px)",
-            boxShadow: "0 18px 40px rgba(0,0,0,0.35)",
-          }}
-        >
-          <div style={{ fontSize: 12, opacity: 0.8, marginBottom: 8 }}>
-            Kerala Section Details
-          </div>
-          {selectedColorDetails ? (
-            <>
-              <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 8 }}>
-                <span
+        <>
+          <aside
+            style={{
+              position: "fixed",
+              top: "50%",
+              left: 24,
+              transform: "translateY(-50%)",
+              zIndex: 60,
+              width: "min(280px, 26vw)",
+              minWidth: 220,
+              background: "rgba(8, 14, 26, 0.82)",
+              border: "1px solid rgba(255,255,255,0.18)",
+              borderRadius: 14,
+              padding: "14px 12px",
+              color: "#f8fafc",
+              backdropFilter: "blur(6px)",
+              boxShadow: "0 18px 40px rgba(0,0,0,0.35)",
+            }}
+          >
+            <div style={{ fontSize: 12, opacity: 0.8, marginBottom: 10 }}>Kerala Soil Types</div>
+            <div style={{ display: "grid", gap: 6 }}>
+              {KERALA_CLASS_ORDER.map((className) => {
+                const item = KERALA_COLOR_DETAILS[className];
+                const isSelected = selectedColorClass === className;
+                return (
+                  <button
+                    key={className}
+                    type="button"
+                    onClick={() => {
+                      activeColorClassRef.current = className;
+                      hoverColorClassRef.current = null;
+                      setHoverColorClass(null);
+                      setActiveColorClass(className);
+                    }}
+                    style={{
+                      display: "flex",
+                      alignItems: "center",
+                      gap: 8,
+                      width: "100%",
+                      textAlign: "left",
+                      padding: "7px 8px",
+                      borderRadius: 8,
+                      border: "1px solid rgba(255,255,255,0.14)",
+                      background: isSelected ? "rgba(255,255,255,0.16)" : "rgba(255,255,255,0.05)",
+                      color: "#f8fafc",
+                      cursor: "pointer",
+                      fontSize: 12,
+                    }}
+                  >
+                    <span
+                      style={{
+                        width: 11,
+                        height: 11,
+                        borderRadius: 999,
+                        background: item.color,
+                        border: "1px solid rgba(255,255,255,0.6)",
+                        flex: "0 0 auto",
+                      }}
+                    />
+                    <span>{item.label}</span>
+                  </button>
+                );
+              })}
+            </div>
+          </aside>
+
+          <aside
+            style={{
+              position: "fixed",
+              top: "50%",
+              right: 24,
+              transform: "translateY(-50%)",
+              zIndex: 60,
+              width: "min(340px, 32vw)",
+              minWidth: 240,
+              background: "linear-gradient(145deg, #0f2d40, #081a29)",
+              border: "1px solid rgba(255,255,255,0.18)",
+              borderRadius: 16,
+              padding: "14px",
+              color: "#f8fafc",
+              boxShadow: "0 20px 50px rgba(0,0,0,0.4)",
+            }}
+          >
+            <div style={{ fontSize: 12, opacity: 0.82, marginBottom: 8 }}>Kerala Soil Data</div>
+            {selectedColorDetails ? (
+              <>
+                <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 10 }}>
+                  <span
+                    style={{
+                      width: 14,
+                      height: 14,
+                      borderRadius: 999,
+                      background: selectedColorDetails.color,
+                      border: "1px solid rgba(255,255,255,0.55)",
+                      display: "inline-block",
+                    }}
+                  />
+                  <strong style={{ fontSize: 14 }}>{selectedColorDetails.label}</strong>
+                </div>
+                <img
+                  src={selectedColorDetails.image}
+                  alt={selectedColorDetails.label}
                   style={{
-                    width: 14,
-                    height: 14,
-                    borderRadius: 999,
-                    background: selectedColorDetails.color,
-                    border: "1px solid rgba(255,255,255,0.55)",
-                    display: "inline-block",
+                    width: "100%",
+                    height: 135,
+                    borderRadius: 10,
+                    objectFit: "cover",
+                    marginBottom: 10,
+                    border: "1px solid rgba(255,255,255,0.15)",
                   }}
                 />
-                <strong style={{ fontSize: 14 }}>{selectedColorDetails.label}</strong>
+                <div style={{ fontSize: 13, lineHeight: 1.45, opacity: 0.95 }}>
+                  {selectedColorDetails.details}
+                </div>
+              </>
+            ) : (
+              <div style={{ fontSize: 13, lineHeight: 1.45, opacity: 0.85 }}>
+                Select a soil type from the left list or hover/click a Kerala section.
               </div>
-              <div style={{ fontSize: 13, lineHeight: 1.45, opacity: 0.95 }}>
-                {selectedColorDetails.details}
-              </div>
-            </>
-          ) : (
-            <div style={{ fontSize: 13, lineHeight: 1.45, opacity: 0.85 }}>
-              Hover or click a colored Kerala section to see details.
-            </div>
-          )}
-        </aside>
+            )}
+          </aside>
+        </>
       )}
 
       <div style={{ position: "fixed", bottom: 40, right: 40, zIndex: 50 }}>
@@ -504,3 +651,4 @@ export default function GobalMap() {
     </main>
   );
 }
+
