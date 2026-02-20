@@ -133,6 +133,7 @@ export default function GobalMap() {
   const [activeColorClass, setActiveColorClass] = useState(null);
   const [hoverColorClass, setHoverColorClass] = useState(null);
   const [keralaZoomComplete, setKeralaZoomComplete] = useState(false);
+  const [isSoilImageZoomed, setIsSoilImageZoomed] = useState(false);
 
   const showOverlay = (view === "india" || view === "kerala") && indiaRevealReady;
   const isKerala = overlayMapView === "kerala";
@@ -405,12 +406,17 @@ export default function GobalMap() {
   }, [activeColorClass, hoverColorClass]);
 
   useEffect(() => {
+    setIsSoilImageZoomed(false);
+  }, [selectedColorClass]);
+
+  useEffect(() => {
     if (isKerala) return;
     setActiveColorClass(null);
     setHoverColorClass(null);
     activeColorClassRef.current = null;
     hoverColorClassRef.current = null;
     setKeralaZoomComplete(false);
+    setIsSoilImageZoomed(false);
   }, [isKerala]);
 
   return (
@@ -559,18 +565,32 @@ export default function GobalMap() {
                   />
                   <strong style={{ fontSize: 14 }}>{selectedColorDetails.label}</strong>
                 </div>
-                <img
-                  src={selectedColorDetails.image}
-                  alt={selectedColorDetails.label}
+                <div
                   style={{
                     width: "100%",
                     height: 135,
                     borderRadius: 10,
-                    objectFit: "cover",
+                    overflow: "hidden",
                     marginBottom: 10,
                     border: "1px solid rgba(255,255,255,0.15)",
                   }}
-                />
+                >
+                  <img
+                    src={selectedColorDetails.image}
+                    alt={selectedColorDetails.label}
+                    onClick={() => setIsSoilImageZoomed((prev) => !prev)}
+                    title={isSoilImageZoomed ? "Click to reset image zoom" : "Click to zoom image"}
+                    style={{
+                      width: "100%",
+                      height: "100%",
+                      objectFit: "cover",
+                      transform: isSoilImageZoomed ? "scale(6)" : "scale(1)",
+                      transformOrigin: "center center",
+                      transition: "transform 0.25s ease",
+                      cursor: isSoilImageZoomed ? "zoom-out" : "zoom-in",
+                    }}
+                  />
+                </div>
                 <div style={{ fontSize: 13, lineHeight: 1.45, opacity: 0.95 }}>
                   {selectedColorDetails.details}
                 </div>

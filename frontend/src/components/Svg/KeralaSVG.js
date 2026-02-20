@@ -7,7 +7,14 @@ const KeralaSVG = forwardRef(({ width, height }, ref) => {
     <svg
       ref={ref}
       viewBox="0 0 595.28 841.89"
-      style={{ width, maxHeight: height, height: "auto" }}
+      style={{
+        width,
+        maxHeight: height,
+        height: "auto",
+        transform: "perspective(1200px) rotateX(3deg) translateZ(0)",
+        filter:
+          "drop-shadow(0 14px 24px rgba(0, 0, 0, 0.32)) drop-shadow(0 28px 56px rgba(0, 0, 0, 0.26))",
+      }}
     >
   
 
