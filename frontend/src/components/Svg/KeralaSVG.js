@@ -4,6 +4,11 @@ import React, { forwardRef } from "react";
 
 const KeralaSVG = forwardRef(({ width, height }, ref) => {
   return (
+    
+    
+<>
+
+
     <svg
       ref={ref}
       viewBox="0 0 595.28 841.89"
@@ -237,7 +242,13 @@ const KeralaSVG = forwardRef(({ width, height }, ref) => {
 
 
     </svg>
+
+
+<img  src='/images/kerala.svg' alt='kerala map' ref={ref}/>
+
+</>
   );
+
 });
 
 export default KeralaSVG;
