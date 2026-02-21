@@ -244,7 +244,7 @@ const KeralaSVG = forwardRef(({ width, height }, ref) => {
     </svg>
 
 
-<img  src='/images/kerala.svg' alt='kerala map' ref={ref}/>
+{/* <img  src='/images/kerala.svg' alt='kerala map' ref={ref}/> */}
 
 </>
   );
