@@ -139,6 +139,8 @@
 input::placeholder {
   /* color: #555; */
 }
+
+
 svg path,
 svg polygon,
 svg rect {
@@ -244,26 +246,33 @@ svg rect {
 .fill-path {
   opacity: 0;
 }
-
-
   .cls-1{fill:#878787;}.cls-2{fill:#f805de;}
   .cls-3{fill:#acfbfe;}.cls-4{fill:#3335b4;}
   .cls-5{fill:#06b49f;}.cls-6{fill:#0f9700;}
   .cls-7{fill:#d0ffcb;}.cls-8{fill:#fff60b;}
   .cls-9{fill:#fcc8b0;}.cls-10{fill:#000;}
   .cls-11{fill:#ca0233;}
-
-
 .cls-10 {
   stroke: #000;
   fill: none;
   stroke-width: 0.60;
   vector-effect: non-scaling-stroke;
-
   /* smoother lines */
   stroke-linecap: round;
   stroke-linejoin: round;
-
   /* optional small transition */
+  transition: stroke 0.3s ease;
+}
+
+
+.IndiaSVG-21{fill:#0f9700;}
+.IndiaSVG-21{fill:#ca0233;}
+.IndiaSVG-20 {
+  stroke: #000;
+  fill: none;
+  stroke-width: 0.60;
+  vector-effect: non-scaling-stroke;
+  stroke-linecap: round;
+  stroke-linejoin: round;
   transition: stroke 0.3s ease;
 }
