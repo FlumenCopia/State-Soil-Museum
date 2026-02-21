@@ -376,15 +376,30 @@ export default function GobalMap() {
       paintHighlights();
     };
 
+    const handleContainerClick = (e) => {
+      const target = e.target;
+      if (!(target instanceof Element)) return;
+      const clickedColorClass = getColorClass(target);
+      if (clickedColorClass) return;
+
+      activeColorClassRef.current = null;
+      hoverColorClassRef.current = null;
+      setActiveColorClass(null);
+      setHoverColorClass(null);
+      paintHighlights();
+    };
+
     colorElements.forEach((el) => {
       el.addEventListener("mouseenter", handleEnter);
       el.addEventListener("mouseleave", handleLeave);
       el.addEventListener("click", handleClick);
     });
+    container.addEventListener("click", handleContainerClick);
     paintHighlights();
 
     return () => {
       container.classList.remove("kerala-has-focus");
+      container.removeEventListener("click", handleContainerClick);
       colorElements.forEach((el) => {
         el.removeEventListener("mouseenter", handleEnter);
         el.removeEventListener("mouseleave", handleLeave);
