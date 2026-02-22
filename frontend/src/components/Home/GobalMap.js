@@ -47,8 +47,21 @@ const KERALA_HEIGHT_BEFORE = "82vh";
 const KERALA_WIDTH_AFTER = "min(92vw, 920px)";
 const KERALA_HEIGHT_AFTER = "88vh";
 
-const BG_BLUR = 52;
-const BG_SATURATION = 0.72;
+const MAP_BACKDROP_BACKGROUND = `
+  radial-gradient(120% 95% at 50% 46%, rgba(34, 98, 198, 0.34) 0%, rgba(12, 32, 68, 0.78) 46%, rgba(4, 12, 28, 0.96) 100%),
+  radial-gradient(52% 42% at 16% 19%, rgba(92, 170, 255, 0.26) 0%, rgba(92, 170, 255, 0) 72%),
+  radial-gradient(44% 36% at 85% 24%, rgba(148, 198, 255, 0.16) 0%, rgba(148, 198, 255, 0) 74%),
+  repeating-linear-gradient(118deg, rgba(92, 162, 255, 0.11) 0 1px, transparent 1px 130px),
+  repeating-linear-gradient(28deg, rgba(74, 126, 220, 0.1) 0 1px, transparent 1px 130px),
+  url('/images/bg.png')
+`;
+const MAP_BACKDROP_BOX_SHADOW =
+  "inset 0 0 140px rgba(0, 0, 0, 0.72), inset 0 0 240px rgba(2, 8, 24, 0.92)";
+const MAP_BACKDROP_SIZE =
+  "cover, cover, cover, auto, auto, min(64vh, 620px)";
+const MAP_BACKDROP_POSITION =
+  "center center, left top, right top, center center, center center, 78% 54%";
+const MAP_BACKDROP_REPEAT = "no-repeat, no-repeat, no-repeat, repeat, repeat, no-repeat";
 const INDIA_COLOR_CLASS_PATTERN = /^IndiaSVG-\d+$/;
 const KERALA_COLOR_CLASS_PATTERN = /^cls-(11|[1-9])$/;
 const KERALA_COLOR_DETAILS = Object.freeze({
@@ -680,7 +693,12 @@ export default function GobalMap() {
           zIndex: 10,
           opacity: 0,
           pointerEvents: "none",
-          backdropFilter: `blur(${BG_BLUR}px) saturate(${BG_SATURATION})`,
+          background: MAP_BACKDROP_BACKGROUND,
+          backgroundSize: MAP_BACKDROP_SIZE,
+          backgroundPosition: MAP_BACKDROP_POSITION,
+          backgroundRepeat: MAP_BACKDROP_REPEAT,
+          boxShadow: MAP_BACKDROP_BOX_SHADOW,
+          mixBlendMode: "normal",
         }}
       />
 
@@ -729,19 +747,28 @@ export default function GobalMap() {
               width: "min(280px, 26vw)",
               minWidth: 220,
               background:
-                "linear-gradient(145deg, rgba(18, 35, 58, 0.52), rgba(8, 18, 34, 0.46))",
-              border: "1px solid rgba(255,255,255,0.24)",
-              borderRadius: 14,
-              padding: "14px 12px",
-              color: "#f8fafc",
-              backdropFilter: "blur(18px) saturate(145%)",
-              WebkitBackdropFilter: "blur(18px) saturate(145%)",
+                "radial-gradient(140% 110% at 100% 0%, rgba(49, 136, 255, 0.22), rgba(49, 136, 255, 0) 55%), linear-gradient(155deg, rgba(8, 24, 56, 0.9), rgba(4, 14, 38, 0.84) 55%, rgba(7, 30, 72, 0.86) 100%)",
+              border: "1px solid rgba(88, 168, 255, 0.45)",
+              borderRadius: 18,
+              padding: "16px 14px",
+              color: "#eaf3ff",
+              backdropFilter: "blur(14px) saturate(122%)",
+              WebkitBackdropFilter: "blur(14px) saturate(122%)",
               boxShadow:
-                "0 18px 45px rgba(0,0,0,0.32), inset 0 1px 0 rgba(255,255,255,0.12)",
+                "0 0 0 1px rgba(124, 194, 255, 0.24), 0 0 35px rgba(49, 142, 255, 0.32), 0 20px 50px rgba(2, 8, 26, 0.68), inset 0 0 40px rgba(38, 118, 255, 0.18), inset 0 1px 0 rgba(196, 228, 255, 0.32)",
             }}
           >
-            <div style={{ fontSize: 12, opacity: 0.8, marginBottom: 10 }}>Kerala Soil Types</div>
-            <div style={{ display: "grid", gap: 6 }}>
+            <div
+              style={{
+                fontSize: 13,
+                letterSpacing: "0.35px",
+                color: "rgba(226, 241, 255, 0.95)",
+                marginBottom: 12,
+              }}
+            >
+              Kerala Soil Types
+            </div>
+            <div style={{ display: "grid", gap: 8 }}>
               {KERALA_CLASS_ORDER.map((className) => {
                 const item = KERALA_COLOR_DETAILS[className];
                 const isSelected = selectedColorClass === className;
@@ -758,26 +785,35 @@ export default function GobalMap() {
                     style={{
                       display: "flex",
                       alignItems: "center",
-                      gap: 8,
+                      gap: 10,
                       width: "100%",
                       textAlign: "left",
-                      padding: "7px 8px",
-                      borderRadius: 8,
-                      border: "1px solid rgba(255,255,255,0.14)",
-                      background: isSelected ? "rgba(255,255,255,0.16)" : "rgba(255,255,255,0.05)",
-                      color: "#f8fafc",
+                      padding: "9px 10px",
+                      borderRadius: 11,
+                      border: isSelected
+                        ? "1px solid rgba(111, 255, 221, 0.72)"
+                        : "1px solid rgba(114, 174, 255, 0.28)",
+                      background: isSelected
+                        ? "linear-gradient(135deg, rgba(37, 152, 255, 0.24), rgba(41, 255, 212, 0.2))"
+                        : "linear-gradient(135deg, rgba(25, 62, 118, 0.54), rgba(12, 34, 72, 0.42))",
+                      color: "#eaf3ff",
                       cursor: "pointer",
-                      fontSize: 12,
+                      fontSize: 12.5,
+                      boxShadow: isSelected
+                        ? "0 0 20px rgba(56, 202, 255, 0.34), inset 0 0 22px rgba(90, 255, 219, 0.22)"
+                        : "inset 0 0 18px rgba(50, 119, 224, 0.16)",
+                      transition: "all 0.2s ease",
                     }}
                   >
                     <span
                       style={{
-                        width: 11,
-                        height: 11,
+                        width: 12,
+                        height: 12,
                         borderRadius: 999,
                         background: item.color,
-                        border: "1px solid rgba(255,255,255,0.6)",
+                        border: "1px solid rgba(210, 236, 255, 0.72)",
                         flex: "0 0 auto",
+                        boxShadow: "0 0 8px rgba(255,255,255,0.26)",
                       }}
                     />
                     <span>{item.label}</span>
@@ -797,18 +833,27 @@ export default function GobalMap() {
               width: "min(340px, 32vw)",
               minWidth: 240,
               background:
-                "linear-gradient(145deg, rgba(18, 35, 58, 0.52), rgba(8, 18, 34, 0.46))",
-              border: "1px solid rgba(255,255,255,0.24)",
-              borderRadius: 16,
-              padding: "14px",
-              color: "#f8fafc",
-              backdropFilter: "blur(18px) saturate(145%)",
-              WebkitBackdropFilter: "blur(18px) saturate(145%)",
+                "radial-gradient(140% 110% at 100% 0%, rgba(49, 136, 255, 0.22), rgba(49, 136, 255, 0) 55%), linear-gradient(155deg, rgba(8, 24, 56, 0.9), rgba(4, 14, 38, 0.84) 55%, rgba(7, 30, 72, 0.86) 100%)",
+              border: "1px solid rgba(88, 168, 255, 0.45)",
+              borderRadius: 18,
+              padding: "16px",
+              color: "#eaf3ff",
+              backdropFilter: "blur(14px) saturate(122%)",
+              WebkitBackdropFilter: "blur(14px) saturate(122%)",
               boxShadow:
-                "0 18px 45px rgba(0,0,0,0.32), inset 0 1px 0 rgba(255,255,255,0.12)",
+                "0 0 0 1px rgba(124, 194, 255, 0.24), 0 0 35px rgba(49, 142, 255, 0.32), 0 20px 50px rgba(2, 8, 26, 0.68), inset 0 0 40px rgba(38, 118, 255, 0.18), inset 0 1px 0 rgba(196, 228, 255, 0.32)",
             }}
           >
-            <div style={{ fontSize: 12, opacity: 0.82, marginBottom: 8 }}>Kerala Soil Data</div>
+            <div
+              style={{
+                fontSize: 13,
+                letterSpacing: "0.35px",
+                color: "rgba(226, 241, 255, 0.95)",
+                marginBottom: 10,
+              }}
+            >
+              Kerala Soil Data
+            </div>
             {selectedColorDetails ? (
               <>
                 <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 10 }}>
@@ -828,10 +873,11 @@ export default function GobalMap() {
                   style={{
                     width: "100%",
                     height: 135,
-                    borderRadius: 10,
+                    borderRadius: 12,
                     overflow: "hidden",
                     marginBottom: 10,
-                    border: "1px solid rgba(255,255,255,0.15)",
+                    border: "1px solid rgba(95, 176, 255, 0.4)",
+                    boxShadow: "inset 0 0 22px rgba(73, 153, 255, 0.2)",
                   }}
                 >
                   <img
@@ -868,25 +914,29 @@ export default function GobalMap() {
           <button
             onClick={() => setView("kerala")}
             style={{
-              padding: "12px 24px",
-              background: "linear-gradient(135deg, #1a6b3c, #2ecc71)",
-              color: "#fff",
-              border: "none",
-              borderRadius: "30px",
+              padding: "12px 26px",
+              background:
+                "radial-gradient(100% 100% at 50% 0%, rgba(88, 255, 181, 0.3), rgba(88, 255, 181, 0) 62%), linear-gradient(135deg, #0c4f9e, #1b78f2 50%, #0f58be)",
+              color: "#eaf4ff",
+              border: "1px solid rgba(144, 222, 255, 0.58)",
+              borderRadius: "36px",
               fontSize: "15px",
               fontWeight: "600",
               letterSpacing: "0.5px",
               cursor: "pointer",
-              boxShadow: "0 4px 20px rgba(46,204,113,0.4)",
+              boxShadow:
+                "0 0 0 1px rgba(82, 173, 255, 0.22), 0 0 22px rgba(47, 150, 255, 0.45), inset 0 1px 0 rgba(214, 239, 255, 0.36)",
               transition: "transform 0.2s, box-shadow 0.2s",
             }}
             onMouseEnter={(e) => {
               e.currentTarget.style.transform = "scale(1.06)";
-              e.currentTarget.style.boxShadow = "0 6px 28px rgba(46,204,113,0.6)";
+              e.currentTarget.style.boxShadow =
+                "0 0 0 1px rgba(98, 217, 255, 0.45), 0 0 30px rgba(52, 197, 255, 0.65), inset 0 1px 0 rgba(232, 247, 255, 0.52)";
             }}
             onMouseLeave={(e) => {
               e.currentTarget.style.transform = "scale(1)";
-              e.currentTarget.style.boxShadow = "0 4px 20px rgba(46,204,113,0.4)";
+              e.currentTarget.style.boxShadow =
+                "0 0 0 1px rgba(82, 173, 255, 0.22), 0 0 22px rgba(47, 150, 255, 0.45), inset 0 1px 0 rgba(214, 239, 255, 0.36)";
             }}
           >
             Explore Kerala
@@ -896,25 +946,29 @@ export default function GobalMap() {
           <button
             onClick={() => setView("india")}
             style={{
-              padding: "12px 24px",
-              background: "linear-gradient(135deg, #1a3a6b, #3a7bd5)",
-              color: "#fff",
-              border: "none",
-              borderRadius: "30px",
+              padding: "12px 26px",
+              background:
+                "radial-gradient(100% 100% at 50% 0%, rgba(92, 203, 255, 0.32), rgba(92, 203, 255, 0) 62%), linear-gradient(135deg, #0b3f88, #1d68df 52%, #0f57be)",
+              color: "#eaf4ff",
+              border: "1px solid rgba(144, 222, 255, 0.58)",
+              borderRadius: "36px",
               fontSize: "15px",
               fontWeight: "600",
               letterSpacing: "0.5px",
               cursor: "pointer",
-              boxShadow: "0 4px 20px rgba(58,123,213,0.4)",
+              boxShadow:
+                "0 0 0 1px rgba(82, 173, 255, 0.22), 0 0 22px rgba(47, 150, 255, 0.45), inset 0 1px 0 rgba(214, 239, 255, 0.36)",
               transition: "transform 0.2s, box-shadow 0.2s",
             }}
             onMouseEnter={(e) => {
               e.currentTarget.style.transform = "scale(1.06)";
-              e.currentTarget.style.boxShadow = "0 6px 28px rgba(58,123,213,0.6)";
+              e.currentTarget.style.boxShadow =
+                "0 0 0 1px rgba(98, 217, 255, 0.45), 0 0 30px rgba(52, 197, 255, 0.65), inset 0 1px 0 rgba(232, 247, 255, 0.52)";
             }}
             onMouseLeave={(e) => {
               e.currentTarget.style.transform = "scale(1)";
-              e.currentTarget.style.boxShadow = "0 4px 20px rgba(58,123,213,0.4)";
+              e.currentTarget.style.boxShadow =
+                "0 0 0 1px rgba(82, 173, 255, 0.22), 0 0 22px rgba(47, 150, 255, 0.45), inset 0 1px 0 rgba(214, 239, 255, 0.36)";
             }}
           >
             Back to India
