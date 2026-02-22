@@ -930,21 +930,25 @@ export default function GobalMap() {
         </>
       )}
 
-      <div style={{ position: "fixed", top: 44, right: 24, zIndex: 50 }}>
-        {view === "india" && (
+      <div style={{ position: "fixed", top: 24, right: 24, zIndex: 50 }}>
+        {(view === "india" || view === "kerala") && (
           <button
-            className="holo-border holo-action-btn map-pill-btn"
-            onClick={() => setView("kerala")}
+            className="holo-border map-preview-switch"
+            onClick={() => setView(view === "india" ? "kerala" : "india")}
+            type="button"
           >
-            Explore Kerala
-          </button>
-        )}
-        {view === "kerala" && (
-          <button
-            className="holo-border holo-action-btn map-pill-btn"
-            onClick={() => setView("india")}
-          >
-            Back to India
+            <div className="map-preview-switch__media">
+              <img
+                src={view === "india" ? "/images/keralasoilmap.png" : "/images/bg.png"}
+                alt={view === "india" ? "Kerala preview" : "India preview"}
+              />
+            </div>
+            <div className="map-preview-switch__meta">
+              <span className="map-preview-switch__label">
+                {view === "india" ? "Explore Kerala" : "Back to India"}
+              </span>
+              <span className="map-preview-switch__hint">Tap to switch map</span>
+            </div>
           </button>
         )}
       </div>
