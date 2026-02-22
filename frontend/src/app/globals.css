@@ -152,10 +152,11 @@ svg rect {
 .highlight {
   filter:
     brightness(1.16)
-    saturate(1.24)
-    drop-shadow(0 0 4px rgba(255, 183, 77, 0.72))
-    drop-shadow(0 0 10px rgba(255, 87, 34, 0.45));
-  stroke: #ff6f00 !important;
+    saturate(1.22)
+    drop-shadow(0 0 4px rgba(141, 220, 255, 0.78))
+    drop-shadow(0 0 10px rgba(72, 214, 140, 0.5))
+    drop-shadow(0 0 16px rgba(255, 244, 158, 0.36));
+  stroke: #6cc8ff !important;
   stroke-width: 1.05 !important;
   stroke-linejoin: bevel;
   stroke-linecap: square;
@@ -168,11 +169,12 @@ svg rect {
 .selected-highlight {
   filter:
     brightness(1.28)
-    saturate(1.4)
-    drop-shadow(0 0 7px rgba(255, 204, 128, 0.96))
-    drop-shadow(0 0 18px rgba(255, 87, 34, 0.78))
-    drop-shadow(0 0 30px rgba(255, 23, 68, 0.58));
-  stroke: #ff3d00 !important;
+    saturate(1.36)
+    drop-shadow(0 0 8px rgba(255, 255, 255, 0.94))
+    drop-shadow(0 0 18px rgba(129, 211, 255, 0.86))
+    drop-shadow(0 0 30px rgba(255, 235, 110, 0.56))
+    drop-shadow(0 0 38px rgba(86, 234, 134, 0.5));
+  stroke: #fff176 !important;
   stroke-width: 1.55 !important;
   stroke-linejoin: bevel;
   stroke-linecap: square;
@@ -211,8 +213,9 @@ svg rect {
       brightness(1.14)
       saturate(1.24)
       hue-rotate(0deg)
-      drop-shadow(0 0 4px rgba(255, 183, 77, 0.75))
-      drop-shadow(0 0 10px rgba(255, 87, 34, 0.52));
+      drop-shadow(0 0 4px rgba(140, 220, 255, 0.82))
+      drop-shadow(0 0 10px rgba(80, 216, 144, 0.54))
+      drop-shadow(0 0 15px rgba(255, 245, 163, 0.34));
   }
 
   /* 35% {
