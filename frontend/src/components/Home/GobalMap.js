@@ -585,17 +585,31 @@ export default function GobalMap() {
       paintHighlights();
     };
 
+    const handleDocumentPointerDown = (e) => {
+      const target = e.target;
+      if (!(target instanceof Node)) return;
+      if (container.contains(target)) return;
+
+      activeIndiaClassRef.current = null;
+      hoverIndiaClassRef.current = null;
+      setActiveIndiaClass(null);
+      setHoverIndiaClass(null);
+      paintHighlights();
+    };
+
     colorElements.forEach((el) => {
       el.addEventListener("mouseenter", handleEnter);
       el.addEventListener("mouseleave", handleLeave);
       el.addEventListener("click", handleClick);
     });
     container.addEventListener("click", handleContainerClick);
+    document.addEventListener("pointerdown", handleDocumentPointerDown);
     paintHighlights();
 
     return () => {
       container.classList.remove("india-has-focus");
       container.removeEventListener("click", handleContainerClick);
+      document.removeEventListener("pointerdown", handleDocumentPointerDown);
       colorElements.forEach((el) => {
         el.removeEventListener("mouseenter", handleEnter);
         el.removeEventListener("mouseleave", handleLeave);
