@@ -553,14 +553,22 @@ export default function GobalMap() {
           justifyContent: "center",
         }}
       >
-        <div ref={overlayRef} style={{ position: "relative", willChange: "transform, opacity" }}>
-          <div ref={indiaContainerRef} style={{ position: "absolute" }}>
+        <div
+          ref={overlayRef}
+          style={{
+            position: "relative",
+            display: "grid",
+            placeItems: "center",
+            willChange: "transform, opacity",
+          }}
+        >
+          <div ref={indiaContainerRef} style={{ gridArea: "1 / 1" }}>
             {shouldRenderIndiaSvg && (
               <IndiaSVG ref={indiaSvgRef} width={INDIA_WIDTH} height={INDIA_HEIGHT} />
             )}
           </div>
 
-          <div ref={keralaContainerRef} style={{ opacity: 0 }}>
+          <div ref={keralaContainerRef} style={{ gridArea: "1 / 1", opacity: 0 }}>
             {shouldRenderKeralaSvg && (
               <KeralaSVG ref={keralaSvgRef} width={keralaSvgWidth} height={keralaSvgHeight} />
             )}
