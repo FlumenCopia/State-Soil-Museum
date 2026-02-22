@@ -939,7 +939,7 @@ export default function GobalMap() {
           >
             <div className="map-preview-switch__media">
               <img
-                src={view === "india" ? "/images/keralasoilmap.png" : "/images/bg.png"}
+                src={view === "india" ? "/images/buttoneimg2.png" : "/images/buttoneimg1.png"}
                 alt={view === "india" ? "Kerala preview" : "India preview"}
               />
             </div>
