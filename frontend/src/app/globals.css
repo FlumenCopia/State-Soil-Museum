@@ -282,3 +282,99 @@ svg rect {
   stroke-linejoin: round;
   transition: stroke 0.3s ease;
 }
+
+@property --holo-angle {
+  syntax: "<angle>";
+  inherits: false;
+  initial-value: 0deg;
+}
+
+.holo-border {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+}
+
+.holo-border::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  padding: 1.35px;
+  border-radius: inherit;
+  background: conic-gradient(
+    from var(--holo-angle),
+    rgba(116, 204, 255, 0.12),
+    rgba(61, 165, 255, 0.88),
+    rgba(129, 255, 239, 0.82),
+    rgba(50, 130, 255, 0.9),
+    rgba(116, 204, 255, 0.12)
+  );
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  mask-composite: exclude;
+  pointer-events: none;
+  z-index: 0;
+  animation: holoSpin var(--holo-speed, 7.5s) linear infinite;
+}
+
+.holo-border::after {
+  content: "";
+  position: absolute;
+  inset: -18%;
+  border-radius: inherit;
+  background: radial-gradient(circle at 50% 50%, rgba(57, 174, 255, 0.32), rgba(57, 174, 255, 0));
+  filter: blur(14px);
+  opacity: 0.58;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.holo-border > * {
+  position: relative;
+  z-index: 1;
+}
+
+.holo-panel {
+  --holo-speed: 9s;
+}
+
+.holo-action-btn {
+  --holo-speed: 5.8s;
+  border: none;
+}
+
+.soil-type-btn {
+  --holo-speed: 8.6s;
+}
+
+.soil-type-btn-active {
+  --holo-speed: 4.9s;
+}
+
+.soil-type-btn-active::before {
+  background: conic-gradient(
+    from var(--holo-angle),
+    rgba(126, 255, 224, 0.18),
+    rgba(62, 195, 255, 0.98),
+    rgba(113, 255, 215, 0.98),
+    rgba(50, 150, 255, 0.95),
+    rgba(126, 255, 224, 0.18)
+  );
+}
+
+.holo-action-btn:hover {
+  transform: translateY(-1px) scale(1.04);
+}
+
+@keyframes holoSpin {
+  to {
+    --holo-angle: 1turn;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .holo-border::before {
+    animation: none;
+  }
+}

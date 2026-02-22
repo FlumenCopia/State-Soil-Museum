@@ -61,7 +61,7 @@ const MAP_BACKDROP_BACKGROUND_INDIA = `
   radial-gradient(44% 36% at 85% 24%, rgba(148, 198, 255, 0.16) 0%, rgba(148, 198, 255, 0) 74%),
   repeating-linear-gradient(118deg, rgba(92, 162, 255, 0.11) 0 1px, transparent 1px 130px),
   repeating-linear-gradient(28deg, rgba(74, 126, 220, 0.1) 0 1px, transparent 1px 130px),
-  url('/images/t3.png')
+  url('/images/bg2.png')
 `;
 const MAP_BACKDROP_BOX_SHADOW =
   "inset 0 0 140px rgba(0, 0, 0, 0.72), inset 0 0 240px rgba(2, 8, 24, 0.92)";
@@ -796,6 +796,7 @@ export default function GobalMap() {
                 const isSelected = selectedColorClass === className;
                 return (
                   <button
+                    className={`holo-border soil-type-btn${isSelected ? " soil-type-btn-active" : ""}`}
                     key={className}
                     type="button"
                     onClick={() => {
@@ -812,9 +813,7 @@ export default function GobalMap() {
                       textAlign: "left",
                       padding: "9px 10px",
                       borderRadius: 11,
-                      border: isSelected
-                        ? "1px solid rgba(111, 255, 221, 0.72)"
-                        : "1px solid rgba(114, 174, 255, 0.28)",
+                      border: "none",
                       background: isSelected
                         ? "linear-gradient(135deg, rgba(37, 152, 255, 0.24), rgba(41, 255, 212, 0.2))"
                         : "linear-gradient(135deg, rgba(25, 62, 118, 0.54), rgba(12, 34, 72, 0.42))",
@@ -934,13 +933,13 @@ export default function GobalMap() {
       <div style={{ position: "fixed", bottom: 40, right: 40, zIndex: 50 }}>
         {view === "india" && (
           <button
+            className="holo-border holo-action-btn"
             onClick={() => setView("kerala")}
             style={{
               padding: "12px 26px",
               background:
                 "radial-gradient(100% 100% at 50% 0%, rgba(88, 255, 181, 0.3), rgba(88, 255, 181, 0) 62%), linear-gradient(135deg, #0c4f9e, #1b78f2 50%, #0f58be)",
               color: "#eaf4ff",
-              border: "1px solid rgba(144, 222, 255, 0.58)",
               borderRadius: "36px",
               fontSize: "15px",
               fontWeight: "600",
@@ -966,13 +965,13 @@ export default function GobalMap() {
         )}
         {view === "kerala" && (
           <button
+            className="holo-border holo-action-btn"
             onClick={() => setView("india")}
             style={{
               padding: "12px 26px",
               background:
                 "radial-gradient(100% 100% at 50% 0%, rgba(92, 203, 255, 0.32), rgba(92, 203, 255, 0) 62%), linear-gradient(135deg, #0b3f88, #1d68df 52%, #0f57be)",
               color: "#eaf4ff",
-              border: "1px solid rgba(144, 222, 255, 0.58)",
               borderRadius: "36px",
               fontSize: "15px",
               fontWeight: "600",
