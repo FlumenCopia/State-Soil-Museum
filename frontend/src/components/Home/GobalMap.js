@@ -14,7 +14,7 @@ import KeralaSVG from "../Svg/KeralaSVG";
 /* CONSTANTS */
 const SCALE_OUT = 0.95;
 
-// Kerala overlay controls (position + animation timings)
+// Overlay controls (position + animation timings)
 const OVERLAY_INITIAL_SCALE = 0.52;
 const OVERLAY_FINAL_SCALE = 1.1;
 const OVERLAY_POSITION_X_BEFORE = -18;
@@ -23,6 +23,14 @@ const OVERLAY_POSITION_X_AFTER = 0;
 const OVERLAY_POSITION_Y_AFTER = 0;
 const OVERLAY_ROTATION_BEFORE = -10;
 const OVERLAY_ROTATION_AFTER = 0;
+
+// India-specific before/after positioning controls.
+const INDIA_OVERLAY_POSITION_X_BEFORE = 0;
+const INDIA_OVERLAY_POSITION_Y_BEFORE = 0;
+const INDIA_OVERLAY_POSITION_X_AFTER = 0;
+const INDIA_OVERLAY_POSITION_Y_AFTER = 0;
+const INDIA_OVERLAY_ROTATION_BEFORE = 0;
+const INDIA_OVERLAY_ROTATION_AFTER = 0;
 const OUTLINE_DELAY_SECONDS = 0.30;
 const OUTLINE_DRAW_DURATION = 2.05;
 const FILL_REVEAL_DURATION = 0.8;
@@ -30,8 +38,8 @@ const ZOOM_DURATION = 1.05;
 const BLUR_FADE_IN_DURATION = 0.45;
 const BLUR_DELAY_AFTER_ZOOM = 0.06;
 
-const INDIA_WIDTH = "min(82vw, 770px)";
-const INDIA_HEIGHT = "87vh";
+const INDIA_WIDTH = "min(82vw, 300px)";
+const INDIA_HEIGHT = "57vh";
 
 const KERALA_WIDTH_BEFORE = "min(68vw, 700px)";
 const KERALA_HEIGHT_BEFORE = "82vh";
@@ -180,10 +188,10 @@ export default function GobalMap() {
     }
 
     gsap.set(overlay, {
-      x: OVERLAY_POSITION_X_BEFORE,
-      y: OVERLAY_POSITION_Y_BEFORE,
-      rotation: isKerala ? OVERLAY_ROTATION_BEFORE : OVERLAY_ROTATION_AFTER,
-      transformOrigin: isKerala ? "50% 50%" : "50% 50%",
+      x: isKerala ? OVERLAY_POSITION_X_BEFORE : INDIA_OVERLAY_POSITION_X_BEFORE,
+      y: isKerala ? OVERLAY_POSITION_Y_BEFORE : INDIA_OVERLAY_POSITION_Y_BEFORE,
+      rotation: isKerala ? OVERLAY_ROTATION_BEFORE : INDIA_OVERLAY_ROTATION_BEFORE,
+      transformOrigin: "50% 50%",
     });
 
     if (!showOverlay) {
@@ -192,9 +200,9 @@ export default function GobalMap() {
         .to(overlay, {
           opacity: 0,
           scale: SCALE_OUT,
-          x: OVERLAY_POSITION_X_BEFORE,
-          y: OVERLAY_POSITION_Y_BEFORE,
-          rotation: isKerala ? OVERLAY_ROTATION_BEFORE : OVERLAY_ROTATION_AFTER,
+          x: isKerala ? OVERLAY_POSITION_X_BEFORE : INDIA_OVERLAY_POSITION_X_BEFORE,
+          y: isKerala ? OVERLAY_POSITION_Y_BEFORE : INDIA_OVERLAY_POSITION_Y_BEFORE,
+          rotation: isKerala ? OVERLAY_ROTATION_BEFORE : INDIA_OVERLAY_ROTATION_BEFORE,
           duration: 0.5,
         })
         .to(blur, { opacity: 0, duration: 0.4 }, "-=0.3");
@@ -227,9 +235,9 @@ export default function GobalMap() {
     gsap.set(overlay, {
       opacity: 1,
       scale: OVERLAY_INITIAL_SCALE,
-      x: OVERLAY_POSITION_X_BEFORE,
-      y: OVERLAY_POSITION_Y_BEFORE,
-      rotation: OVERLAY_ROTATION_BEFORE,
+      x: INDIA_OVERLAY_POSITION_X_BEFORE,
+      y: INDIA_OVERLAY_POSITION_Y_BEFORE,
+      rotation: INDIA_OVERLAY_ROTATION_BEFORE,
       transformOrigin: "50% 50%",
     });
     gsap.set(blur, { opacity: 0 });
@@ -257,9 +265,9 @@ export default function GobalMap() {
     });
     tl.to(overlay, {
       scale: OVERLAY_FINAL_SCALE,
-      x: OVERLAY_POSITION_X_AFTER,
-      y: OVERLAY_POSITION_Y_AFTER,
-      rotation: OVERLAY_ROTATION_AFTER,
+      x: INDIA_OVERLAY_POSITION_X_AFTER,
+      y: INDIA_OVERLAY_POSITION_Y_AFTER,
+      rotation: INDIA_OVERLAY_ROTATION_AFTER,
       duration: ZOOM_DURATION,
       ease: "power3.out",
     });
@@ -767,7 +775,7 @@ export default function GobalMap() {
 
       <div style={{ position: "relative", zIndex: 10 }}>
         <section id="globe-section" style={{ height: "100vh" }} />
-        <section id="india-section" style={{ height: "200vh" }} />
+        <section id="india-section" style={{ height: "100vh" }} />
         <section id="kerala-section" style={{ height: "100vh" }} />
       </div>
     </main>
