@@ -933,64 +933,16 @@ export default function GobalMap() {
       <div style={{ position: "fixed", bottom: 40, right: 40, zIndex: 50 }}>
         {view === "india" && (
           <button
-            className="holo-border holo-action-btn"
+            className="holo-border holo-action-btn map-pill-btn"
             onClick={() => setView("kerala")}
-            style={{
-              padding: "12px 26px",
-              background:
-                "radial-gradient(100% 100% at 50% 0%, rgba(88, 255, 181, 0.3), rgba(88, 255, 181, 0) 62%), linear-gradient(135deg, #0c4f9e, #1b78f2 50%, #0f58be)",
-              color: "#eaf4ff",
-              borderRadius: "36px",
-              fontSize: "15px",
-              fontWeight: "600",
-              letterSpacing: "0.5px",
-              cursor: "pointer",
-              boxShadow:
-                "0 0 0 1px rgba(82, 173, 255, 0.22), 0 0 22px rgba(47, 150, 255, 0.45), inset 0 1px 0 rgba(214, 239, 255, 0.36)",
-              transition: "transform 0.2s, box-shadow 0.2s",
-            }}
-            onMouseEnter={(e) => {
-              e.currentTarget.style.transform = "scale(1.06)";
-              e.currentTarget.style.boxShadow =
-                "0 0 0 1px rgba(98, 217, 255, 0.45), 0 0 30px rgba(52, 197, 255, 0.65), inset 0 1px 0 rgba(232, 247, 255, 0.52)";
-            }}
-            onMouseLeave={(e) => {
-              e.currentTarget.style.transform = "scale(1)";
-              e.currentTarget.style.boxShadow =
-                "0 0 0 1px rgba(82, 173, 255, 0.22), 0 0 22px rgba(47, 150, 255, 0.45), inset 0 1px 0 rgba(214, 239, 255, 0.36)";
-            }}
           >
             Explore Kerala
           </button>
         )}
         {view === "kerala" && (
           <button
-            className="holo-border holo-action-btn"
+            className="holo-border holo-action-btn map-pill-btn"
             onClick={() => setView("india")}
-            style={{
-              padding: "12px 26px",
-              background:
-                "radial-gradient(100% 100% at 50% 0%, rgba(92, 203, 255, 0.32), rgba(92, 203, 255, 0) 62%), linear-gradient(135deg, #0b3f88, #1d68df 52%, #0f57be)",
-              color: "#eaf4ff",
-              borderRadius: "36px",
-              fontSize: "15px",
-              fontWeight: "600",
-              letterSpacing: "0.5px",
-              cursor: "pointer",
-              boxShadow:
-                "0 0 0 1px rgba(82, 173, 255, 0.22), 0 0 22px rgba(47, 150, 255, 0.45), inset 0 1px 0 rgba(214, 239, 255, 0.36)",
-              transition: "transform 0.2s, box-shadow 0.2s",
-            }}
-            onMouseEnter={(e) => {
-              e.currentTarget.style.transform = "scale(1.06)";
-              e.currentTarget.style.boxShadow =
-                "0 0 0 1px rgba(98, 217, 255, 0.45), 0 0 30px rgba(52, 197, 255, 0.65), inset 0 1px 0 rgba(232, 247, 255, 0.52)";
-            }}
-            onMouseLeave={(e) => {
-              e.currentTarget.style.transform = "scale(1)";
-              e.currentTarget.style.boxShadow =
-                "0 0 0 1px rgba(82, 173, 255, 0.22), 0 0 22px rgba(47, 150, 255, 0.45), inset 0 1px 0 rgba(214, 239, 255, 0.36)";
-            }}
           >
             Back to India
           </button>

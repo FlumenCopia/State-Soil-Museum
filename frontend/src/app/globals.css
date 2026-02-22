@@ -367,6 +367,46 @@ svg rect {
   transform: translateY(-1px) scale(1.04);
 }
 
+.map-pill-btn {
+  --holo-speed: 4.6s;
+  min-width: 270px;
+  padding: 13px 28px;
+  border-radius: 999px;
+  border: none;
+  color: #e9f4ff;
+  font-size: clamp(15px, 1.1vw, 17px);
+  font-weight: 700;
+  letter-spacing: 0.3px;
+  line-height: 1;
+  cursor: pointer;
+  background:
+    radial-gradient(120% 120% at 50% -18%, rgba(145, 224, 255, 0.58), rgba(145, 224, 255, 0) 46%),
+    repeating-linear-gradient(135deg, rgba(144, 198, 255, 0.14) 0 1px, rgba(144, 198, 255, 0) 1px 13px),
+    linear-gradient(180deg, #1f72f7 0%, #1257d6 42%, #0d47be 100%);
+  box-shadow:
+    0 0 0 1px rgba(128, 200, 255, 0.25),
+    0 10px 34px rgba(6, 35, 102, 0.6),
+    0 0 20px rgba(61, 162, 255, 0.38),
+    inset 0 1px 0 rgba(228, 246, 255, 0.62),
+    inset 0 -14px 28px rgba(8, 45, 130, 0.44);
+  transition: transform 0.2s ease, box-shadow 0.2s ease, filter 0.2s ease;
+}
+
+.map-pill-btn:hover {
+  transform: translateY(-1px) scale(1.03);
+  filter: brightness(1.06);
+  box-shadow:
+    0 0 0 1px rgba(138, 220, 255, 0.5),
+    0 14px 38px rgba(7, 39, 112, 0.68),
+    0 0 32px rgba(77, 194, 255, 0.56),
+    inset 0 1px 0 rgba(236, 250, 255, 0.82),
+    inset 0 -14px 28px rgba(10, 54, 150, 0.48);
+}
+
+.map-pill-btn:active {
+  transform: translateY(0) scale(1);
+}
+
 @keyframes holoSpin {
   to {
     --holo-angle: 1turn;
