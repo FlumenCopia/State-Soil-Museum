@@ -930,7 +930,7 @@ export default function GobalMap() {
         </>
       )}
 
-      <div style={{ position: "fixed", bottom: 40, right: 40, zIndex: 50 }}>
+      <div style={{ position: "fixed", top: 44, right: 24, zIndex: 50 }}>
         {view === "india" && (
           <button
             className="holo-border holo-action-btn map-pill-btn"
