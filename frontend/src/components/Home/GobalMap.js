@@ -49,6 +49,7 @@ const KERALA_HEIGHT_AFTER = "88vh";
 
 const BG_BLUR = 52;
 const BG_SATURATION = 0.72;
+const INDIA_COLOR_CLASS_PATTERN = /^IndiaSVG-\d+$/;
 const KERALA_COLOR_CLASS_PATTERN = /^cls-(11|[1-9])$/;
 const KERALA_COLOR_DETAILS = Object.freeze({
   "cls-1": {
@@ -137,10 +138,15 @@ export default function GobalMap() {
   const keralaAnimRef = useRef(null);
   const indiaAnimRef = useRef(null);
   const colorElementsRef = useRef([]);
+  const indiaColorElementsRef = useRef([]);
   const activeColorClassRef = useRef(null);
   const hoverColorClassRef = useRef(null);
+  const activeIndiaClassRef = useRef(null);
+  const hoverIndiaClassRef = useRef(null);
   const [activeColorClass, setActiveColorClass] = useState(null);
   const [hoverColorClass, setHoverColorClass] = useState(null);
+  const [activeIndiaClass, setActiveIndiaClass] = useState(null);
+  const [hoverIndiaClass, setHoverIndiaClass] = useState(null);
   const [keralaZoomComplete, setKeralaZoomComplete] = useState(false);
   const [isSoilImageZoomed, setIsSoilImageZoomed] = useState(false);
 
@@ -507,6 +513,119 @@ export default function GobalMap() {
   }, [activeColorClass, hoverColorClass]);
 
   useEffect(() => {
+    const container = indiaContainerRef.current;
+    if (!container || !showOverlay || isKerala) return;
+
+    const elements = Array.from(container.querySelectorAll("path, polygon, rect"));
+    const getColorClass = (el) =>
+      Array.from(el.classList).find((name) => INDIA_COLOR_CLASS_PATTERN.test(name)) ?? null;
+    const colorElements = elements.filter((el) => getColorClass(el));
+    indiaColorElementsRef.current = colorElements;
+
+    const paintHighlights = () => {
+      const hoverClass = hoverIndiaClassRef.current;
+      const clickedClass = activeIndiaClassRef.current;
+      const hasFocusedSection = Boolean(hoverClass || clickedClass);
+
+      container.classList.toggle("india-has-focus", hasFocusedSection);
+      indiaColorElementsRef.current.forEach((el) => {
+        el.classList.remove("highlight");
+        el.classList.remove("selected-highlight");
+      });
+
+      if (clickedClass) {
+        indiaColorElementsRef.current.forEach((el) => {
+          if (el.classList.contains(clickedClass)) {
+            el.classList.add("selected-highlight");
+          }
+        });
+      }
+
+      if (hoverClass) {
+        indiaColorElementsRef.current.forEach((el) => {
+          if (el.classList.contains(hoverClass)) {
+            el.classList.add("highlight");
+          }
+        });
+      }
+    };
+
+    const handleEnter = (e) => {
+      const colorClass = getColorClass(e.currentTarget);
+      if (!colorClass) return;
+      hoverIndiaClassRef.current = colorClass;
+      setHoverIndiaClass(colorClass);
+      paintHighlights();
+    };
+
+    const handleLeave = () => {
+      hoverIndiaClassRef.current = null;
+      setHoverIndiaClass(null);
+      paintHighlights();
+    };
+
+    const handleClick = (e) => {
+      const colorClass = getColorClass(e.currentTarget);
+      if (!colorClass) return;
+      activeIndiaClassRef.current = colorClass;
+      setActiveIndiaClass(colorClass);
+      paintHighlights();
+    };
+
+    const handleContainerClick = (e) => {
+      const target = e.target;
+      if (!(target instanceof Element)) return;
+      const clickedColorClass = getColorClass(target);
+      if (clickedColorClass) return;
+
+      activeIndiaClassRef.current = null;
+      hoverIndiaClassRef.current = null;
+      setActiveIndiaClass(null);
+      setHoverIndiaClass(null);
+      paintHighlights();
+    };
+
+    colorElements.forEach((el) => {
+      el.addEventListener("mouseenter", handleEnter);
+      el.addEventListener("mouseleave", handleLeave);
+      el.addEventListener("click", handleClick);
+    });
+    container.addEventListener("click", handleContainerClick);
+    paintHighlights();
+
+    return () => {
+      container.classList.remove("india-has-focus");
+      container.removeEventListener("click", handleContainerClick);
+      colorElements.forEach((el) => {
+        el.removeEventListener("mouseenter", handleEnter);
+        el.removeEventListener("mouseleave", handleLeave);
+        el.removeEventListener("click", handleClick);
+      });
+      indiaColorElementsRef.current = [];
+    };
+  }, [isKerala, showOverlay]);
+
+  useEffect(() => {
+    const selectedClass = activeIndiaClassRef.current;
+    const hoveredClass = hoverIndiaClassRef.current;
+    const container = indiaContainerRef.current;
+    if (container) {
+      container.classList.toggle("india-has-focus", Boolean(selectedClass || hoveredClass));
+    }
+
+    indiaColorElementsRef.current.forEach((el) => {
+      el.classList.remove("highlight");
+      el.classList.remove("selected-highlight");
+      if (selectedClass && el.classList.contains(selectedClass)) {
+        el.classList.add("selected-highlight");
+      }
+      if (hoveredClass && el.classList.contains(hoveredClass)) {
+        el.classList.add("highlight");
+      }
+    });
+  }, [activeIndiaClass, hoverIndiaClass]);
+
+  useEffect(() => {
     setIsSoilImageZoomed(false);
   }, [selectedColorClass]);
 
@@ -518,6 +637,14 @@ export default function GobalMap() {
     hoverColorClassRef.current = null;
     setKeralaZoomComplete(false);
     setIsSoilImageZoomed(false);
+  }, [isKerala]);
+
+  useEffect(() => {
+    if (!isKerala) return;
+    setActiveIndiaClass(null);
+    setHoverIndiaClass(null);
+    activeIndiaClassRef.current = null;
+    hoverIndiaClassRef.current = null;
   }, [isKerala]);
 
   return (

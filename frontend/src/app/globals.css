@@ -187,6 +187,12 @@ svg rect {
   opacity: 0.4 !important;
 }
 
+.india-has-focus svg path:not(.highlight):not(.selected-highlight),
+.india-has-focus svg polygon:not(.highlight):not(.selected-highlight),
+.india-has-focus svg rect:not(.highlight):not(.selected-highlight) {
+  opacity: 0.4 !important;
+}
+
 @keyframes keralaZigzagMotion {
   0% {
     stroke-dashoffset: 0;
