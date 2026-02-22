@@ -47,7 +47,7 @@ const KERALA_HEIGHT_BEFORE = "82vh";
 const KERALA_WIDTH_AFTER = "min(92vw, 920px)";
 const KERALA_HEIGHT_AFTER = "88vh";
 
-const MAP_BACKDROP_BACKGROUND = `
+const MAP_BACKDROP_BACKGROUND_KERALA = `
   radial-gradient(120% 95% at 50% 46%, rgba(34, 98, 198, 0.34) 0%, rgba(12, 32, 68, 0.78) 46%, rgba(4, 12, 28, 0.96) 100%),
   radial-gradient(52% 42% at 16% 19%, rgba(92, 170, 255, 0.26) 0%, rgba(92, 170, 255, 0) 72%),
   radial-gradient(44% 36% at 85% 24%, rgba(148, 198, 255, 0.16) 0%, rgba(148, 198, 255, 0) 74%),
@@ -55,13 +55,27 @@ const MAP_BACKDROP_BACKGROUND = `
   repeating-linear-gradient(28deg, rgba(74, 126, 220, 0.1) 0 1px, transparent 1px 130px),
   url('/images/bg.png')
 `;
+const MAP_BACKDROP_BACKGROUND_INDIA = `
+  radial-gradient(120% 95% at 50% 46%, rgba(34, 98, 198, 0.34) 0%, rgba(12, 32, 68, 0.78) 46%, rgba(4, 12, 28, 0.96) 100%),
+  radial-gradient(52% 42% at 16% 19%, rgba(92, 170, 255, 0.26) 0%, rgba(92, 170, 255, 0) 72%),
+  radial-gradient(44% 36% at 85% 24%, rgba(148, 198, 255, 0.16) 0%, rgba(148, 198, 255, 0) 74%),
+  repeating-linear-gradient(118deg, rgba(92, 162, 255, 0.11) 0 1px, transparent 1px 130px),
+  repeating-linear-gradient(28deg, rgba(74, 126, 220, 0.1) 0 1px, transparent 1px 130px),
+  url('/images/t3.png')
+`;
 const MAP_BACKDROP_BOX_SHADOW =
   "inset 0 0 140px rgba(0, 0, 0, 0.72), inset 0 0 240px rgba(2, 8, 24, 0.92)";
-const MAP_BACKDROP_SIZE =
-  "cover, cover, cover, auto, auto, min(64vh, 620px)";
-const MAP_BACKDROP_POSITION =
+const MAP_BACKDROP_SIZE_KERALA =
+  "cover, cover, cover, auto, auto, cover";
+const MAP_BACKDROP_SIZE_INDIA = "cover, cover, cover, auto, auto, cover";
+const MAP_BACKDROP_POSITION_KERALA =
   "center center, left top, right top, center center, center center, 78% 54%";
-const MAP_BACKDROP_REPEAT = "no-repeat, no-repeat, no-repeat, repeat, repeat, no-repeat";
+const MAP_BACKDROP_POSITION_INDIA =
+  "center center, left top, right top, center center, center center, center center";
+const MAP_BACKDROP_REPEAT_KERALA =
+  "no-repeat, no-repeat, no-repeat, repeat, repeat, no-repeat";
+const MAP_BACKDROP_REPEAT_INDIA =
+  "no-repeat, no-repeat, no-repeat, repeat, repeat, no-repeat";
 const INDIA_COLOR_CLASS_PATTERN = /^IndiaSVG-\d+$/;
 const KERALA_COLOR_CLASS_PATTERN = /^cls-(11|[1-9])$/;
 const KERALA_COLOR_DETAILS = Object.freeze({
@@ -173,6 +187,14 @@ export default function GobalMap() {
   const selectedColorDetails = selectedColorClass
     ? KERALA_COLOR_DETAILS[selectedColorClass]
     : null;
+  const activeBackdropBackground = isKerala
+    ? MAP_BACKDROP_BACKGROUND_KERALA
+    : MAP_BACKDROP_BACKGROUND_INDIA;
+  const activeBackdropSize = isKerala ? MAP_BACKDROP_SIZE_KERALA : MAP_BACKDROP_SIZE_INDIA;
+  const activeBackdropPosition = isKerala
+    ? MAP_BACKDROP_POSITION_KERALA
+    : MAP_BACKDROP_POSITION_INDIA;
+  const activeBackdropRepeat = isKerala ? MAP_BACKDROP_REPEAT_KERALA : MAP_BACKDROP_REPEAT_INDIA;
 
   /* SCROLL TRIGGER */
   useEffect(() => {
@@ -693,10 +715,10 @@ export default function GobalMap() {
           zIndex: 10,
           opacity: 0,
           pointerEvents: "none",
-          background: MAP_BACKDROP_BACKGROUND,
-          backgroundSize: MAP_BACKDROP_SIZE,
-          backgroundPosition: MAP_BACKDROP_POSITION,
-          backgroundRepeat: MAP_BACKDROP_REPEAT,
+          background: activeBackdropBackground,
+          backgroundSize: activeBackdropSize,
+          backgroundPosition: activeBackdropPosition,
+          backgroundRepeat: activeBackdropRepeat,
           boxShadow: MAP_BACKDROP_BOX_SHADOW,
           mixBlendMode: "normal",
         }}
