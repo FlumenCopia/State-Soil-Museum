@@ -12,7 +12,6 @@ import IndiaSVG from "../Svg/IndiaSVG";
 import KeralaSVG from "../Svg/KeralaSVG";
 
 /* CONSTANTS */
-const SCALE_IN = 1.14;
 const SCALE_OUT = 0.95;
 
 // Kerala overlay controls (position + animation timings)
@@ -123,10 +122,12 @@ export default function GobalMap() {
   const blurRef = useRef(null);
   const overlayRef = useRef(null);
   const keralaSvgRef = useRef(null);
+  const indiaSvgRef = useRef(null);
 
   const indiaContainerRef = useRef(null);
   const keralaContainerRef = useRef(null);
   const keralaAnimRef = useRef(null);
+  const indiaAnimRef = useRef(null);
   const colorElementsRef = useRef([]);
   const activeColorClassRef = useRef(null);
   const hoverColorClassRef = useRef(null);
@@ -169,6 +170,10 @@ export default function GobalMap() {
     if (!blur || !overlay) return;
 
     gsap.killTweensOf([blur, overlay]);
+    if (indiaAnimRef.current) {
+      indiaAnimRef.current.kill();
+      indiaAnimRef.current = null;
+    }
     if (keralaAnimRef.current) {
       keralaAnimRef.current.kill();
       keralaAnimRef.current = null;
@@ -181,22 +186,7 @@ export default function GobalMap() {
       transformOrigin: isKerala ? "50% 50%" : "50% 50%",
     });
 
-    if (showOverlay) {
-      if (isKerala) {
-        gsap.set(blur, { opacity: 0 });
-        gsap.set(overlay, { opacity: 1, scale: OVERLAY_INITIAL_SCALE });
-      } else {
-        gsap
-          .timeline()
-          .to(blur, { opacity: 1, duration: 0.5 })
-          .fromTo(
-            overlay,
-            { opacity: 0, scale: SCALE_OUT },
-            { opacity: 1, scale: SCALE_IN, duration: 0.8 },
-            "-=0.3"
-          );
-      }
-    } else {
+    if (!showOverlay) {
       gsap
         .timeline()
         .to(overlay, {
@@ -208,8 +198,87 @@ export default function GobalMap() {
           duration: 0.5,
         })
         .to(blur, { opacity: 0, duration: 0.4 }, "-=0.3");
+      return;
+    }
+
+    gsap.set(overlay, { opacity: 1 });
+    if (isKerala) {
+      gsap.set(blur, { opacity: 0 });
+      gsap.set(overlay, { scale: OVERLAY_INITIAL_SCALE });
+    } else {
+      gsap.set(blur, { opacity: 0 });
     }
   }, [showOverlay, isKerala]);
+
+  // India sequence:
+  // small image -> outline draw -> fill reveal -> zoom to full -> blur background.
+  useEffect(() => {
+    if (!showOverlay || !indiaSvgRef.current || isKerala) return;
+
+    const svg = indiaSvgRef.current;
+    const drawPaths = svg.querySelectorAll(".IndiaSVG-draw-path");
+    const fillPaths = svg.querySelectorAll(".IndiaSVG-fill-path");
+    const overlay = overlayRef.current;
+    const blur = blurRef.current;
+    if (!overlay || !blur) return;
+
+    gsap.killTweensOf([overlay, blur]);
+
+    gsap.set(overlay, {
+      opacity: 1,
+      scale: OVERLAY_INITIAL_SCALE,
+      x: OVERLAY_POSITION_X_BEFORE,
+      y: OVERLAY_POSITION_Y_BEFORE,
+      rotation: OVERLAY_ROTATION_BEFORE,
+      transformOrigin: "50% 50%",
+    });
+    gsap.set(blur, { opacity: 0 });
+    gsap.set(fillPaths, { opacity: 0 });
+
+    drawPaths.forEach((path) => {
+      const length = path.getTotalLength();
+      gsap.set(path, {
+        strokeDasharray: length,
+        strokeDashoffset: length,
+      });
+    });
+
+    const tl = gsap.timeline();
+    tl.to({}, { duration: OUTLINE_DELAY_SECONDS });
+    tl.to(drawPaths, {
+      strokeDashoffset: 0,
+      duration: OUTLINE_DRAW_DURATION,
+      ease: "power2.out",
+    });
+    tl.to(fillPaths, {
+      opacity: 1,
+      duration: FILL_REVEAL_DURATION,
+      ease: "power2.out",
+    });
+    tl.to(overlay, {
+      scale: OVERLAY_FINAL_SCALE,
+      x: OVERLAY_POSITION_X_AFTER,
+      y: OVERLAY_POSITION_Y_AFTER,
+      rotation: OVERLAY_ROTATION_AFTER,
+      duration: ZOOM_DURATION,
+      ease: "power3.out",
+    });
+    tl.to(
+      blur,
+      {
+        opacity: 1,
+        duration: BLUR_FADE_IN_DURATION,
+        ease: "power2.out",
+      },
+      `>+${BLUR_DELAY_AFTER_ZOOM}`
+    );
+
+    indiaAnimRef.current = tl;
+    return () => {
+      tl.kill();
+      indiaAnimRef.current = null;
+    };
+  }, [isKerala, showOverlay]);
 
   /* INDIA/KERALA SWITCH */
   useEffect(() => {
@@ -478,7 +547,9 @@ export default function GobalMap() {
       >
         <div ref={overlayRef} style={{ position: "relative", willChange: "transform, opacity" }}>
           <div ref={indiaContainerRef} style={{ position: "absolute" }}>
-            {shouldRenderIndiaSvg && <IndiaSVG width={INDIA_WIDTH} height={INDIA_HEIGHT} />}
+            {shouldRenderIndiaSvg && (
+              <IndiaSVG ref={indiaSvgRef} width={INDIA_WIDTH} height={INDIA_HEIGHT} />
+            )}
           </div>
 
           <div ref={keralaContainerRef} style={{ opacity: 0 }}>
