@@ -11,9 +11,9 @@ function Kerala3Dfile({ path }) {
 
 
 const models = [
-  { name: "IndiaSVG-20 ", path: "/models/file1.glb" },
-  { name: "IndiaSVG-21 ", path: "/models/file2.glb" },
-  { name: "IndiaSVG-22 ", path: "/models/file3.glb" },
+  { name: "IndiaSVG-20 ", path: "/model/s1.glb" },
+  { name: "IndiaSVG-21 ", path: "/model/s2.glb" },
+  { name: "IndiaSVG-22 ", path: "/model/s3.glb" },
 ];
 
 

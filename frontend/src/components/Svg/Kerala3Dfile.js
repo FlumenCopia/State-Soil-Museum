@@ -11,17 +11,17 @@ function Kerala3Dfile({ path }) {
 
 
 const models = [
-  { name: "cls-1", path: "/models/file1.glb" },
-  { name: "cls-2", path: "/models/file2.glb" },
-  { name: "cls-3", path: "/models/file3.glb" },
-  { name: "cls-4", path: "/models/file4.glb" },
-  { name: "cls-5", path: "/models/file5.glb" },
-  { name: "cls-6", path: "/models/file6.glb" },
-  { name: "cls-7", path: "/models/file7.glb" },
-  { name: "cls-8", path: "/models/file8.glb" },
-  { name: "cls-9", path: "/models/file9.glb" },
+  { name: "cls-1", path: "/model/s6.glb" },
+  { name: "cls-2", path: "/model/s2.glb" },
+  { name: "cls-3", path: "/model/s3.glb" },
+  { name: "cls-4", path: "/model/s4.glb" },
+  { name: "cls-5", path: "/model/s5.glb" },
+  { name: "cls-6", path: "/model/s6.glb" },
+  { name: "cls-7", path: "/model/s7.glb" },
+  { name: "cls-8", path: "/model/s8.glb" },
+  { name: "cls-9", path: "/model/s9.glb" },
   // { name: "cls-10", path: "/models/file10.glb" },
-  { name: "cls-11", path: "/models/file11.glb" },
+  { name: "cls-11", path: "/model/s11.glb" },
 ];
 
 
