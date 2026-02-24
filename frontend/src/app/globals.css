@@ -152,40 +152,40 @@ svg rect {
 svg path.highlight,
 svg polygon.highlight,
 svg rect.highlight {
-  stroke: #fff1dc !important;
-  stroke-width: 1.4 !important;
+  stroke: #9ce37c !important;
+  stroke-width: 1.55 !important;
   vector-effect: non-scaling-stroke;
   paint-order: stroke fill markers;
   filter:
-    drop-shadow(0 1px 0 #9b6a3c)
-    drop-shadow(0 2px 0 #7a4e2a)
-    drop-shadow(0 3px 0 #6a3f1f)
-    drop-shadow(0 4px 0 #553016)
-    drop-shadow(0 5px 0 #3e220f)
-    drop-shadow(0 16px 12px rgba(0,0,0,0.7))
-    drop-shadow(0 22px 28px rgba(0,0,0,0.9));
+    brightness(1.08)
+    drop-shadow(0 1px 0 #51733f)
+    drop-shadow(0 2px 0 #3e582f)
+    drop-shadow(0 0 8px rgba(130, 230, 128, 0.5))
+    drop-shadow(0 14px 10px rgba(0, 0, 0, 0.52));
 }
+
 svg path.selected-highlight,
 svg polygon.selected-highlight,
 svg rect.selected-highlight {
   stroke: #fff1dc !important;
-  stroke-width: 1.4 !important;
+  stroke-width: 1.9 !important;
   vector-effect: non-scaling-stroke;
   paint-order: stroke fill markers;
   filter:
+    brightness(1.8)
     drop-shadow(0 1px 0 #9b6a3c)
     drop-shadow(0 2px 0 #7a4e2a)
     drop-shadow(0 3px 0 #6a3f1f)
-    drop-shadow(0 4px 0 #553016)
-    drop-shadow(0 5px 0 #3e220f)
-    drop-shadow(0 16px 12px rgba(0,0,0,0.7))
-    drop-shadow(0 22px 28px rgba(0,0,0,0.9));
+    drop-shadow(0 5px 0 #4b2b13)
+    drop-shadow(0 0 10px rgba(255, 237, 188, 0.44))
+    drop-shadow(0 16px 12px rgba(0, 0, 0, 0.7))
+    drop-shadow(0 22px 28px rgba(0, 0, 0, 0.9));
 }
 
 .kerala-has-focus svg path:not(.highlight):not(.selected-highlight),
 .kerala-has-focus svg polygon:not(.highlight):not(.selected-highlight),
 .kerala-has-focus svg rect:not(.highlight):not(.selected-highlight) {
-  opacity: 0.3 !important;
+  opacity: 0.4 !important;
 }
 
 .india-has-focus svg path:not(.highlight):not(.selected-highlight),
@@ -253,15 +253,25 @@ svg rect.selected-highlight {
 /* Hide fills initially */
 .fill-path {
   opacity: 0;
+  stroke: rgba(13, 30, 53, 0.58);
+  stroke-width: 0.9;
+  vector-effect: non-scaling-stroke;
+  paint-order: stroke fill markers;
+  filter: drop-shadow(0 1px 0 rgba(177, 207, 255, 0.08));
 }
-  .cls-1{fill:#878787;}.cls-2{fill:#f805de;}
-  .cls-3{fill:#acfbfe;}.cls-4{fill:#3335b4;}
-  .cls-5{fill:#06b49f;}.cls-6{fill:#0f9700;}
-  .cls-7{fill:#d0ffcb;}.cls-8{fill:#fff60b;}
-  .cls-9{fill:#fcc8b0;}.cls-10{fill:#000;}
-  .cls-11{fill:#ca0233;}
+.cls-1{fill:#888888;}
+.cls-2{fill:#ff00fe;}
+.cls-3{fill:#96fffe;}
+.cls-4{fill:#3c36bc;}
+.cls-5{fill:#04b293;}
+.cls-6{fill:#009900;}
+.cls-7{fill:#ceffc8;}
+.cls-8{fill:#ffff01;}
+.cls-9{fill:#f7c4a2;}
+.cls-10{fill:#030304;}
+.cls-11{fill:#cc0033;}
 .cls-10 {
-  stroke: #000;
+  stroke: #030304;
   fill: none;
   stroke-width: 0.60;
   vector-effect: non-scaling-stroke;
@@ -273,8 +283,8 @@ svg rect.selected-highlight {
 }
 
 
-.IndiaSVG-22{fill:#0f9700;}
-.IndiaSVG-21{fill:#ca0233;}
+.IndiaSVG-22{fill:#2b8a34;}
+.IndiaSVG-21{fill:#6e2554;}
 .IndiaSVG-20 {
   stroke: #000;
   fill: none;
