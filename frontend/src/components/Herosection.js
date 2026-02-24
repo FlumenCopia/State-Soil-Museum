@@ -117,15 +117,7 @@ State
       </div>
     </div>
 
-    {/* Bottom gradient */}
-    {/* <div
-      className="position-absolute bottom-0 start-0 w-100"
-      style={{
-        height: "160px",
-        background:
-          "linear-gradient(to top, rgba(0,0,0,1), rgba(0,0,0,0))",
-      }}
-    /> */}
+
   </section>
 );
 
