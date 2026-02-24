@@ -182,14 +182,25 @@ svg rect {
   stroke-linejoin: bevel;
   stroke-linecap: square;
   stroke-dasharray: 4 2 11 3;
+  transform-box: fill-box;
+  transform-origin: center center;
+  transform: scale(1.14);
   animation: keralaZigzagMotion 1.2s linear infinite, keralaGradientGlow 1.75s ease-in-out infinite;
-  transition: filter 0.24s ease, stroke 0.24s ease, stroke-width 0.24s ease;
+  transition: transform 0.22s ease, filter 0.24s ease, stroke 0.24s ease, stroke-width 0.24s ease;
+  z-index: 9999 !important;
+
+    transform: translateY(-1px) scale(1.14);
+  animation:
+    keralaZigzagMotion 1.2s linear infinite,
+    selectedDepthPulse 1.6s ease-in-out infinite,
+    keralaGradientGlow 1.75s ease-in-out infinite;
+  transition: transform 0.22s ease, filter 0.24s ease, stroke 0.24s ease, stroke-width 0.24s ease;
 }
 
 .kerala-has-focus svg path:not(.highlight):not(.selected-highlight),
 .kerala-has-focus svg polygon:not(.highlight):not(.selected-highlight),
 .kerala-has-focus svg rect:not(.highlight):not(.selected-highlight) {
-  opacity: 0.4 !important;
+  opacity: 0.3 !important;
 }
 
 .india-has-focus svg path:not(.highlight):not(.selected-highlight),
@@ -230,14 +241,14 @@ svg rect {
       drop-shadow(0 0 18px rgba(255, 87, 34, 0.74))
       drop-shadow(0 0 28px rgba(255, 23, 68, 0.52));
   } */
-  70% {
+  /* 70% {
     filter:
       brightness(1.18)
       saturate(1.3)
       hue-rotate(-8deg)
       drop-shadow(0 0 5px rgba(255, 224, 178, 0.85))
       drop-shadow(0 0 14px rgba(255, 111, 0, 0.62));
-  }
+  } */
 }
 
 @media (prefers-reduced-motion: reduce) {
