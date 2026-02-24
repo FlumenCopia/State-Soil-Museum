@@ -1,57 +1,46 @@
 "use client";
 
 import { Canvas } from "@react-three/fiber";
-import { OrbitControls, Environment, useGLTF } from "@react-three/drei";
+import { Environment, OrbitControls, useGLTF } from "@react-three/drei";
 import { Suspense } from "react";
 
-function Kerala3Dfile({ path }) {
+const KERALA_MODELS = Object.freeze({
+  "cls-1": "/model/s9.glb",
+  "cls-2": "/model/s7.glb",
+  "cls-3": "/model/s3.glb",
+  "cls-4": "/model/s8.glb",
+  "cls-5": "/model/s5.glb",
+  "cls-6": "/model/s1.glb",
+  "cls-7": "/model/s3.glb",
+
+  "cls-8": "/model/s4.glb",
+  "cls-9": "/model/s2.glb",
+  // "cls-10": "/model/s.glb",
+  "cls-11": "/model/s2.glb",
+});
+
+Object.values(KERALA_MODELS).forEach((path) => useGLTF.preload(path));
+
+function Model({ path }) {
   const { scene } = useGLTF(path);
-  return <primitive object={scene} scale={1} />;
+  return <primitive object={scene} scale={1.15} />;
 }
 
+export default function Kerala3Dfile({ selectedClass }) {
+  const modelPath = selectedClass ? KERALA_MODELS[selectedClass] : null;
+  if (!modelPath) return null;
 
-const models = [
-  { name: "cls-1", path: "/model/s6.glb" },
-  { name: "cls-2", path: "/model/s2.glb" },
-  { name: "cls-3", path: "/model/s3.glb" },
-  { name: "cls-4", path: "/model/s4.glb" },
-  { name: "cls-5", path: "/model/s5.glb" },
-  { name: "cls-6", path: "/model/s6.glb" },
-  { name: "cls-7", path: "/model/s7.glb" },
-  { name: "cls-8", path: "/model/s8.glb" },
-  { name: "cls-9", path: "/model/s9.glb" },
-  // { name: "cls-10", path: "/models/file10.glb" },
-  { name: "cls-11", path: "/model/s11.glb" },
-];
-
-
-
-models.forEach((model) => useGLTF.preload(model.path));
-export default function Kerala3Dfile() {
   return (
-    <div className="grid grid-cols-3 gap-6 p-6">
-      {models.map((model, index) => (
-        <div key={index} className="flex flex-col items-center">
-          <div className="w-full h-[300px] bg-black rounded-lg">
-            <Canvas camera={{ position: [2, 2, 2], fov: 45 }}>
-              <ambientLight intensity={0.7} />
-              <directionalLight position={[10, 10, 5]} intensity={1} />
-
-              <Suspense fallback={null}>
-                <Model path={model.path} />
-              </Suspense>
-
-              <OrbitControls enableZoom={true} />
-              <Environment preset="sunset" />
-            </Canvas>
-          </div>
-
-          {/* 🔥 Show Model Name */}
-          <p className="mt-2 text-sm font-medium text-gray-700">
-            {model.name}
-          </p>
-        </div>
-      ))}
+    <div style={{ width: "min(62vw, 860px)", height: "min(72vh, 700px)" }}>
+      <Canvas camera={{ position: [2.2, 1.8, 2.3], fov: 42 }}>
+        <ambientLight intensity={0.7} />
+        <directionalLight position={[10, 10, 5]} intensity={1.1} />
+        <Suspense fallback={null}>
+          <Model path={modelPath} />
+        </Suspense>
+        <OrbitControls enablePan={false} />
+        <Environment preset="sunset" />
+      </Canvas>
     </div>
   );
 }

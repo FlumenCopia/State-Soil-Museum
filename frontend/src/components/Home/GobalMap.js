@@ -10,6 +10,8 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 import IndiaSVG from "../Svg/IndiaSVG";
 import KeralaSVG from "../Svg/KeralaSVG";
+import Kerala3Dfile from "../Svg/Kerala3Dfile";
+import Indian3Dfile from "../Svg/Indian3Dfile";
 
 /* CONSTANTS */
 const SCALE_OUT = 0.95;
@@ -184,6 +186,8 @@ export default function GobalMap() {
   const keralaSvgWidth = keralaZoomComplete ? KERALA_WIDTH_AFTER : KERALA_WIDTH_BEFORE;
   const keralaSvgHeight = keralaZoomComplete ? KERALA_HEIGHT_AFTER : KERALA_HEIGHT_BEFORE;
   const selectedColorClass = hoverColorClass || activeColorClass;
+  const selectedKeralaClass = activeColorClass;
+  const selectedIndiaClass = activeIndiaClass;
   const selectedColorDetails = selectedColorClass
     ? KERALA_COLOR_DETAILS[selectedColorClass]
     : null;
@@ -623,6 +627,12 @@ export default function GobalMap() {
     const handleDocumentPointerDown = (e) => {
       const target = e.target;
       if (!(target instanceof Node)) return;
+      if (
+        target instanceof Element &&
+        target.closest("[data-model-viewer='true']")
+      ) {
+        return;
+      }
       if (container.contains(target)) return;
 
       activeIndiaClassRef.current = null;
@@ -756,6 +766,40 @@ export default function GobalMap() {
           </div>
         </div>
       </div>
+
+      {showOverlay && (selectedKeralaClass || selectedIndiaClass) && (
+        <div
+          data-model-viewer="true"
+          style={{
+            position: "fixed",
+            inset: 0,
+            zIndex: 58,
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            pointerEvents: "none",
+          }}
+        >
+          <div
+            style={{
+              borderRadius: 18,
+              overflow: "hidden",
+              border: "1px solid rgba(96, 176, 255, 0.45)",
+              background:
+                "radial-gradient(120% 120% at 50% 10%, rgba(68, 156, 255, 0.16), rgba(8, 20, 48, 0.9))",
+              boxShadow:
+                "0 0 0 1px rgba(124, 194, 255, 0.18), 0 24px 60px rgba(2, 8, 26, 0.72)",
+              pointerEvents: "auto",
+            }}
+          >
+            {isKerala ? (
+              <Kerala3Dfile selectedClass={selectedKeralaClass} />
+            ) : (
+              <Indian3Dfile selectedClass={selectedIndiaClass} />
+            )}
+          </div>
+        </div>
+      )}
 
       {isKerala && showOverlay && (
         <>
