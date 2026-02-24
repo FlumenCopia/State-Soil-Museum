@@ -39,6 +39,7 @@ export default function Kerala3Dfile({ selectedClass }) {
         </Suspense>
         <OrbitControls enablePan={false} />
         <Environment preset="sunset" />
+        
       </Canvas>
     </div>
   );
