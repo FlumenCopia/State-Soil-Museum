@@ -152,8 +152,10 @@ svg rect {
 svg path.highlight,
 svg polygon.highlight,
 svg rect.highlight {
-  stroke: #efe6d6 !important; 
-  stroke-width: 1.1 !important;
+  stroke: #fff1dc !important;
+  stroke-width: 1.4 !important;
+  vector-effect: non-scaling-stroke;
+  paint-order: stroke fill markers;
   filter:
     drop-shadow(0 1px 0 #9b6a3c)
     drop-shadow(0 2px 0 #7a4e2a)
