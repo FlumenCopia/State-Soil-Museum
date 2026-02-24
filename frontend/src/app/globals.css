@@ -188,6 +188,13 @@ svg rect {
   animation: keralaZigzagMotion 1.2s linear infinite, keralaGradientGlow 1.75s ease-in-out infinite;
   transition: transform 0.22s ease, filter 0.24s ease, stroke 0.24s ease, stroke-width 0.24s ease;
   z-index: 9999 !important;
+
+    transform: translateY(-1px) scale(1.14);
+  animation:
+    keralaZigzagMotion 1.2s linear infinite,
+    selectedDepthPulse 1.6s ease-in-out infinite,
+    keralaGradientGlow 1.75s ease-in-out infinite;
+  transition: transform 0.22s ease, filter 0.24s ease, stroke 0.24s ease, stroke-width 0.24s ease;
 }
 
 .kerala-has-focus svg path:not(.highlight):not(.selected-highlight),
