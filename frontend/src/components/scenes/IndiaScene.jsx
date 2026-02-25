@@ -22,9 +22,6 @@ const CLOUD_RADIUS_SCALE = 1.32;
 const CLOUD_LEFT_SHIFT = 190;
 const MAP_VIEWPORT_PADDING = 28;
 const MAP_FIT_LERP = 0.18;
-
-// Fine-tune mask edges in screen pixels.
-// Positive values trim inward on that edge. Negative values expand outward.
 const MASK_INSET_LEFT = 0;
 const MASK_INSET_RIGHT = 0;
 const MASK_INSET_TOP = 0;
@@ -93,7 +90,7 @@ const MASK_UV_CORNERS = [
   [0, 1],
 ];
 
-useTexture.preload("/textures/earth/earth_clouds1.jpg");
+useTexture.preload("/images/e1.webp");
 useTexture.preload(INDIA_MAP_IMAGE_URL);
 
 export default function IndiaScene() {
@@ -114,7 +111,7 @@ export default function IndiaScene() {
   const scratchWorldCorner = useRef(new THREE.Vector3());
   const { camera, gl, scene, size } = useThree();
 
-  const rawCloudTexture = useTexture("/textures/earth/earth_clouds1.jpg");
+  const rawCloudTexture = useTexture("/images/e1.webp");
   const rawSoilTexture = useTexture(INDIA_MAP_IMAGE_URL);
 
   const indiaCenter = useMemo(() => {

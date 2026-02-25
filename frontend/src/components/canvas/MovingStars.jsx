@@ -1,6 +1,4 @@
 
-
-// src/components/canvas/MovingStars.jsx
 "use client";
 
 import { useRef } from "react";
@@ -18,17 +16,16 @@ export default function MovingStars() {
       starsRef.current.rotation.x += delta * 0.001;
     }
   });
-
   return (
     <group ref={starsRef}>
       <Stars 
         radius={300} 
         depth={60} 
         count={20000} 
-        factor={3}      // Small, steady points of light
+        factor={3}      
         saturation={0} 
         fade 
-        speed={0}       // SET TO 0: This stops the atmospheric "twinkling" effect
+        speed={0} 
       />
     </group>
   );
