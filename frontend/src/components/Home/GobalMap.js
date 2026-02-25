@@ -450,15 +450,19 @@ export default function GobalMap() {
       const hasFocusedSection = Boolean(hoverClass || clickedClass);
 
       container.classList.toggle("kerala-has-focus", hasFocusedSection);
+      container.classList.toggle("kerala-hide-map-labels", Boolean(clickedClass));
       colorElementsRef.current.forEach((el) => {
         el.classList.remove("highlight");
         el.classList.remove("selected-highlight");
+        el.classList.remove("map-hidden");
       });
 
       if (clickedClass) {
         colorElementsRef.current.forEach((el) => {
           if (el.classList.contains(clickedClass)) {
             el.classList.add("selected-highlight");
+          } else {
+            el.classList.add("map-hidden");
           }
         });
       }
@@ -517,6 +521,7 @@ export default function GobalMap() {
 
     return () => {
       container.classList.remove("kerala-has-focus");
+      container.classList.remove("kerala-hide-map-labels");
       container.removeEventListener("click", handleContainerClick);
       colorElements.forEach((el) => {
         el.removeEventListener("mouseenter", handleEnter);
@@ -533,13 +538,17 @@ export default function GobalMap() {
     const container = keralaContainerRef.current;
     if (container) {
       container.classList.toggle("kerala-has-focus", Boolean(selectedClass || hoveredClass));
+      container.classList.toggle("kerala-hide-map-labels", Boolean(selectedClass));
     }
 
     colorElementsRef.current.forEach((el) => {
       el.classList.remove("highlight");
       el.classList.remove("selected-highlight");
+      el.classList.remove("map-hidden");
       if (selectedClass && el.classList.contains(selectedClass)) {
         el.classList.add("selected-highlight");
+      } else if (selectedClass) {
+        el.classList.add("map-hidden");
       }
       if (hoveredClass && el.classList.contains(hoveredClass)) {
         el.classList.add("highlight");
@@ -566,12 +575,15 @@ export default function GobalMap() {
       indiaColorElementsRef.current.forEach((el) => {
         el.classList.remove("highlight");
         el.classList.remove("selected-highlight");
+        el.classList.remove("map-hidden");
       });
 
       if (clickedClass) {
         indiaColorElementsRef.current.forEach((el) => {
           if (el.classList.contains(clickedClass)) {
             el.classList.add("selected-highlight");
+          } else {
+            el.classList.add("map-hidden");
           }
         });
       }
@@ -665,8 +677,11 @@ export default function GobalMap() {
     indiaColorElementsRef.current.forEach((el) => {
       el.classList.remove("highlight");
       el.classList.remove("selected-highlight");
+      el.classList.remove("map-hidden");
       if (selectedClass && el.classList.contains(selectedClass)) {
         el.classList.add("selected-highlight");
+      } else if (selectedClass) {
+        el.classList.add("map-hidden");
       }
       if (hoveredClass && el.classList.contains(hoveredClass)) {
         el.classList.add("highlight");

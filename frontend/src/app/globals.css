@@ -177,6 +177,8 @@ svg rect.selected-highlight {
     drop-shadow(0 2px 0 #7a4e2a)
     drop-shadow(0 3px 0 #6a3f1f)
     drop-shadow(0 5px 0 #4b2b13)
+        drop-shadow(0 6px 0 #4b2b13)
+
      /* drop-shadow(0 0 10px rgba(255, 237, 188, 0.44)) */
     /* drop-shadow(0 16px 12px rgba(0, 0, 0, 0.7)) */
     /* drop-shadow(0 22px 28px rgba(0, 0, 0, 0.9));  */
@@ -192,6 +194,23 @@ svg rect.selected-highlight {
 .india-has-focus svg polygon:not(.highlight):not(.selected-highlight),
 .india-has-focus svg rect:not(.highlight):not(.selected-highlight) {
   opacity: 0.5 !important;
+}
+
+.kerala-hide-map-labels .LABELS {
+  display: none !important;
+}
+
+.kerala-has-focus svg path.map-hidden,
+.kerala-has-focus svg polygon.map-hidden,
+.kerala-has-focus svg rect.map-hidden,
+.india-has-focus svg path.map-hidden,
+.india-has-focus svg polygon.map-hidden,
+.india-has-focus svg rect.map-hidden,
+svg path.map-hidden,
+svg polygon.map-hidden,
+svg rect.map-hidden {
+  opacity: 0 !important;
+  pointer-events: none !important;
 }
 
 @keyframes keralaZigzagMotion {

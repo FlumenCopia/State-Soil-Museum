@@ -291,6 +291,7 @@ const KeralaSVG = forwardRef(({ width, height, isZoomed = false }, ref) => {
     </g>
     {isZoomed && (
       <g
+        className="LABELS"
         style={{
           pointerEvents: "none",
           filter: "none",
