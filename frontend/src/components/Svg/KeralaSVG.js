@@ -9,18 +9,28 @@ const KeralaSVG = forwardRef(({ width, height }, ref) => {
 <>
 
 
-    <svg
-      ref={ref}
-      viewBox="0 0 595.28 841.89"
-      style={{
-        width,
-        maxHeight: height,
-        height: "auto",
-        transform: "perspective(1200px) rotateX(3deg) translateZ(0)",
-        filter:
-          "drop-shadow(0 14px 24px rgba(0, 0, 0, 0.32)) drop-shadow(0 28px 56px rgba(0, 0, 0, 0.26))",
-      }}
-    >
+<svg
+  ref={ref}
+  viewBox="0 0 595.28 841.89"
+  style={{
+    width,
+    maxHeight: height,
+    height: "auto",
+
+    /* 3D slab position (like your example image) */
+    transform: "perspective(1300px) rotateX(42deg) rotateY(-8deg) rotateZ(0deg) translateZ(0px) translateY(0px)",
+    transformOrigin: "50% 50%",
+    /* depth + highlight */
+    filter: `
+  drop-shadow(0 1px 0 #d6d6d6)
+    drop-shadow(0 2px 0 #c2c2c2)
+    drop-shadow(0 3px 0 #adadad)
+    drop-shadow(0 4px 0 #999999)
+    drop-shadow(-10px -12px 18px rgba(255,255,255,0.22))
+    drop-shadow(14px 18px 30px rgba(0,0,0,0.65))
+    `,
+  }}
+>
   
 
      <path className="cls-1 fill-path" d="M409.46,391.06c-1.55-.73-3.11-1.43-4.66-2.14-.3-.21-.73-.12-1-.43h0C398.5,386,390.33,390,386.28,394a3.51,3.51,0,0,0-.26.73,3.85,3.85,0,0,0-.09.76c0,.89,0,1.78,0,2.67s0,1.52,0,2.28c0,.39,0,.77,0,1.16s0,.52,0,.78c0,1.83,0,3.67,0,5.5-.28,2.58,1.85,4.13,2.64,6.25a3.87,3.87,0,0,0,3.91,2.88l.64.17a4.9,4.9,0,0,1,.84.38l.24.17a3.94,3.94,0,0,0,.51.32,3,3,0,0,0,.56.22c.41.13.8.29,1.22.38a2.5,2.5,0,0,0,1,0,2.77,2.77,0,0,0,.67-.27c1.47-.92,3.13-.86,4.79-.93.86,0,2.06.34,2.32-1l.14,0c1.86-1.1,2-1.43,1.3-3.9a4.45,4.45,0,0,1-1.49-2.77c-.94-2.45-.49-5-.23-7.44a1.14,1.14,0,0,1,.74-.86v0a1.6,1.6,0,0,0,.47-.5l0,0c1.15-1.28,2.48-2.42,2.95-4.18h0c1.53-.72,1.43-2.29,1.86-3.57C411.05,392.05,410.34,391.48,409.46,391.06Z"/>
