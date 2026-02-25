@@ -2,7 +2,7 @@
 
 import React, { forwardRef } from "react";
 
-const KeralaSVG = forwardRef(({ width, height }, ref) => {
+const KeralaSVG = forwardRef(({ width, height, isZoomed = false }, ref) => {
   return (
     
     
@@ -16,19 +16,24 @@ const KeralaSVG = forwardRef(({ width, height }, ref) => {
     width,
     maxHeight: height,
     height: "auto",
+    transition: "transform 0.45s ease, filter 0.45s ease",
 
     /* 3D slab position (like your example image) */
-    transform: "perspective(1300px) rotateX(42deg) rotateY(-8deg) rotateZ(0deg) translateZ(0px) translateY(0px)",
+    transform: isZoomed
+      ? "perspective(1300px) rotateX(32deg) rotateY(-8deg) rotateZ(0deg) translateZ(0px) translateY(0px)"
+      : "none",
     transformOrigin: "50% 50%",
     /* depth + highlight */
-    filter: `
+    filter: isZoomed
+      ? `
   drop-shadow(0 1px 0 #d6d6d6)
     drop-shadow(0 2px 0 #c2c2c2)
     drop-shadow(0 3px 0 #adadad)
     drop-shadow(0 4px 0 #999999)
     drop-shadow(-10px -12px 18px rgba(255,255,255,0.22))
     drop-shadow(14px 18px 30px rgba(0,0,0,0.65))
-    `,
+    `
+      : "none",
   }}
 >
   

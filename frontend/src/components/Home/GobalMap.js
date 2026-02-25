@@ -749,11 +749,16 @@ export default function GobalMap() {
             )}
           </div>
 
-          <div ref={keralaContainerRef} style={{ gridArea: "1 / 1", opacity: 0 }}>
-            {shouldRenderKeralaSvg && (
-              <KeralaSVG ref={keralaSvgRef} width={keralaSvgWidth} height={keralaSvgHeight} />
-            )}
-          </div>
+            <div ref={keralaContainerRef} style={{ gridArea: "1 / 1", opacity: 0 }}>
+              {shouldRenderKeralaSvg && (
+                <KeralaSVG
+                  ref={keralaSvgRef}
+                  width={keralaSvgWidth}
+                  height={keralaSvgHeight}
+                  isZoomed={keralaZoomComplete}
+                />
+              )}
+            </div>
         </div>
       </div>
 
