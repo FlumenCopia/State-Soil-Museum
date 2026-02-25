@@ -3,24 +3,33 @@
 import React, { forwardRef } from "react";
 
 const KERALA_MAP_LABELS = [
-  { text: "Grey and Brown Soils", x: 130, y: 62, size: 14 },
-  { text: "Kasaragod", x: 14, y: 130 },
-  { text: "Wayanad", x: 240, y: 175 },
-  { text: "Kozhikode", x: 288, y: 205 },
-  { text: "Kozhikode", x: 76, y: 240 },
-  { text: "Palakkad", x: 338, y: 278 },
-  { text: "Palakkad", x: 118, y: 378 },
-  { text: "Thrissur", x: 390, y: 338 },
-  { text: "Thrissur", x: 160, y: 468 },
-  { text: "Thrissur", x: 440, y: 422 },
-  { text: "Ernakulam", x: 136, y: 536 },
-  { text: "Idukki", x: 440, y: 548 },
-  { text: "Kollam", x: 194, y: 610 },
-  { text: "Pathanamthitta", x: 462, y: 600 },
-  { text: "Black Soils", x: 186, y: 674 },
-  { text: "Wetland Soils", x: 472, y: 676 },
-  { text: "(Kuttanad)", x: 474, y: 700, size: 13 },
-  { text: "Forest & Hill Soils", x: 466, y: 726 },
+  // { text: "Grey and Brown Soils", x: 130, y: 62, size: 14, side: "left", ax: 198, ay: 62 },
+  { text: "Kasaragod", x: 14, y: 130, side: "left", ax: 108, ay: 130 },
+  { text: "Wayanad", x: 260, y: 175, side: "right", ax: 226, ay: 175 },
+  // { text: "Kozhikode", x: 288, y: 205, side: "right", ax: 256, ay: 205 },
+  { text: "kannur", x: 76, y: 240, side: "left", ax: 180, ay: 240 },
+    { text: "Kozhikode", x: 76, y: 310, side: "left", ax: 220, ay: 310 },
+
+  // { text: "Palakkad", x: 338, y: 278, side: "right", ax: 304, ay: 278 },
+  // { text: "Palakkad", x: 118, y: 378, side: "left", ax: 196, ay: 378 },
+  { text: "Palakkad", x: 410, y: 338, side: "right", ax: 360, ay: 338 },
+  { text: "Thrissur", x: 160, y: 438, side: "left", ax: 272, ay: 438 },
+  // { text: "Thrissur", x: 440, y: 422, side: "right", ax: 404, ay: 422 },
+  { text: "Ernakulam", x: 136, y: 536, side: "left", ax: 294, ay: 536 },
+  { text: "Idukki", x: 490, y: 548, side: "right", ax: 406, ay: 548 },
+  { text: "Alappuzha", x: 194, y: 610, side: "left", ax: 352, ay: 610 },
+  { text: "Pathanamthitta", x: 499, y: 600, side: "right", ax: 432, ay: 600 },
+  // { text: "Black Soils", x: 186, y: 674, side: "left", ax: 340, ay: 674 },
+
+  { text: "Kollam", x: 186, y: 674, side: "left", ax: 340, ay: 674 },
+
+
+  { text: "trivandrum", x: 186, y: 774, side: "left", ax: 400, ay: 774 },
+
+
+  { text: "Wetland Soils", x: 492, y: 676, side: "right", ax: 432, ay: 676 },
+  { text: "(Kuttanad)", x: 494, y: 700, size: 13, side: "right", ax: 432, ay: 700 },
+  { text: "Forest & Hill Soils", x: 486, y: 726, side: "right", ax: 432, ay: 726 },
 ];
 
 const KeralaSVG = forwardRef(({ width, height, isZoomed = false }, ref) => {
@@ -287,17 +296,45 @@ const KeralaSVG = forwardRef(({ width, height, isZoomed = false }, ref) => {
           filter: "none",
         }}
       >
-        {KERALA_MAP_LABELS.map((label) => (
-          <text
-            key={`${label.text}-${label.x}-${label.y}`}
-            x={label.x}
-            y={label.y}
-            fill="#fff"
-            
-          >
-            {label.text}
-          </text>
-        ))}
+        {KERALA_MAP_LABELS.map((label) => {
+          const fontSize = label.size ?? 12;
+          const estimatedTextWidth = label.text.length * (fontSize * 0.56);
+          const leftLineStart = label.x + estimatedTextWidth + 6;
+          const leftLineEnd = (label.ax ?? label.x) - 6;
+          const rightLineStart = (label.ax ?? label.x) + 6;
+          const rightLineEnd = label.x - 6;
+          const isLeft = label.side === "left";
+
+          return (
+            <g key={`${label.text}-${label.x}-${label.y}`}>
+              <line
+                x1={isLeft ? leftLineStart : rightLineStart}
+                y1={label.ay ?? label.y}
+                x2={isLeft ? leftLineEnd : rightLineEnd}
+                y2={label.ay ?? label.y}
+                stroke="#f3d3a6"
+                strokeWidth="1.25"
+                opacity="0.95"
+              />
+              <circle
+                cx={label.ax ?? label.x}
+                cy={label.ay ?? label.y}
+                r="2.8"
+                fill="#f7d9ae"
+                stroke="#fff0d6"
+                strokeWidth="0.6"
+              />
+              <text
+                x={label.x}
+                y={label.y}
+                fill="#fff"
+                fontSize={fontSize}
+              >
+                {label.text}
+              </text>
+            </g>
+          );
+        })}
       </g>
     )}
 

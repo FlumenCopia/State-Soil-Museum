@@ -185,7 +185,7 @@ svg rect.selected-highlight {
 .kerala-has-focus svg path:not(.selected-highlight),
 .kerala-has-focus svg polygon:not(.selected-highlight),
 .kerala-has-focus svg rect:not(.selected-highlight) {
-  opacity: 0.7 !important;
+  opacity: 0.4 !important;
 }
 
 .india-has-focus svg path:not(.highlight):not(.selected-highlight),
