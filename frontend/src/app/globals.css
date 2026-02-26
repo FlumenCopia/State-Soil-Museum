@@ -275,14 +275,21 @@ svg rect.selected-highlight {
   fill: none;
   stroke-width: 0.60;
   vector-effect: non-scaling-stroke;
-  /* smoother lines */
   stroke-linecap: round;
   stroke-linejoin: round;
-  /* optional small transition */
   transition: stroke 0.3s ease;
 }
 
 
+
+.IndiaSVG-21{fill:#add7d6;}.IndiaSVG-22{fill:#d6e3a7;}.IndiaSVG-23{fill:#dccd67;}.IndiaSVG-24{fill:#fbf6b0;}
+.IndiaSVG-25{fill:#d3bccb;}.IndiaSVG-26{fill:#fdd5a4;}
+.IndiaSVG-27{fill:#f5f5ed;}.IndiaSVG-28{fill:#f3a75c;}.IndiaSVG-29{fill:#c5c5c5;}.IndiaSVG-30{fill:#fad73e;}
+.IndiaSVG-31{fill:#d55a1a;}.IndiaSVG-32{fill:#bcc3dc;}.IndiaSVG-33{fill:#34945f;}.IndiaSVG-34{fill:#f4eeb4;}
+
+
+
+/* 
 .IndiaSVG-22{fill:#2b8a34;}
 .IndiaSVG-21{fill:#6e2554;}
 .IndiaSVG-20 {
@@ -293,7 +300,7 @@ svg rect.selected-highlight {
   stroke-linecap: round;
   stroke-linejoin: round;
   transition: stroke 0.3s ease;
-}
+} */
 
 @property --holo-angle {
   syntax: "<angle>";
