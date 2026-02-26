@@ -851,6 +851,13 @@ export default function GobalMap() {
                     key={className}
                     type="button"
                     onClick={() => {
+                      if (activeColorClassRef.current === className) {
+                        activeColorClassRef.current = null;
+                        hoverColorClassRef.current = null;
+                        setHoverColorClass(null);
+                        setActiveColorClass(null);
+                        return;
+                      }
                       activeColorClassRef.current = className;
                       hoverColorClassRef.current = null;
                       setHoverColorClass(null);

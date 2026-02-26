@@ -297,7 +297,7 @@ const KeralaSVG = forwardRef(({ width, height, isZoomed = false }, ref) => {
         }}
       >
         {KERALA_MAP_LABELS.map((label) => {
-          const fontSize = label.size ?? 12;
+          const fontSize = label.size ?? 18;
           const estimatedTextWidth = label.text.length * (fontSize * 0.56);
           const leftLineStart = label.x + estimatedTextWidth + 6;
           const leftLineEnd = (label.ax ?? label.x) - 6;
