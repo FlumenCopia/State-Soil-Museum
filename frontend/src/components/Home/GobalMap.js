@@ -16,7 +16,7 @@ const SCALE_OUT = 0.95;
 
 // Overlay controls (position + animation timings)
 const OVERLAY_INITIAL_SCALE = 0.52;
-const OVERLAY_FINAL_SCALE = 1.1;
+const OVERLAY_FINAL_SCALE = 1.18;
 const OVERLAY_POSITION_X_BEFORE = -18;
 const OVERLAY_POSITION_Y_BEFORE = 130;
 const OVERLAY_POSITION_X_AFTER = 0;
@@ -36,7 +36,8 @@ const OUTLINE_DRAW_DURATION = 2.05;
 const FILL_REVEAL_DURATION = 0.8;
 const ZOOM_DURATION = 2.55;
 const BLUR_FADE_IN_DURATION = 0.45;
-const BLUR_DELAY_AFTER_ZOOM = 0.06;
+const BLUR_DELAY_AFTER_FILL = 0.06;
+const ZOOM_DELAY_AFTER_BLUR = 0.08;
 
 const INDIA_WIDTH = "min(82vw, 300px)";
 const INDIA_HEIGHT = "57vh";
@@ -260,7 +261,7 @@ export default function GobalMap() {
   }, [showOverlay, isKerala]);
 
   // India sequence:
-  // small image -> outline draw -> fill reveal -> zoom to full -> blur background.
+  // small image -> outline draw -> fill reveal -> blur background -> zoom to full.
   useEffect(() => {
     if (!showOverlay || !indiaSvgRef.current || isKerala) return;
 
@@ -304,14 +305,6 @@ export default function GobalMap() {
       duration: FILL_REVEAL_DURATION,
       ease: "power2.out",
     });
-    tl.to(overlay, {
-      scale: OVERLAY_FINAL_SCALE,
-      x: INDIA_OVERLAY_POSITION_X_AFTER,
-      y: INDIA_OVERLAY_POSITION_Y_AFTER,
-      rotation: INDIA_OVERLAY_ROTATION_AFTER,
-      duration: ZOOM_DURATION,
-      ease: "power3.out",
-    });
     tl.to(
       blur,
       {
@@ -319,7 +312,20 @@ export default function GobalMap() {
         duration: BLUR_FADE_IN_DURATION,
         ease: "power2.out",
       },
-      `>+${BLUR_DELAY_AFTER_ZOOM}`
+      `>+${BLUR_DELAY_AFTER_FILL}`
+    );
+    tl.to(
+      overlay,
+      {
+        scale: OVERLAY_FINAL_SCALE,
+        x: INDIA_OVERLAY_POSITION_X_AFTER,
+        y: INDIA_OVERLAY_POSITION_Y_AFTER,
+        rotation: INDIA_OVERLAY_ROTATION_AFTER,
+        duration: ZOOM_DURATION,
+        ease: "power3.out",
+        force3D: true,
+      },
+      `>+${ZOOM_DELAY_AFTER_BLUR}`
     );
 
     indiaAnimRef.current = tl;
@@ -363,7 +369,7 @@ export default function GobalMap() {
   }, [isKerala]);
 
   // Kerala sequence:
-  // small image -> wait 4s -> outline -> color + zoom -> blur background.
+  // small image -> outline -> color -> blur background -> zoom to full.
   useEffect(() => {
     if (!showOverlay || !keralaSvgRef.current || !isKerala) return;
     setKeralaZoomComplete(false);
@@ -408,14 +414,6 @@ export default function GobalMap() {
       duration: FILL_REVEAL_DURATION,
       ease: "power2.out",
     });
-    tl.to(overlay, {
-      scale: OVERLAY_FINAL_SCALE,
-      x: OVERLAY_POSITION_X_AFTER,
-      y: OVERLAY_POSITION_Y_AFTER,
-      rotation: OVERLAY_ROTATION_AFTER,
-      duration: ZOOM_DURATION,
-      ease: "power3.out",
-    });
     tl.to(
       blur,
       {
@@ -423,7 +421,20 @@ export default function GobalMap() {
         duration: BLUR_FADE_IN_DURATION,
         ease: "power2.out",
       },
-      `>+${BLUR_DELAY_AFTER_ZOOM}`
+      `>+${BLUR_DELAY_AFTER_FILL}`
+    );
+    tl.to(
+      overlay,
+      {
+        scale: OVERLAY_FINAL_SCALE,
+        x: OVERLAY_POSITION_X_AFTER,
+        y: OVERLAY_POSITION_Y_AFTER,
+        rotation: OVERLAY_ROTATION_AFTER,
+        duration: ZOOM_DURATION,
+        ease: "power3.out",
+        force3D: true,
+      },
+      `>+${ZOOM_DELAY_AFTER_BLUR}`
     );
     tl.eventCallback("onComplete", () => setKeralaZoomComplete(true));
 
