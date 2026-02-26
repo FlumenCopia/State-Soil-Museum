@@ -150,32 +150,30 @@ const KERALA_COLOR_DETAILS = Object.freeze({
 const KERALA_CLASS_ORDER = Object.keys(KERALA_COLOR_DETAILS);
 
 const INDIA_COLOR_DETAILS = Object.freeze({
-  "IndiaSVG-1": { label: "Alluvial Soils", color: "#add7d6", details: "Deep, fertile river-deposited soils in plains and deltas." },
-  "IndiaSVG-2": { label: "Red Soils", color: "#d6e3a7", details: "Iron-rich red soils common in peninsular uplands." },
-  "IndiaSVG-3": { label: "Black Soils", color: "#dccd67", details: "Clay-rich moisture-retentive soils suited for cotton." },
-  "IndiaSVG-4": { label: "Laterite Soils", color: "#fbf6b0", details: "Highly weathered soils of high-rainfall tropical regions." },
-  "IndiaSVG-5": { label: "Arid Soils", color: "#d3bccb", details: "Low-humus soils in dry western and semi-arid zones." },
-  "IndiaSVG-6": { label: "Mountain Soils", color: "#fdd5a4", details: "Thin, slope-influenced soils in Himalayan belts." },
-  "IndiaSVG-7": { label: "Forest Soils", color: "#f5f5ed", details: "Organic-rich soils under varied forest ecosystems." },
-  "IndiaSVG-8": { label: "Desert Soils", color: "#f3a75c", details: "Sandy soils with low organic matter and high drainage." },
-  "IndiaSVG-9": { label: "Saline Soils", color: "#c5c5c5", details: "Salt-affected soils in coastal and arid-irrigated tracts." },
- 
- 
-  "IndiaSVG-10": { label: "Peaty Soils", color: "#fad73e", details: "Organic peat-rich soils in waterlogged humid pockets." },
-  "IndiaSVG-11": { label: "Marshy Soils", color: "#d55a1a", details: "Poorly drained wetland soils in low-lying basins." },
-  "IndiaSVG-12": { label: "Coastal Alluvium", color: "#bcc3dc", details: "Marine-influenced alluvial soils along coastal plains." },
-  "IndiaSVG-13": { label: "Hill Soils", color: "#34945f", details: "Shallow to medium-depth soils of hill slopes." },
-  "IndiaSVG-14": { label: "Brown Forest Soils", color: "#f4eeb4", details: "Moderately fertile soils in temperate forest zones." },
-  "IndiaSVG-15": { label: "Deltaic Soils", color: "#8ac5ff", details: "Fine-textured nutrient-rich sediments in major deltas." },
-  "IndiaSVG-16": { label: "Sandy Coastal Soils", color: "#ffd38a", details: "Coarse coastal sands with low nutrient retention." },
-  "IndiaSVG-17": { label: "Red-Loamy Soils", color: "#ff9f8a", details: "Mixed red loam profiles with moderate fertility." },
-  "IndiaSVG-18": { label: "Gravelly Soils", color: "#b5b5b5", details: "Coarse fragment-rich upland soils with low depth." },
-  "IndiaSVG-19": { label: "Mixed Soils", color: "#a3d7a5", details: "Transition zones with mixed parent material influence." },
+
+
+  
   "IndiaSVG-20": { label: "Boundary / Outline", color: "#000000", details: "Map outline class used as geographic border." },
   "IndiaSVG-21": { label: "Moist Forest Soils", color: "#6e2554", details: "Humid forest-region soils with good organic content." },
   "IndiaSVG-22": { label: "Lateritic Green Belt Soils", color: "#2b8a34", details: "Weathered, iron-rich soils across tropical belts." },
 
+
+  "IndiaSVG-23": { label: "Peaty Soils", color: "#fad73e", details: "Organic peat-rich soils in waterlogged humid pockets." },
+  "IndiaSVG-24": { label: "Marshy Soils", color: "#d55a1a", details: "Poorly drained wetland soils in low-lying basins." },
+  "IndiaSVG-25": { label: "Coastal Alluvium", color: "#bcc3dc", details: "Marine-influenced alluvial soils along coastal plains." },
+  "IndiaSVG-26": { label: "Hill Soils", color: "#34945f", details: "Shallow to medium-depth soils of hill slopes." },
+  "IndiaSVG-27": { label: "Brown Forest Soils", color: "#f4eeb4", details: "Moderately fertile soils in temperate forest zones." },
+  "IndiaSVG-28": { label: "Deltaic Soils", color: "#8ac5ff", details: "Fine-textured nutrient-rich sediments in major deltas." },
+  "IndiaSVG-29": { label: "Sandy Coastal Soils", color: "#ffd38a", details: "Coarse coastal sands with low nutrient retention." },
+  "IndiaSVG-30": { label: "Red-Loamy Soils", color: "#ff9f8a", details: "Mixed red loam profiles with moderate fertility." },
+  "IndiaSVG-31": { label: "Gravelly Soils", color: "#b5b5b5", details: "Coarse fragment-rich upland soils with low depth." },
+  "IndiaSVG-32": { label: "Mixed Soils", color: "#a3d7a5", details: "Transition zones with mixed parent material influence." },
+  "IndiaSVG-33": { label: "Sandy Loam Soils", color: "#ffff01", details: "Well-drained sandy loam soils with moderate fertility." },
+  "IndiaSVG-34": { label: "Black Cotton Soils", color: "#f7c4a2", details: "Clay-rich soils with high moisture retention and shrink-swell properties." },
 });
+const INDIA_CLASS_ORDER = Object.keys(INDIA_COLOR_DETAILS)
+  .filter((className) => className !== "IndiaSVG-20")
+  .sort((a, b) => Number(a.replace("IndiaSVG-", "")) - Number(b.replace("IndiaSVG-", "")));
 
 
 
@@ -1026,62 +1024,181 @@ export default function GobalMap() {
         </>
       )}
       {!isKerala && showOverlay && (
-        <aside
-          style={{
-            position: "fixed",
-            top: "50%",
-            right: 24,
-            transform: "translateY(-50%)",
-            zIndex: 60,
-            width: "min(340px, 32vw)",
-            minWidth: 240,
-            background:
-              "radial-gradient(140% 110% at 100% 0%, rgba(49, 136, 255, 0.22), rgba(49, 136, 255, 0) 55%), linear-gradient(155deg, rgba(8, 24, 56, 0.9), rgba(4, 14, 38, 0.84) 55%, rgba(7, 30, 72, 0.86) 100%)",
-            border: "1px solid rgba(88, 168, 255, 0.45)",
-            borderRadius: 18,
-            padding: "16px",
-            color: "#eaf3ff",
-            backdropFilter: "blur(14px) saturate(122%)",
-            WebkitBackdropFilter: "blur(14px) saturate(122%)",
-            boxShadow:
-              "0 0 0 1px rgba(124, 194, 255, 0.24), 0 0 35px rgba(49, 142, 255, 0.32), 0 20px 50px rgba(2, 8, 26, 0.68), inset 0 0 40px rgba(38, 118, 255, 0.18), inset 0 1px 0 rgba(196, 228, 255, 0.32)",
-          }}
-        >
-          <div
+        <>
+          <aside
             style={{
-              fontSize: 13,
-              letterSpacing: "0.35px",
-              color: "rgba(226, 241, 255, 0.95)",
-              marginBottom: 10,
+              position: "fixed",
+              top: "50%",
+              left: 24,
+              transform: "translateY(-50%)",
+              zIndex: 60,
+              width: "min(300px, 28vw)",
+              minWidth: 230,
+              maxHeight: "calc(100vh - 48px)",
+              overflowY: "auto",
+              background:
+                "radial-gradient(140% 110% at 100% 0%, rgba(49, 136, 255, 0.22), rgba(49, 136, 255, 0) 55%), linear-gradient(155deg, rgba(8, 24, 56, 0.9), rgba(4, 14, 38, 0.84) 55%, rgba(7, 30, 72, 0.86) 100%)",
+              border: "1px solid rgba(88, 168, 255, 0.45)",
+              borderRadius: 18,
+              padding: "14px 12px",
+              color: "#eaf3ff",
+              backdropFilter: "blur(14px) saturate(122%)",
+              WebkitBackdropFilter: "blur(14px) saturate(122%)",
+              boxShadow:
+                "0 0 0 1px rgba(124, 194, 255, 0.24), 0 0 35px rgba(49, 142, 255, 0.32), 0 20px 50px rgba(2, 8, 26, 0.68), inset 0 0 40px rgba(38, 118, 255, 0.18), inset 0 1px 0 rgba(196, 228, 255, 0.32)",
             }}
           >
-            India Soil Data
-          </div>
-          {selectedIndiaDetails ? (
-            <>
-              <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 10 }}>
-                <span
-                  style={{
-                    width: 14,
-                    height: 14,
-                    borderRadius: 999,
-                    background: selectedIndiaDetails.color,
-                    border: "1px solid rgba(255,255,255,0.55)",
-                    display: "inline-block",
-                  }}
-                />
-                <strong style={{ fontSize: 14 }}>{selectedIndiaDetails.label}</strong>
+
+        <div
+              style={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "space-between",
+                gap: 12,
+                marginBottom: 12,
+              }}
+            >
+              <div
+                style={{
+                  fontSize: 13,
+                  letterSpacing: "0.35px",
+                  color: "rgba(226, 241, 255, 0.95)",
+                }}
+              >
+                India Soil Types
               </div>
-              <div style={{ fontSize: 13, lineHeight: 1.45, opacity: 0.95 }}>
-                {selectedIndiaDetails.details}
-              </div>
-            </>
-          ) : (
-            <div style={{ fontSize: 13, lineHeight: 1.45, opacity: 0.85 }}>
-              Click or hover an India map region to view soil data.
+              <button
+                className="see-all-section-btn"
+                type="button"
+                onClick={() => {
+                  activeColorClassRef.current = null;
+                  hoverColorClassRef.current = null;
+                  setHoverColorClass(null);
+                  setActiveColorClass(null);
+                }}
+              >
+                See all section
+              </button>
             </div>
-          )}
-        </aside>
+
+            <div style={{ display: "grid", gap: 6 }}>
+              {INDIA_CLASS_ORDER.map((className) => {
+                const item = INDIA_COLOR_DETAILS[className];
+                const isSelected = selectedIndiaClass === className;
+                return (
+                  <button
+                    className={`holo-border soil-type-btn${isSelected ? " soil-type-btn-active" : ""}`}
+                    key={className}
+                    type="button"
+                    onClick={() => {
+                      if (activeIndiaClassRef.current === className) {
+                        activeIndiaClassRef.current = null;
+                        hoverIndiaClassRef.current = null;
+                        setHoverIndiaClass(null);
+                        setActiveIndiaClass(null);
+                        return;
+                      }
+                      activeIndiaClassRef.current = className;
+                      hoverIndiaClassRef.current = null;
+                      setHoverIndiaClass(null);
+                      setActiveIndiaClass(className);
+                    }}
+                    style={{
+                      display: "flex",
+                      alignItems: "center",
+                      gap: 8,
+                      width: "100%",
+                      textAlign: "left",
+                      padding: "7px 8px",
+                      borderRadius: 11,
+                      border: "none",
+                      background: isSelected
+                        ? "linear-gradient(135deg, rgba(37, 152, 255, 0.24), rgba(41, 255, 212, 0.2))"
+                        : "linear-gradient(135deg, rgba(25, 62, 118, 0.54), rgba(12, 34, 72, 0.42))",
+                      color: "#eaf3ff",
+                      cursor: "pointer",
+                      fontSize: 11,
+                      boxShadow: isSelected
+                        ? "0 0 20px rgba(56, 202, 255, 0.34), inset 0 0 22px rgba(90, 255, 219, 0.22)"
+                        : "inset 0 0 18px rgba(50, 119, 224, 0.16)",
+                      transition: "all 0.2s ease",
+                    }}
+                  >
+                    <span
+                      style={{
+                        width: 12,
+                        height: 12,
+                        borderRadius: 999,
+                        background: item.color,
+                        border: "1px solid rgba(210, 236, 255, 0.72)",
+                        flex: "0 0 auto",
+                        boxShadow: "0 0 8px rgba(255,255,255,0.26)",
+                      }}
+                    />
+                    <span>{item.label}</span>
+                  </button>
+                );
+              })}
+            </div>
+          </aside>
+
+          <aside
+            style={{
+              position: "fixed",
+              top: "50%",
+              right: 24,
+              transform: "translateY(-50%)",
+              zIndex: 60,
+              width: "min(340px, 32vw)",
+              minWidth: 240,
+              background:
+                "radial-gradient(140% 110% at 100% 0%, rgba(49, 136, 255, 0.22), rgba(49, 136, 255, 0) 55%), linear-gradient(155deg, rgba(8, 24, 56, 0.9), rgba(4, 14, 38, 0.84) 55%, rgba(7, 30, 72, 0.86) 100%)",
+              border: "1px solid rgba(88, 168, 255, 0.45)",
+              borderRadius: 18,
+              padding: "16px",
+              color: "#eaf3ff",
+              backdropFilter: "blur(14px) saturate(122%)",
+              WebkitBackdropFilter: "blur(14px) saturate(122%)",
+              boxShadow:
+                "0 0 0 1px rgba(124, 194, 255, 0.24), 0 0 35px rgba(49, 142, 255, 0.32), 0 20px 50px rgba(2, 8, 26, 0.68), inset 0 0 40px rgba(38, 118, 255, 0.18), inset 0 1px 0 rgba(196, 228, 255, 0.32)",
+            }}
+          >
+            <div
+              style={{
+                fontSize: 13,
+                letterSpacing: "0.35px",
+                color: "rgba(226, 241, 255, 0.95)",
+                marginBottom: 10,
+              }}
+            >
+              India Soil Data
+            </div>
+            {selectedIndiaDetails ? (
+              <>
+                <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 10 }}>
+                  <span
+                    style={{
+                      width: 14,
+                      height: 14,
+                      borderRadius: 999,
+                      background: selectedIndiaDetails.color,
+                      border: "1px solid rgba(255,255,255,0.55)",
+                      display: "inline-block",
+                    }}
+                  />
+                  <strong style={{ fontSize: 14 }}>{selectedIndiaDetails.label}</strong>
+                </div>
+                <div style={{ fontSize: 13, lineHeight: 1.45, opacity: 0.95 }}>
+                  {selectedIndiaDetails.details}
+                </div>
+              </>
+            ) : (
+              <div style={{ fontSize: 13, lineHeight: 1.45, opacity: 0.85 }}>
+                Click or hover an India map region to view soil data.
+              </div>
+            )}
+          </aside>
+        </>
       )}
 
       <div style={{ position: "fixed", top: 24, right: 24, zIndex: 50 }}>
