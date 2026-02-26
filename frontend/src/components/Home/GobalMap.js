@@ -500,6 +500,12 @@ export default function GobalMap() {
     const handleClick = (e) => {
       const colorClass = getColorClass(e.currentTarget);
       if (!colorClass) return;
+      if (activeColorClassRef.current === colorClass) {
+        activeColorClassRef.current = null;
+        setActiveColorClass(null);
+        paintHighlights();
+        return;
+      }
       activeColorClassRef.current = colorClass;
       setActiveColorClass(colorClass);
       paintHighlights();
@@ -613,6 +619,12 @@ export default function GobalMap() {
     const handleClick = (e) => {
       const colorClass = getColorClass(e.currentTarget);
       if (!colorClass) return;
+      if (activeIndiaClassRef.current === colorClass) {
+        activeIndiaClassRef.current = null;
+        setActiveIndiaClass(null);
+        paintHighlights();
+        return;
+      }
       activeIndiaClassRef.current = colorClass;
       setActiveIndiaClass(colorClass);
       paintHighlights();
@@ -796,7 +808,9 @@ export default function GobalMap() {
                 "0 0 0 1px rgba(124, 194, 255, 0.24), 0 0 35px rgba(49, 142, 255, 0.32), 0 20px 50px rgba(2, 8, 26, 0.68), inset 0 0 40px rgba(38, 118, 255, 0.18), inset 0 1px 0 rgba(196, 228, 255, 0.32)",
             }}
           >
-            <div
+
+            <div className="d-flex">
+   <div
               style={{
                 fontSize: 13,
                 letterSpacing: "0.35px",
@@ -806,6 +820,31 @@ export default function GobalMap() {
             >
               Kerala Soil Types
             </div>
+
+
+                        <div
+   
+            >
+          
+<button
+  type="button"
+  onClick={() => {
+    activeColorClassRef.current = null;
+    hoverColorClassRef.current = null;
+    setHoverColorClass(null);
+    setActiveColorClass(null);
+  }}
+>
+  see all section
+</button>
+
+            </div>
+
+
+            </div>
+         
+
+
             <div style={{ display: "grid", gap: 8 }}>
               {KERALA_CLASS_ORDER.map((className) => {
                 const item = KERALA_COLOR_DETAILS[className];
