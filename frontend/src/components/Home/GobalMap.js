@@ -809,41 +809,37 @@ export default function GobalMap() {
             }}
           >
 
-            <div className="d-flex">
-   <div
+            <div
               style={{
-                fontSize: 13,
-                letterSpacing: "0.35px",
-                color: "rgba(226, 241, 255, 0.95)",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "space-between",
+                gap: 12,
                 marginBottom: 12,
               }}
             >
-              Kerala Soil Types
+              <div
+                style={{
+                  fontSize: 13,
+                  letterSpacing: "0.35px",
+                  color: "rgba(226, 241, 255, 0.95)",
+                }}
+              >
+                Kerala Soil Types
+              </div>
+              <button
+                className="see-all-section-btn"
+                type="button"
+                onClick={() => {
+                  activeColorClassRef.current = null;
+                  hoverColorClassRef.current = null;
+                  setHoverColorClass(null);
+                  setActiveColorClass(null);
+                }}
+              >
+                See all section
+              </button>
             </div>
-
-
-                        <div
-   
-            >
-          
-<button
-  type="button"
-  onClick={() => {
-    activeColorClassRef.current = null;
-    hoverColorClassRef.current = null;
-    setHoverColorClass(null);
-    setActiveColorClass(null);
-  }}
->
-  see all section
-</button>
-
-            </div>
-
-
-            </div>
-         
-
 
             <div style={{ display: "grid", gap: 8 }}>
               {KERALA_CLASS_ORDER.map((className) => {
