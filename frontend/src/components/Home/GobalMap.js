@@ -42,11 +42,11 @@ const ZOOM_DELAY_AFTER_BLUR = 0.08;
 const INDIA_WIDTH = "min(82vw, 300px)";
 const INDIA_HEIGHT = "57vh";
 
-const KERALA_WIDTH_BEFORE = "min(68vw, 700px)";
-const KERALA_HEIGHT_BEFORE = "82vh";
+const KERALA_WIDTH_BEFORE = "min(58vw, 600px)";
+const KERALA_HEIGHT_BEFORE = "62vh";
 
-const KERALA_WIDTH_AFTER = "min(92vw, 920px)";
-const KERALA_HEIGHT_AFTER = "88vh";
+const KERALA_WIDTH_AFTER = "min(72vw, 720px)";
+const KERALA_HEIGHT_AFTER = "68vh";
 
 const MAP_BACKDROP_BACKGROUND_KERALA = `
   radial-gradient(120% 95% at 50% 46%, rgba(34, 98, 198, 0.34) 0%, rgba(12, 32, 68, 0.78) 46%, rgba(4, 12, 28, 0.96) 100%),
