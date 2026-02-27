@@ -149,20 +149,27 @@ svg rect {
   cursor: pointer;
 }
 
+
+
 svg path.highlight,
 svg polygon.highlight,
 svg rect.highlight {
-  stroke: #9ce37c !important;
-  stroke-width: 1.55 !important;
+    stroke: #9ce37c !important;
+
+  stroke-width: 1.9 !important;
   vector-effect: non-scaling-stroke;
   paint-order: stroke fill markers;
   filter:
-    brightness(1.08)
+    brightness(1.8)
     drop-shadow(0 1px 0 #51733f)
     drop-shadow(0 2px 0 #3e582f)
-    /* drop-shadow(0 0 8px rgba(130, 230, 128, 0.5))
-    drop-shadow(0 14px 10px rgba(0, 0, 0, 0.52)); */
+    drop-shadow(0 3px 0 #2e4522)
+     /* drop-shadow(0 0 10px rgba(255, 237, 188, 0.44)) */
+    /* drop-shadow(0 16px 12px rgba(0, 0, 0, 0.7)) */
+    /* drop-shadow(0 22px 28px rgba(0, 0, 0, 0.9));  */
 }
+
+
 
 svg path.selected-highlight,
 svg polygon.selected-highlight,
@@ -182,9 +189,9 @@ svg rect.selected-highlight {
     /* drop-shadow(0 22px 28px rgba(0, 0, 0, 0.9));  */
 }
 
-.kerala-has-focus svg path:not(.selected-highlight),
-.kerala-has-focus svg polygon:not(.selected-highlight),
-.kerala-has-focus svg rect:not(.selected-highlight) {
+.kerala-has-focus svg path:not(.highlight):not(.selected-highlight),
+.kerala-has-focus svg polygon:not(.highlight):not(.selected-highlight),
+.kerala-has-focus svg rect:not(.highlight):not(.selected-highlight) {
   opacity: 0.4 !important;
 }
 
