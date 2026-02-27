@@ -39,8 +39,8 @@ const BLUR_FADE_IN_DURATION = 0.45;
 const BLUR_DELAY_AFTER_FILL = 0.06;
 const ZOOM_DELAY_AFTER_BLUR = 0.08;
 
-const INDIA_WIDTH = "min(82vw, 700px)";
-const INDIA_HEIGHT = "87vh";
+const INDIA_WIDTH = "min(97vw, 800px)";
+const INDIA_HEIGHT = "97vh";
 
 const KERALA_WIDTH_BEFORE = "min(58vw, 600px)";
 const KERALA_HEIGHT_BEFORE = "62vh";
@@ -867,10 +867,10 @@ export default function GobalMap() {
                 className="see-all-section-btn"
                 type="button"
                 onClick={() => {
-                  activeIndiaClassRef.current = null;
-                  hoverIndiaClassRef.current = null;
-                  setHoverIndiaClass(null);
-                  setActiveIndiaClass(null);
+                  activeColorClassRef.current = null;
+                  hoverColorClassRef.current = null;
+                  setHoverColorClass(null);
+                  setActiveColorClass(null);
                 }}
               >
                 See all section
@@ -1071,10 +1071,10 @@ export default function GobalMap() {
                 className="see-all-section-btn"
                 type="button"
                 onClick={() => {
-                  activeColorClassRef.current = null;
-                  hoverColorClassRef.current = null;
-                  setHoverColorClass(null);
-                  setActiveColorClass(null);
+                  activeIndiaClassRef.current = null;
+                  hoverIndiaClassRef.current = null;
+                  setHoverIndiaClass(null);
+                  setActiveIndiaClass(null);
                 }}
               >
                 See all section
