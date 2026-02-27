@@ -2,7 +2,75 @@
 
 import { forwardRef } from "react";
 
-const IndiaSVG = forwardRef(({ width, height }, ref) => {
+const INDIA_MAP_LABELS = [
+
+  { text: "jammu & kashmir", x: 372, y: 332, side: "right", ax: 248, ay: 332 },
+  { text: "Himachal Pradesh", x: 66, y: 438, side: "left", ax: 322, ay: 438 },
+  { text: "punjabe", x: 66, y: 468, side: "left", ax: 252, ay: 468 },
+  { text: "Uttarakhand", x: 512, y: 482, side: "right", ax: 358, ay: 482 },
+
+
+
+
+];
+
+// Andhra Pradesh
+// (Amaravati)
+// Arunachal Pradesh
+// (Itanagar)
+// Assam
+// (Dispur)
+// Bihar
+// (Patna)
+// Chhattisgarh
+// (Raipur)
+// Goa
+// (Panaji)
+// Gujarat
+// (Gandhinagar)
+// Haryana
+// (Chandigarh)
+// Himachal Pradesh
+// (Shimla)
+// Jharkhand
+// (Ranchi)
+// Karnataka
+// (Bangalore)
+// Kerala
+// (Thiruvananthapuram)
+// Madhya Pradesh
+// (Bhopal)
+// Maharashtra
+// (Mumbai)
+// Manipur
+// (Imphal)
+// Meghalaya
+// (Shillong)
+// Mizoram
+// (Aizawl)
+// Nagaland
+// (Kohima)
+// Odisha
+// (Bhubaneshwar)
+// Punjab
+// (Chandigarh)
+// Rajasthan
+// (Jaipur)
+// Sikkim
+// (Gangtok)
+// Tamil Nadu
+// (Chennai)
+// Telangana
+// (Hyderabad)
+// Tripura
+// (Agartala)
+// Uttarakhand
+
+
+// Backward-compatible alias for typo references.
+const indain_MAP_LABELS = INDIA_MAP_LABELS;
+
+const IndiaSVG = forwardRef(({ width, height, showLabels = true }, ref) => {
   return (
     <svg
       ref={ref}
@@ -11,23 +79,30 @@ const IndiaSVG = forwardRef(({ width, height }, ref) => {
     width,
     maxHeight: height,
     height: "auto",
+    transition: "transform 0.45s ease, filter 0.45s ease",
 
-    /* 3D slab position (like your example image) */
-    transform: "perspective(1200px) rotateX(05deg) rotateY(-8deg) rotateZ(0deg) translateZ(0px) translateY(0px)",
+    transform: showLabels
+     ? "perspective(1300px) rotateX(12deg) rotateY(08deg) rotateZ(0deg) translateZ(0px) translateY(0px)"
+      : "none",
     transformOrigin: "50% 50%",
+    filter: "none",
+  }}
+    >
+   <g
+    style={{
+      filter: showLabels
+        ? `
 
-
-    /* depth + highlight */
-    filter: `
   drop-shadow(0 1px 0 #d6d6d6)
     drop-shadow(0 2px 0 #c2c2c2)
     drop-shadow(0 3px 0 #adadad)
     drop-shadow(0 4px 0 #999999)
     drop-shadow(-10px -12px 18px rgba(255,255,255,0.22))
     drop-shadow(14px 18px 30px rgba(0,0,0,0.65))
-    `,
-  }}
-    >
+    `
+        : "none",
+    }}
+  >
 
       {/* outline  */}
   
@@ -517,9 +592,56 @@ const IndiaSVG = forwardRef(({ width, height }, ref) => {
 
 
         <path className="IndiaSVG-35 IndiaSVG-fill-path" d="M188.23,621.17h-3.94c-5.85,0-6.38.3-6.3,6,0,3-1.8,3.86-3.93,4.82-1.33.61-2.93.35-4.07,1.55s-2.23,2.43-1.37,4.23a3.45,3.45,0,0,0,4,1.9,12.35,12.35,0,0,0,8.83-5.79c2.53-4.16,6.94-4.17,10.7-5.63,1.2-.46,1.76.43,1.8,1.49a52,52,0,0,1-2.28,9c-4.49,8.09-9.38,13.15-17.57,11.74-3.23-.56-6.1-1.3-7.9-3.76a79.72,79.72,0,0,1-11.41-21.52c-1.84-5.54-2.93-8.73-9.46-8.41-3.58.17-5.62-5.93-4.07-10.87.64-2,1.81-3.89,2.43-5.92,1.22-4,.45-5.25-3.55-6.26-2.2-.56-4.4-1.12-6.61-1.64-5.32-1.27-7.93-9.62-3-12.67,1.59-1,3-2.2,4.56-3.29,2.21-1.57,4.49-3.22,5.28-5.89,1.25-4.23,3.88-7.15,7.38-9.68,5.2-3.75,9.27-3.09,11.38,2.77,1.48,4.11,3.49,4.65,6.89,2.63,3.75-2.23,7.62-.36,11.41-.26,3.37.09,5.77-.74,6.89-4.12a8,8,0,0,1,2.46-3.07c2.15-2.07,4.64-3.73,5.07-7.36a5.5,5.5,0,0,1,4.7-4.87c3.1-.38,2.4-1.07,5.33,1a35,35,0,0,0,3.55,2c2,.84,3.16,1.88,5.11,2.11,3.54.42,8,2.11,10.9,2.84,4,1,8.52,1.54,12.19,2.16a131,131,0,0,0,13.62,2.08,29.62,29.62,0,0,1,8.83,1.9c2.87,1.29,2.83,2.78.73,4.81a14.67,14.67,0,0,1-11.33,4.29c-9.38-.67-13.66,5.73-17.46,12.36-2.68,4.65-5.16,9.52-8.75,13.39-6.75,7.26-14.09,14-20.12,21.89C196,621.36,192,621.66,188.23,621.17Z"/>
+    </g>
+      {showLabels && (
+      <g
+        style={{
+          pointerEvents: "none",
+          filter: "none",
+        }}
+      >
+        {indain_MAP_LABELS.map((label) => {
+          const fontSize = label.size ?? 17;
+          const estimatedTextWidth = label.text.length * (fontSize * 0.56);
+          const leftLineStart = label.x + estimatedTextWidth + 6;
+          const leftLineEnd = (label.ax ?? label.x) - 6;
+          const rightLineStart = (label.ax ?? label.x) + 6;
+          const rightLineEnd = label.x - 6;
+          const isLeft = label.side === "left";
 
-
-</svg>
+          return (
+            <g key={`${label.text}-${label.x}-${label.y}`}>
+              <line
+                x1={isLeft ? leftLineStart : rightLineStart}
+                y1={label.ay ?? label.y}
+                x2={isLeft ? leftLineEnd : rightLineEnd}
+                y2={label.ay ?? label.y}
+                stroke="#f3d3a6"
+                strokeWidth="1.15"
+                opacity="0.92"
+              />
+              <circle
+                cx={label.ax ?? label.x}
+                cy={label.ay ?? label.y}
+                r="2.6"
+                fill="#f7d9ae"
+                stroke="#fff0d6"
+                strokeWidth="0.6"
+              />
+              <text
+                x={label.x}
+                y={label.y}
+                fill="#fff"
+                fontSize={fontSize}
+              >
+                {label.text}
+              </text>
+            </g>
+          );
+        })}
+      </g>
+    )}
+    </svg>
 
 
 

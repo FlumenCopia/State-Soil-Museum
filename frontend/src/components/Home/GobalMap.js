@@ -54,7 +54,7 @@ const MAP_BACKDROP_BACKGROUND_KERALA = `
   radial-gradient(44% 36% at 85% 24%, rgba(148, 198, 255, 0.16) 0%, rgba(148, 198, 255, 0) 74%),
   repeating-linear-gradient(118deg, rgba(92, 162, 255, 0.11) 0 1px, transparent 1px 130px),
   repeating-linear-gradient(28deg, rgba(74, 126, 220, 0.1) 0 1px, transparent 1px 130px),
-  url('/images/bg2.png')
+  url('/images/bg3.png')
 `;
 const MAP_BACKDROP_BACKGROUND_INDIA = `
   radial-gradient(120% 95% at 50% 46%, rgba(34, 98, 198, 0.34) 0%, rgba(12, 32, 68, 0.78) 46%, rgba(4, 12, 28, 0.96) 100%),
@@ -62,7 +62,7 @@ const MAP_BACKDROP_BACKGROUND_INDIA = `
   radial-gradient(44% 36% at 85% 24%, rgba(148, 198, 255, 0.16) 0%, rgba(148, 198, 255, 0) 74%),
   repeating-linear-gradient(118deg, rgba(92, 162, 255, 0.11) 0 1px, transparent 1px 130px),
   repeating-linear-gradient(28deg, rgba(74, 126, 220, 0.1) 0 1px, transparent 1px 130px),
-  url('/images/bg2.png')
+  url('/images/bg3.png')
 `;
 const MAP_BACKDROP_BOX_SHADOW =
   "inset 0 0 140px rgba(0, 0, 0, 0.72), inset 0 0 240px rgba(2, 8, 24, 0.92)";

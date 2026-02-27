@@ -156,7 +156,7 @@ svg polygon.highlight,
 svg rect.highlight {
     stroke: #9ce37c !important;
 
-  stroke-width: 1.9 !important;
+  stroke-width: 1 !important;
   vector-effect: non-scaling-stroke;
   paint-order: stroke fill markers;
   filter:
@@ -178,6 +178,8 @@ svg rect.selected-highlight {
   stroke-width: 1.8 !important;
   vector-effect: non-scaling-stroke;
   paint-order: stroke fill markers;
+
+  
   filter:
     brightness(1.3)
     drop-shadow(0 1px 0 #9b6a3c)
