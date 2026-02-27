@@ -867,10 +867,10 @@ export default function GobalMap() {
                 className="see-all-section-btn"
                 type="button"
                 onClick={() => {
-                  activeColorClassRef.current = null;
-                  hoverColorClassRef.current = null;
-                  setHoverColorClass(null);
-                  setActiveColorClass(null);
+                  activeIndiaClassRef.current = null;
+                  hoverIndiaClassRef.current = null;
+                  setHoverIndiaClass(null);
+                  setActiveIndiaClass(null);
                 }}
               >
                 See all section
