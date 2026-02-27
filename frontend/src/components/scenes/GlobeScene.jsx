@@ -20,7 +20,7 @@ export default function GlobeScene() {
   const previousViewRef = useRef("globe");
   const { gl } = useThree();
   const { view } = useAppStore();
-  const earthColor = useTexture("/images/e2.webp");
+  const earthColor = useTexture("/images/e4.webp");
   const earthNormal = useTexture("/images/earth_normal.webp");
   const cloudsTexture = useTexture("/images/e1.webp");
   useEffect(() => {
