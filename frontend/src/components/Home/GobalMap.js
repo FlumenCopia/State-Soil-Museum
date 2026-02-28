@@ -26,7 +26,7 @@ const OVERLAY_ROTATION_AFTER = 0;
 
 // India-specific before/after positioning controls.
 const INDIA_OVERLAY_POSITION_X_BEFORE = 0;
-const INDIA_OVERLAY_POSITION_Y_BEFORE = 0;
+const INDIA_OVERLAY_POSITION_Y_BEFORE =0;
 const INDIA_OVERLAY_POSITION_X_AFTER = 0;
 const INDIA_OVERLAY_POSITION_Y_AFTER = 0;
 const INDIA_OVERLAY_ROTATION_BEFORE = 0;
@@ -39,8 +39,11 @@ const BLUR_FADE_IN_DURATION = 0.45;
 const BLUR_DELAY_AFTER_FILL = 0.06;
 const ZOOM_DELAY_AFTER_BLUR = 0.08;
 
-const INDIA_WIDTH = "min(77vw, 800px)";
-const INDIA_HEIGHT = "77vh";
+const INDIA_WIDTH_BEFORE = "min(70vw, 700px)";
+const INDIA_HEIGHT_BEFORE = "70vh";
+
+const INDIA_WIDTH_AFTER = "min(77vw, 800px)";
+const INDIA_HEIGHT_AFTER = "77vh";
 
 const KERALA_WIDTH_BEFORE = "min(58vw, 600px)";
 const KERALA_HEIGHT_BEFORE = "62vh";
@@ -81,69 +84,74 @@ const INDIA_COLOR_CLASS_PATTERN = /^IndiaSVG-\d+$/;
 const KERALA_COLOR_CLASS_PATTERN = /^cls-(11|[1-9])$/;
 const KERALA_COLOR_DETAILS = Object.freeze({
   "cls-1": {
-    label: "Red Sandy Soils",
+    label: "Black Cotton Soils",
     color: "#888888",
     details: "Well-drained coarse-textured soil seen in selected Kerala regions.",
     image: "/images/hill.jpg",
   },
   "cls-2": {
-    label: "Red Loamy Soils",
+    label: "Red Soils",
     color: "#ff00fe",
     details: "Balanced loamy red soil with moderate moisture-holding capacity.",
     image: "/images/hill.jpg",
   },
   "cls-3": {
-    label: "Red and Yellow Soils",
+    label: "Coastal Alluvium Soils",
     color: "#96fffe",
     details: "Mixed red-yellow profile typically requiring organic enrichment.",
     image: "/images/hill.jpg",
   },
-  "cls-4": {
-    label: "Laterite Soils",
-    color: "#3c36bc",
-    details: "Leached lateritic soil common in high-rainfall and upland belts.",
-    image: "/images/hill.jpg",
-  },
+
   "cls-5": {
-    label: "Sub Mountain Soils",
+    label: " Kari Soils",
     color: "#04b293",
     details: "Hill-foot and slope soils with variable depth and gravel content.",
     image: "/images/hill.jpg",
   },
   "cls-6": {
-    label: "Desert Soils",
+    label: "Forest Soils",
     color: "#009900",
     details: "Light-textured low-organic soils represented by this mapped class.",
     image: "/images/hill.jpg",
   },
   "cls-7": {
-    label: "Grey and Brown Soils",
+    label: "Hill Soils",
     color: "#ceffc8",
     details: "Fine to medium-textured soils with moderate nutrient status.",
     image: "/images/hill.jpg",
   },
+
   "cls-8": {
-    label: "Sandy Loam",
+    label: "Alluvium Soils",
     color: "#ffff01",
     details: "Freely draining sandy-loam profile suitable for multiple crops.",
     image: "/images/hill.jpg",
   },
+
+
   "cls-9": {
-    label: "Black Soils",
+    label: "Acid Soils",
     color: "#f7c4a2",
     details: "Clay-rich darker soils with higher moisture retention.",
     image: "/images/hill.jpg",
   },
+
+  "cls-11": {
+    label: "Lateritic Soils",
+    color: "#cc0033",
+    details: "Highland soils influenced by slope, rainfall, and forest cover.",
+    image: "/images/hill.jpg",
+  },
   "cls-10": {
-    label: "Mixed Red and Black Soils",
+    label: "District Boundary",
     color: "#030304",
     details: "Transition zones containing mixed red and black soil traits.",
     image: "/images/hill.jpg",
   },
-  "cls-11": {
-    label: "Mountain Soils",
-    color: "#cc0033",
-    details: "Highland soils influenced by slope, rainfall, and forest cover.",
+    "cls-4": {
+    label: "Water Body",
+    color: "#3c36bc",
+    details: "Leached lateritic soil common in high-rainfall and upland belts.",
     image: "/images/hill.jpg",
   },
 });
@@ -203,6 +211,7 @@ export default function GobalMap() {
   const [hoverColorClass, setHoverColorClass] = useState(null);
   const [activeIndiaClass, setActiveIndiaClass] = useState(null);
   const [hoverIndiaClass, setHoverIndiaClass] = useState(null);
+  const [indiaZoomComplete, setIndiaZoomComplete] = useState(false);
   const [keralaZoomComplete, setKeralaZoomComplete] = useState(false);
   const [isSoilImageZoomed, setIsSoilImageZoomed] = useState(false);
 
@@ -210,6 +219,8 @@ export default function GobalMap() {
   const isKerala = overlayMapView === "kerala";
   const shouldRenderIndiaSvg = showOverlay && !isKerala;
   const shouldRenderKeralaSvg = showOverlay && isKerala;
+  const indiaSvgWidth = indiaZoomComplete ? INDIA_WIDTH_AFTER : INDIA_WIDTH_BEFORE;
+  const indiaSvgHeight = indiaZoomComplete ? INDIA_HEIGHT_AFTER : INDIA_HEIGHT_BEFORE;
   const keralaSvgWidth = keralaZoomComplete ? KERALA_WIDTH_AFTER : KERALA_WIDTH_BEFORE;
   const keralaSvgHeight = keralaZoomComplete ? KERALA_HEIGHT_AFTER : KERALA_HEIGHT_BEFORE;
   const selectedColorClass = hoverColorClass || activeColorClass;
@@ -300,6 +311,7 @@ export default function GobalMap() {
   // small image -> outline draw -> fill reveal -> blur background -> zoom to full.
   useEffect(() => {
     if (!showOverlay || !indiaSvgRef.current || isKerala) return;
+    setIndiaZoomComplete(false);
 
     const svg = indiaSvgRef.current;
     const drawPaths = svg.querySelectorAll(".IndiaSVG-draw-path");
@@ -363,6 +375,7 @@ export default function GobalMap() {
       },
       `>+${ZOOM_DELAY_AFTER_BLUR}`
     );
+    tl.eventCallback("onComplete", () => setIndiaZoomComplete(true));
 
     indiaAnimRef.current = tl;
     return () => {
@@ -804,7 +817,7 @@ export default function GobalMap() {
         >
           <div ref={indiaContainerRef} style={{ gridArea: "1 / 1" }}>
             {shouldRenderIndiaSvg && (
-              <IndiaSVG ref={indiaSvgRef} width={INDIA_WIDTH} height={INDIA_HEIGHT} />
+              <IndiaSVG ref={indiaSvgRef} width={indiaSvgWidth} height={indiaSvgHeight} />
             )}
           </div>
 

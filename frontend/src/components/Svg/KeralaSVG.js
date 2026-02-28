@@ -320,8 +320,8 @@ const KeralaSVG = forwardRef(({ width, height, isZoomed = false }, ref) => {
                 cx={label.ax ?? label.x}
                 cy={label.ay ?? label.y}
                 r="2.8"
-                fill="#f7d9ae"
-                stroke="#fff0d6"
+                fill="#000"
+                stroke="#000"
                 strokeWidth="0.6"
               />
               <text
