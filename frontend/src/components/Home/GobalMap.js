@@ -158,9 +158,6 @@ const KERALA_COLOR_DETAILS = Object.freeze({
 const KERALA_CLASS_ORDER = Object.keys(KERALA_COLOR_DETAILS);
 
 const INDIA_COLOR_DETAILS = Object.freeze({
-
-
-  
   "IndiaSVG-20": { label: "Boundary / Outline", color: "#000000", details: "Map outline class used as geographic border." },
   "IndiaSVG-21": { label: "Moist Forest Soils", color: "#6e2554", details: "Humid forest-region soils with good organic content." },
   "IndiaSVG-22": { label: "Lateritic Green Belt Soils", color: "#2b8a34", details: "Weathered, iron-rich soils across tropical belts." },
