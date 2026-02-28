@@ -650,26 +650,31 @@ const IndiaSVG = forwardRef(({ width, height, showLabels = true }, ref) => {
           const rightLineStart = (label.ax ?? label.x) + 6;
           const rightLineEnd = label.x - 6;
           const isLeft = label.side === "left";
+          const hasCallout = label.side === "left" || label.side === "right";
 
           return (
             <g key={`${label.text}-${label.x}-${label.y}`}>
-              <line
-                x1={isLeft ? leftLineStart : rightLineStart}
-                y1={label.ay ?? label.y}
-                x2={isLeft ? leftLineEnd : rightLineEnd}
-                y2={label.ay ?? label.y}
-                stroke="#f3d3a6"
-                strokeWidth="1.15"
-                opacity="0.92"
-              />
-              <circle
-                cx={label.ax ?? label.x}
-                cy={label.ay ?? label.y}
-                r="2.6"
-                fill="#000"
-                stroke="#000"
-                strokeWidth="0.6"
-              />
+              {hasCallout && (
+                <line
+                  x1={isLeft ? leftLineStart : rightLineStart}
+                  y1={label.ay ?? label.y}
+                  x2={isLeft ? leftLineEnd : rightLineEnd}
+                  y2={label.ay ?? label.y}
+                  stroke="#f3d3a6"
+                  strokeWidth="1.15"
+                  opacity="0.92"
+                />
+              )}
+              {hasCallout && (
+                <circle
+                  cx={label.ax ?? label.x}
+                  cy={label.ay ?? label.y}
+                  r="2.6"
+                  fill="#000"
+                  stroke="#000"
+                  strokeWidth="0.6"
+                />
+              )}
               <text
                 x={label.x}
                 y={label.y}
