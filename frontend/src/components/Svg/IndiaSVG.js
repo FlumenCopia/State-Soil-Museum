@@ -36,7 +36,7 @@ const INDIA_MAP_LABELS = [
 
 
 const indain_MAP_LABELS = INDIA_MAP_LABELS;
-const INDIA_SVG_35_POSITION = { x: -50, y: -400 };
+const INDIA_SVG_35_POSITION = { x: -110, y: -300 };
 const INDIA_SVG_35_POSITION2 = { x: -200, y: -250 };
 
 
@@ -656,7 +656,7 @@ const IndiaSVG = forwardRef(({ width, height, showLabels = true }, ref) => {
           transform={`translate(${INDIA_SVG_35_POSITION.x} ${INDIA_SVG_35_POSITION.y})`}
           style={{ filter: "none" }}
         >
-        <text x="594" y="1128" style={INDIA_SVG_35_LABEL_STYLE}>
+        <text x="554" y="1128" style={INDIA_SVG_35_LABEL_STYLE}>
           Andaman & Nicobar
         </text>
         <path className="IndiaSVG-35 IndiaSVG-fill-path" d="M715.61,994.5c-3.06-2.18-4.75-4-3.35-7.22,1.09-2.49-.92-4.34-1.76-6.31s-1-3.26.21-5.1c3-4.57,3.18-9.58,1.31-14.63-.89-2.41,0-4.63,0-6.92.11-4,1.53-7.83,1-11.77-.61-4.58,2.71-7.7,3.94-11.58.3-1,1.5-1.06,2.45-1,1.45.15,1,1.35,1,2.18,0,2.81.34,5.72-.23,8.43-1.32,6.26-3,12.37-.52,18.77.88,2.27-.72,4.43-1.58,6.48-2.45,5.9-1.08,12.12-1.7,18.17C716.12,987.31,715.92,990.6,715.61,994.5Z"/>

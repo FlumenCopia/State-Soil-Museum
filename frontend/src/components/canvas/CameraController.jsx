@@ -10,7 +10,7 @@ import * as THREE from "three";
 const CAMERA_TRANSITION_DURATION = 3.8;
 const CAMERA_TRANSITION_EASE = "power3.inOut";
 
-const INDIA_CAMERA_POSITION = new THREE.Vector3(0, 0, 167);
+const INDIA_CAMERA_POSITION = new THREE.Vector3(0, 0, 190);
 const INDIA_CAMERA_TARGET = new THREE.Vector3(0, 0, 0);
 
 const CAMERA_POSES = {
