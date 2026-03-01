@@ -12,11 +12,11 @@ import IndiaSVG from "../Svg/IndiaSVG";
 import KeralaSVG from "../Svg/KeralaSVG";
 
 /* CONSTANTS */
-const SCALE_OUT = 0.95;
+const SCALE_OUT = 0.5;
 
 // Overlay controls (position + animation timings)
-const OVERLAY_INITIAL_SCALE = 0.52;
-const OVERLAY_FINAL_SCALE = 1.18;
+const OVERLAY_INITIAL_SCALE = 1;
+const OVERLAY_FINAL_SCALE = 1;
 const OVERLAY_POSITION_X_BEFORE = -18;
 const OVERLAY_POSITION_Y_BEFORE = 130;
 const OVERLAY_POSITION_X_AFTER = 0;
@@ -25,8 +25,8 @@ const OVERLAY_ROTATION_BEFORE = -10;
 const OVERLAY_ROTATION_AFTER = 0;
 
 // India-specific before/after positioning controls.
-const INDIA_OVERLAY_POSITION_X_BEFORE = 0;
-const INDIA_OVERLAY_POSITION_Y_BEFORE =0;
+const INDIA_OVERLAY_POSITION_X_BEFORE = 40;
+const INDIA_OVERLAY_POSITION_Y_BEFORE =10;
 const INDIA_OVERLAY_POSITION_X_AFTER = 0;
 const INDIA_OVERLAY_POSITION_Y_AFTER = 0;
 const INDIA_OVERLAY_ROTATION_BEFORE = 0;
@@ -34,22 +34,22 @@ const INDIA_OVERLAY_ROTATION_AFTER = 0;
 const OUTLINE_DELAY_SECONDS = 0.30;
 const OUTLINE_DRAW_DURATION = 2.05;
 const FILL_REVEAL_DURATION = 0.8;
-const ZOOM_DURATION = 2.55;
+const ZOOM_DURATION = 1.55;
 const BLUR_FADE_IN_DURATION = 0.45;
 const BLUR_DELAY_AFTER_FILL = 0.06;
 const ZOOM_DELAY_AFTER_BLUR = 0.08;
 
-const INDIA_WIDTH_BEFORE = "min(70vw, 700px)";
-const INDIA_HEIGHT_BEFORE = "70vh";
+const INDIA_WIDTH_BEFORE = "min(105vw, 1050px)";
+const INDIA_HEIGHT_BEFORE = "105vh";
 
 const INDIA_WIDTH_AFTER = "min(77vw, 800px)";
 const INDIA_HEIGHT_AFTER = "77vh";
 
-const KERALA_WIDTH_BEFORE = "min(58vw, 600px)";
-const KERALA_HEIGHT_BEFORE = "62vh";
+const KERALA_WIDTH_BEFORE = "min(72vw, 720px)";
+const KERALA_HEIGHT_BEFORE = "68vh";
 
-const KERALA_WIDTH_AFTER = "min(72vw, 720px)";
-const KERALA_HEIGHT_AFTER = "68vh";
+const KERALA_WIDTH_AFTER = "min(92vw, 920px)";
+const KERALA_HEIGHT_AFTER = "92vh";
 
 const MAP_BACKDROP_BACKGROUND_KERALA = `
   radial-gradient(120% 95% at 50% 46%, rgba(34, 98, 198, 0.34) 0%, rgba(12, 32, 68, 0.78) 46%, rgba(4, 12, 28, 0.96) 100%),

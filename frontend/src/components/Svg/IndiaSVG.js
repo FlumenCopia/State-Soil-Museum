@@ -76,12 +76,7 @@ const IndiaSVG = forwardRef(({ width, height, showLabels = true }, ref) => {
     width,
     maxHeight: height,
     height: "auto",
-    transition: "transform 0.45s ease, filter 0.45s ease",
-
-    transform: showLabels
-     ? "perspective(1300px) rotateX(12deg) rotateY(08deg) rotateZ(0deg) translateZ(0px) translateY(0px)"
-      : "none",
-    transformOrigin: "50% 50%",
+    transition: "filter 0.45s ease",
     filter: "none",
   }}
     >
