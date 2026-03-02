@@ -158,23 +158,31 @@ const KERALA_COLOR_DETAILS = Object.freeze({
 const KERALA_CLASS_ORDER = Object.keys(KERALA_COLOR_DETAILS);
 
 const INDIA_COLOR_DETAILS = Object.freeze({
-  "IndiaSVG-20": { label: "Boundary / Outline", color: "#000000", details: "Map outline class used as geographic border." },
-  "IndiaSVG-21": { label: "Moist Forest Soils", color: "#6e2554", details: "Humid forest-region soils with good organic content." },
-  "IndiaSVG-22": { label: "Lateritic Green Belt Soils", color: "#2b8a34", details: "Weathered, iron-rich soils across tropical belts." },
+  "IndiaSVG-20": { label: "Boundary / Outline", color: "#000", details: "Map outline class used as geographic border." },
+  "IndiaSVG-21": { label: "Skeletal Soils", color: "#add7d6", details: "Skeletal soils in India are shallow, coarse-textured soils, often rocky, with low water-holding capacity and limited fertility. Primarily found in Ladakh, the Vindhyan range, they consist largely of rock fragments, gravel and boulders." },
+  "IndiaSVG-31": { label: "Red Sandy Soils", color: "#d55a1a", details: "Red sandy soil is a well-drained, sandy, coarse-textured, low moisture soil with a distinct red colour caused by iron oxide (hematite). Generally less fertile, acidic and low in humus, nitrogen and phosphorus, found in arid/semi-arid regions, ideal for crops like pulses, millets and tubers." },
+  "IndiaSVG-30": { label: "Red Loamy Soils", color: "#fad73e", details: "Red loamy soils are type of red soil, characteristically coloured by high iron oxide content and formed by the weathering of granite, gneiss, and diorite rocks. They are generally well drained, loamy textured with better structure ,moderately fertility and nutrient holding capacity. often requiring irrigation and fertilizer management, seen especially in the southern states." },
+  "IndiaSVG-26": { label: "Red and Yellow Soils", color: "#fdd5a4", details: "Red and yellow soils (covering approx. 10.6% of India) form on crystalline metamorphic rocks in low-rainfall, eastern/southern Deccan Plateau regions. They are Sandy to loamy textured, Low to moderate water holding capacity & fertility, low in humus and nitrogen and phosphorus. They appear red due to iron diffusion and yellow when hydrated" },
+  "IndiaSVG-25": { label: "Grey and Brown Soils", color: "#d3bccb", details: "Grey and brown soils in India, largely prevalent in semi-arid to sub-humid regions developed under low to moderate rainfall, formed from alluvial and wind-blown deposits. They are sandy to loam textured soils formed from weathering of granite, gneiss and schist. Characterized by high salinity, low organic matter and low moisture retention. They support hardy crops like millets, pulses and fodder requiring irrigation. " },
+
+  "IndiaSVG-32": { label: "Mountain Soils", color: "#bcc3dc", details: "Mountain soil, or forest soil, covers about 18.2 million hectares (5.5%) of India, (primarly Himalayan region).They are acidic, humus rich,acidic, dark brown, loamy/silty in valleys and coarse-grained on upper slopes, Prone to erosion. Formed by weathering of rocks in mountains, often shallow and immature soils." },
+  "IndiaSVG-34": { label: "Desert Soils", color: "#f4eeb4", details: "Desert soils, known as Aridisols, are dry, nutrient-poor, often alkaline soils found in arid and semi-arid regions, develop in regions with very low rainfall and high temperature. Low rainfall leads to minimal leaching and High evaporation causes salt accumulation. They are characterized by sandy or gravelly textures, low organic matter/ humus, high salinity, and rapid water draining." },
+  "IndiaSVG-29": { label: "Black Soils", color: "#c5c5c5", details: "Black soils (Regur soil or black cotton soil) covers about 16.6% of the total geographical area, primarily in the Deccan lava plateau. Rich in clay, iron, lime and magnesium, it is highly fertile, moisture-retentive, and ideal for cotton, wheat and soybean." },
+  "IndiaSVG-35": { label: "Sandy Loam", color: "#ffffff", details: "Sandy loam soil is characterized by high sand content, good draining and gritty texture, predominantly found in eastern and western coastal regions. It requires organic amendments to improve water-holding capacity and nutrient retention for agriculture." },
+  "IndiaSVG-33": { label: "Alluvial Soils", color: "#34945f", details: "Alluvial soil is India's most extensive soil and agriculturally important soils covering around 45% of its land area. Primarily found in the Indo-Gangetic –Brahmaputra plains, formed by the river deposits, making it highly fertile and ideal for crops like rice, wheat, sugarcane and cotton. most widespread in India." },
 
 
-  "IndiaSVG-23": { label: "Peaty Soils", color: "#fad73e", details: "Organic peat-rich soils in waterlogged humid pockets." },
-  "IndiaSVG-24": { label: "Marshy Soils", color: "#d55a1a", details: "Poorly drained wetland soils in low-lying basins." },
-  "IndiaSVG-25": { label: "Coastal Alluvium", color: "#bcc3dc", details: "Marine-influenced alluvial soils along coastal plains." },
-  "IndiaSVG-26": { label: "Hill Soils", color: "#34945f", details: "Shallow to medium-depth soils of hill slopes." },
-  "IndiaSVG-27": { label: "Brown Forest Soils", color: "#f4eeb4", details: "Moderately fertile soils in temperate forest zones." },
-  "IndiaSVG-28": { label: "Deltaic Soils", color: "#8ac5ff", details: "Fine-textured nutrient-rich sediments in major deltas." },
-  "IndiaSVG-29": { label: "Sandy Coastal Soils", color: "#ffd38a", details: "Coarse coastal sands with low nutrient retention." },
-  "IndiaSVG-30": { label: "Red-Loamy Soils", color: "#ff9f8a", details: "Mixed red loam profiles with moderate fertility." },
-  "IndiaSVG-31": { label: "Gravelly Soils", color: "#b5b5b5", details: "Coarse fragment-rich upland soils with low depth." },
-  "IndiaSVG-32": { label: "Mixed Soils", color: "#a3d7a5", details: "Transition zones with mixed parent material influence." },
-  "IndiaSVG-33": { label: "Sandy Loam Soils", color: "#ffff01", details: "Well-drained sandy loam soils with moderate fertility." },
-  "IndiaSVG-34": { label: "Black Cotton Soils", color: "#f7c4a2", details: "Clay-rich soils with high moisture retention and shrink-swell properties." },
+
+
+  "IndiaSVG-22": { label: "Terai Soils", color: "#d6e3a7", details: "Terai soils are fertile, moisture-retentive, and marshy alluvial soils found in a 15-30 km wide, humid, and forested belt along the Himalayan foothills. These fine-textured, clayey soils are rich in organic matter and nitrogen but deficient in phosphate, making them ideal for high-yield crops like sugarcane, rice and wheat." },
+ "IndiaSVG-23": { label: "Laterite Soils", color: "#dccd67", details: "Laterite soil is a rusty-red, acidic, and nutrient-poor soil type formed by intense leaching and weathering of iron/aluminium-rich rocks in tropical regions with high temperature and heavy rainfall. The name “laterite” comes from word later(Latin) ie., soil becomes hard like brick when exposed to air." },
+
+ 
+  "IndiaSVG-24": { label: "Sub Mountain Soils", color: "#fbf6b0", details: "Sub-mountain soils (or sub-montane soils) are variant of forest/mountain soils found in India's lower Himalayan, North-eastern hill, and valley regions.They are typically rich in humus, deep and acidic making them ideal for orchards, fruits crops and tea." },
+  "IndiaSVG-27": { label: "Glaciers", color: "#f5f5ed", details: "Glacial soils are primarily found in the high-altitude regions of the Greater Himalayas, Karakoram, Ladakh, and Zaskar ranges, are immature, often frozen and possess low organic matter. These nutrient-rich mineral sediments are crucial for forming fertile soils in lower valleys, unsuitable for agriculture in the native form." },
+  "IndiaSVG-28": { label: "Mixed Red and Black Soils", color: "#f3a75c", details: " Mixed red and black soils are fertile, hybrid soils formed by the mixture of red soil (from iron-rich crystalline rocks) and black soil (from volcanic lava). These soils are ideal for growing cotton and maize." },
+
+
 });
 const INDIA_CLASS_ORDER = Object.keys(INDIA_COLOR_DETAILS)
   .filter((className) => className !== "IndiaSVG-20")
@@ -1127,7 +1135,7 @@ export default function GobalMap() {
                         : "linear-gradient(135deg, rgba(25, 62, 118, 0.54), rgba(12, 34, 72, 0.42))",
                       color: "#eaf3ff",
                       cursor: "pointer",
-                      fontSize: 11,
+                      fontSize: 13,
                       boxShadow: isSelected
                         ? "0 0 20px rgba(56, 202, 255, 0.34), inset 0 0 22px rgba(90, 255, 219, 0.22)"
                         : "inset 0 0 18px rgba(50, 119, 224, 0.16)",
@@ -1175,13 +1183,13 @@ export default function GobalMap() {
           >
             <div
               style={{
-                fontSize: 13,
+                fontSize: 15,
                 letterSpacing: "0.35px",
                 color: "rgba(226, 241, 255, 0.95)",
                 marginBottom: 10,
               }}
             >
-              India Soil Data
+              India Soil 
             </div>
             {selectedIndiaDetails ? (
               <>
@@ -1198,7 +1206,7 @@ export default function GobalMap() {
                   />
                   <strong style={{ fontSize: 14 }}>{selectedIndiaDetails.label}</strong>
                 </div>
-                <div style={{ fontSize: 13, lineHeight: 1.45, opacity: 0.95 }}>
+                <div style={{ fontSize: 15, lineHeight: 1.45, opacity: 0.95 }}>
                   {selectedIndiaDetails.details}
                 </div>
               </>
