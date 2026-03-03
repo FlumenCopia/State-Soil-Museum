@@ -10,6 +10,7 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 import IndiaSVG from "../Svg/IndiaSVG";
 import KeralaSVG from "../Svg/KeralaSVG";
+import IndiaPortraitPanel from "./IndiaPortraitPanel";
 
 /* CONSTANTS */
 const SCALE_OUT = 0.5;
@@ -187,7 +188,6 @@ const INDIA_COLOR_DETAILS = Object.freeze({
 const INDIA_CLASS_ORDER = Object.keys(INDIA_COLOR_DETAILS)
   .filter((className) => className !== "IndiaSVG-20")
   .sort((a, b) => Number(a.replace("IndiaSVG-", "")) - Number(b.replace("IndiaSVG-", "")));
-const INDIA_PORTRAIT_PAGE_SIZE = 6;
 
 
 
@@ -213,12 +213,10 @@ export default function GobalMap() {
   const hoverColorClassRef = useRef(null);
   const activeIndiaClassRef = useRef(null);
   const hoverIndiaClassRef = useRef(null);
-  const indiaPortraitTouchStartXRef = useRef(null);
   const [activeColorClass, setActiveColorClass] = useState(null);
   const [hoverColorClass, setHoverColorClass] = useState(null);
   const [activeIndiaClass, setActiveIndiaClass] = useState(null);
   const [hoverIndiaClass, setHoverIndiaClass] = useState(null);
-  const [indiaPortraitPage, setIndiaPortraitPage] = useState(0);
   const [indiaZoomComplete, setIndiaZoomComplete] = useState(false);
   const [keralaZoomComplete, setKeralaZoomComplete] = useState(false);
   const [isSoilImageZoomed, setIsSoilImageZoomed] = useState(false);
@@ -271,13 +269,6 @@ export default function GobalMap() {
     ? MAP_BACKDROP_POSITION_KERALA
     : MAP_BACKDROP_POSITION_INDIA;
   const activeBackdropRepeat = isKerala ? MAP_BACKDROP_REPEAT_KERALA : MAP_BACKDROP_REPEAT_INDIA;
-  const indiaPortraitPageCount = Math.ceil(INDIA_CLASS_ORDER.length / INDIA_PORTRAIT_PAGE_SIZE);
-  const indiaPortraitPages = Array.from({ length: indiaPortraitPageCount }, (_, pageIndex) =>
-    INDIA_CLASS_ORDER.slice(
-      pageIndex * INDIA_PORTRAIT_PAGE_SIZE,
-      (pageIndex + 1) * INDIA_PORTRAIT_PAGE_SIZE
-    )
-  );
   const clearIndiaSelection = () => {
     activeIndiaClassRef.current = null;
     hoverIndiaClassRef.current = null;
@@ -294,17 +285,6 @@ export default function GobalMap() {
     setHoverIndiaClass(null);
     setActiveIndiaClass(className);
   };
-  const handleIndiaPortraitSwipeEnd = (event) => {
-    if (indiaPortraitTouchStartXRef.current == null || indiaPortraitPageCount <= 1) return;
-    const touchX = event.changedTouches?.[0]?.clientX;
-    if (typeof touchX !== "number") return;
-    const deltaX = touchX - indiaPortraitTouchStartXRef.current;
-    indiaPortraitTouchStartXRef.current = null;
-    if (Math.abs(deltaX) < 36) return;
-    setIndiaPortraitPage((prev) =>
-      Math.max(0, Math.min(indiaPortraitPageCount - 1, prev + (deltaX < 0 ? 1 : -1)))
-    );
-  };
 
   useEffect(() => {
     const updateViewport = () => {
@@ -315,24 +295,6 @@ export default function GobalMap() {
     window.addEventListener("resize", updateViewport);
     return () => window.removeEventListener("resize", updateViewport);
   }, []);
-
-  useEffect(() => {
-    if (!isPortraitLayout || isKerala) return;
-    if (!selectedIndiaClass) return;
-    const classIndex = INDIA_CLASS_ORDER.indexOf(selectedIndiaClass);
-    if (classIndex < 0) return;
-    setIndiaPortraitPage(Math.floor(classIndex / INDIA_PORTRAIT_PAGE_SIZE));
-  }, [isKerala, isPortraitLayout, selectedIndiaClass]);
-
-  useEffect(() => {
-    if (!isPortraitLayout) {
-      setIndiaPortraitPage(0);
-      return;
-    }
-    if (indiaPortraitPage > indiaPortraitPageCount - 1) {
-      setIndiaPortraitPage(Math.max(0, indiaPortraitPageCount - 1));
-    }
-  }, [indiaPortraitPage, indiaPortraitPageCount, isPortraitLayout]);
 
   /* SCROLL TRIGGER */
   useEffect(() => {
@@ -1135,69 +1097,13 @@ export default function GobalMap() {
       {!isKerala && showOverlay && (
         <>
           {isPortraitLayout ? (
-            <aside className="india-portrait-swiper-panel">
-              <div className="india-portrait-swiper-head">
-                <h3>India Soil</h3>
-                <p>Click or tap a region on the map to view soil data.</p>
-              </div>
-
-              <div
-                className="india-portrait-swiper-window"
-                onTouchStart={(event) => {
-                  indiaPortraitTouchStartXRef.current = event.touches?.[0]?.clientX ?? null;
-                }}
-                onTouchEnd={handleIndiaPortraitSwipeEnd}
-              >
-                <div
-                  className="india-portrait-swiper-track"
-                  style={{
-                    transform: `translateX(-${indiaPortraitPage * 100}%)`,
-                  }}
-                >
-                  {indiaPortraitPages.map((pageItems, pageIndex) => (
-                    <div className="india-portrait-swiper-page" key={`india-portrait-page-${pageIndex}`}>
-                      {pageItems.map((className) => {
-                        const item = INDIA_COLOR_DETAILS[className];
-                        const isSelected = selectedIndiaClass === className;
-                        return (
-                          <button
-                            key={className}
-                            type="button"
-                            className={`india-portrait-soil-card${isSelected ? " active" : ""}`}
-                            onClick={() => toggleIndiaSelection(className)}
-                          >
-                            <span
-                              className="india-portrait-soil-dot"
-                              style={{ background: item.color }}
-                              aria-hidden="true"
-                            />
-                            <span>{item.label}</span>
-                          </button>
-                        );
-                      })}
-                    </div>
-                  ))}
-                </div>
-              </div>
-
-              <div className="india-portrait-swiper-footer">
-                <button className="see-all-section-btn" type="button" onClick={clearIndiaSelection}>
-                  See all section
-                </button>
-                <div className="india-portrait-swiper-dots" aria-label="India soil pages">
-                  {indiaPortraitPages.map((_, pageIndex) => (
-                    <button
-                      key={`india-portrait-dot-${pageIndex}`}
-                      type="button"
-                      className={`india-portrait-swiper-dot${
-                        indiaPortraitPage === pageIndex ? " active" : ""
-                      }`}
-                      onClick={() => setIndiaPortraitPage(pageIndex)}
-                    />
-                  ))}
-                </div>
-              </div>
-            </aside>
+            <IndiaPortraitPanel
+              classOrder={INDIA_CLASS_ORDER}
+              colorDetails={INDIA_COLOR_DETAILS}
+              selectedClass={selectedIndiaClass}
+              onToggleSelection={toggleIndiaSelection}
+              onClearSelection={clearIndiaSelection}
+            />
           ) : (
             <aside
               style={{
