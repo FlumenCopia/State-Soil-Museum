@@ -822,7 +822,12 @@ export default function GobalMap() {
         >
           <div ref={indiaContainerRef} style={{ gridArea: "1 / 1" }}>
             {shouldRenderIndiaSvg && (
-              <IndiaSVG ref={indiaSvgRef} width={indiaSvgWidth} height={indiaSvgHeight} />
+              <IndiaSVG
+                ref={indiaSvgRef}
+                width={indiaSvgWidth}
+                height={indiaSvgHeight}
+                showLabels={indiaZoomComplete}
+              />
             )}
           </div>
 
