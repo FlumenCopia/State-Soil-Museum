@@ -65,7 +65,7 @@ const SEA_LABEL_STYLE = {
 
 
 
-const IndiaSVG = forwardRef(({ width, height, showLabels = true }, ref) => {
+const IndiaSVG = forwardRef(({ width, height, showLabels = true, showFilter = true }, ref) => {
   return (
     <svg
       ref={ref}
@@ -76,13 +76,14 @@ const IndiaSVG = forwardRef(({ width, height, showLabels = true }, ref) => {
     width,
     maxHeight: height,
     height: "auto",
+    overflow: "visible",
     transition: "filter 0.45s ease",
     filter: "none",
   }}
     >
    <g
     style={{
-      filter: showLabels
+      filter: showFilter
         ? `
 
   drop-shadow(0 1px 0 #d6d6d6)

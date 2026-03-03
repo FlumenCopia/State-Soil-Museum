@@ -219,15 +219,35 @@ export default function GobalMap() {
   const [indiaZoomComplete, setIndiaZoomComplete] = useState(false);
   const [keralaZoomComplete, setKeralaZoomComplete] = useState(false);
   const [isSoilImageZoomed, setIsSoilImageZoomed] = useState(false);
+  const [viewportSize, setViewportSize] = useState({ width: 0, height: 0 });
 
   const showOverlay = (view === "india" || view === "kerala") && indiaRevealReady;
   const isKerala = overlayMapView === "kerala";
+  const isPortrait = viewportSize.height > viewportSize.width;
+  const isCompactViewport = viewportSize.width > 0 && viewportSize.width <= 1100;
+  const isPortraitLayout = isCompactViewport && isPortrait;
   const shouldRenderIndiaSvg = showOverlay && !isKerala;
   const shouldRenderKeralaSvg = showOverlay && isKerala;
-  const indiaSvgWidth = indiaZoomComplete ? INDIA_WIDTH_AFTER : INDIA_WIDTH_BEFORE;
-  const indiaSvgHeight = indiaZoomComplete ? INDIA_HEIGHT_AFTER : INDIA_HEIGHT_BEFORE;
+  const indiaSvgWidth = isPortraitLayout
+    ? indiaZoomComplete
+      ? "min(92vw, 620px)"
+      : "min(84vw, 520px)"
+    : indiaZoomComplete
+      ? INDIA_WIDTH_AFTER
+      : INDIA_WIDTH_BEFORE;
+  const indiaSvgHeight = isPortraitLayout
+    ? indiaZoomComplete
+      ? "74vh"
+      : "66vh"
+    : indiaZoomComplete
+      ? INDIA_HEIGHT_AFTER
+      : INDIA_HEIGHT_BEFORE;
   const keralaSvgWidth = keralaZoomComplete ? KERALA_WIDTH_AFTER : KERALA_WIDTH_BEFORE;
   const keralaSvgHeight = keralaZoomComplete ? KERALA_HEIGHT_AFTER : KERALA_HEIGHT_BEFORE;
+  const indiaOverlayXBefore = isPortraitLayout ? 0 : INDIA_OVERLAY_POSITION_X_BEFORE;
+  const indiaOverlayYBefore = isPortraitLayout ? 24 : INDIA_OVERLAY_POSITION_Y_BEFORE;
+  const indiaOverlayXAfter = isPortraitLayout ? 0 : INDIA_OVERLAY_POSITION_X_AFTER;
+  const indiaOverlayYAfter = isPortraitLayout ? 12 : INDIA_OVERLAY_POSITION_Y_AFTER;
   const selectedColorClass = hoverColorClass || activeColorClass;
   const selectedIndiaClass = hoverIndiaClass || activeIndiaClass;
   const selectedColorDetails = selectedColorClass
@@ -248,6 +268,16 @@ export default function GobalMap() {
     ? MAP_BACKDROP_POSITION_KERALA
     : MAP_BACKDROP_POSITION_INDIA;
   const activeBackdropRepeat = isKerala ? MAP_BACKDROP_REPEAT_KERALA : MAP_BACKDROP_REPEAT_INDIA;
+
+  useEffect(() => {
+    const updateViewport = () => {
+      setViewportSize({ width: window.innerWidth, height: window.innerHeight });
+    };
+
+    updateViewport();
+    window.addEventListener("resize", updateViewport);
+    return () => window.removeEventListener("resize", updateViewport);
+  }, []);
 
   /* SCROLL TRIGGER */
   useEffect(() => {
@@ -282,8 +312,8 @@ export default function GobalMap() {
     }
 
     gsap.set(overlay, {
-      x: isKerala ? OVERLAY_POSITION_X_BEFORE : INDIA_OVERLAY_POSITION_X_BEFORE,
-      y: isKerala ? OVERLAY_POSITION_Y_BEFORE : INDIA_OVERLAY_POSITION_Y_BEFORE,
+      x: isKerala ? OVERLAY_POSITION_X_BEFORE : indiaOverlayXBefore,
+      y: isKerala ? OVERLAY_POSITION_Y_BEFORE : indiaOverlayYBefore,
       rotation: isKerala ? OVERLAY_ROTATION_BEFORE : INDIA_OVERLAY_ROTATION_BEFORE,
       transformOrigin: "50% 50%",
     });
@@ -294,8 +324,8 @@ export default function GobalMap() {
         .to(overlay, {
           opacity: 0,
           scale: SCALE_OUT,
-          x: isKerala ? OVERLAY_POSITION_X_BEFORE : INDIA_OVERLAY_POSITION_X_BEFORE,
-          y: isKerala ? OVERLAY_POSITION_Y_BEFORE : INDIA_OVERLAY_POSITION_Y_BEFORE,
+          x: isKerala ? OVERLAY_POSITION_X_BEFORE : indiaOverlayXBefore,
+          y: isKerala ? OVERLAY_POSITION_Y_BEFORE : indiaOverlayYBefore,
           rotation: isKerala ? OVERLAY_ROTATION_BEFORE : INDIA_OVERLAY_ROTATION_BEFORE,
           duration: 0.5,
         })
@@ -310,7 +340,7 @@ export default function GobalMap() {
     } else {
       gsap.set(blur, { opacity: 0 });
     }
-  }, [showOverlay, isKerala]);
+  }, [showOverlay, isKerala, indiaOverlayXBefore, indiaOverlayYBefore]);
 
   // India sequence:
   // small image -> outline draw -> fill reveal -> blur background -> zoom to full.
@@ -330,8 +360,8 @@ export default function GobalMap() {
     gsap.set(overlay, {
       opacity: 1,
       scale: OVERLAY_INITIAL_SCALE,
-      x: INDIA_OVERLAY_POSITION_X_BEFORE,
-      y: INDIA_OVERLAY_POSITION_Y_BEFORE,
+      x: indiaOverlayXBefore,
+      y: indiaOverlayYBefore,
       rotation: INDIA_OVERLAY_ROTATION_BEFORE,
       transformOrigin: "50% 50%",
     });
@@ -371,8 +401,8 @@ export default function GobalMap() {
       overlay,
       {
         scale: OVERLAY_FINAL_SCALE,
-        x: INDIA_OVERLAY_POSITION_X_AFTER,
-        y: INDIA_OVERLAY_POSITION_Y_AFTER,
+        x: indiaOverlayXAfter,
+        y: indiaOverlayYAfter,
         rotation: INDIA_OVERLAY_ROTATION_AFTER,
         duration: ZOOM_DURATION,
         ease: "power3.out",
@@ -387,7 +417,7 @@ export default function GobalMap() {
       tl.kill();
       indiaAnimRef.current = null;
     };
-  }, [isKerala, showOverlay]);
+  }, [isKerala, showOverlay, indiaOverlayXAfter, indiaOverlayXBefore, indiaOverlayYAfter, indiaOverlayYBefore]);
 
   /* INDIA/KERALA SWITCH */
   useEffect(() => {
@@ -826,7 +856,8 @@ export default function GobalMap() {
                 ref={indiaSvgRef}
                 width={indiaSvgWidth}
                 height={indiaSvgHeight}
-                showLabels={indiaZoomComplete}
+                showLabels={indiaZoomComplete && !isPortraitLayout}
+                showFilter={indiaZoomComplete}
               />
             )}
           </div>
@@ -1051,13 +1082,15 @@ export default function GobalMap() {
           <aside
             style={{
               position: "fixed",
-              top: "50%",
-              left: 24,
-              transform: "translateY(-50%)",
+              top: isPortraitLayout ? "auto" : "50%",
+              left: isPortraitLayout ? 12 : 24,
+              right: isPortraitLayout ? 12 : "auto",
+              bottom: isPortraitLayout ? 12 : "auto",
+              transform: isPortraitLayout ? "none" : "translateY(-50%)",
               zIndex: 60,
-              width: "min(300px, 28vw)",
-              minWidth: 230,
-              maxHeight: "calc(100vh - 48px)",
+              width: isPortraitLayout ? "auto" : "min(300px, 28vw)",
+              minWidth: isPortraitLayout ? 0 : 230,
+              maxHeight: isPortraitLayout ? "38vh" : "calc(100vh - 48px)",
               overflowY: "auto",
               background:
                 "radial-gradient(140% 110% at 100% 0%, rgba(49, 136, 255, 0.22), rgba(49, 136, 255, 0) 55%), linear-gradient(155deg, rgba(8, 24, 56, 0.9), rgba(4, 14, 38, 0.84) 55%, rgba(7, 30, 72, 0.86) 100%)",
@@ -1168,12 +1201,15 @@ export default function GobalMap() {
           <aside
             style={{
               position: "fixed",
-              top: "50%",
-              right: 24,
-              transform: "translateY(-50%)",
+              top: isPortraitLayout ? 94 : "50%",
+              right: isPortraitLayout ? 12 : 24,
+              left: isPortraitLayout ? 12 : "auto",
+              transform: isPortraitLayout ? "none" : "translateY(-50%)",
               zIndex: 60,
-              width: "min(340px, 32vw)",
-              minWidth: 240,
+              width: isPortraitLayout ? "auto" : "min(340px, 32vw)",
+              minWidth: isPortraitLayout ? 0 : 240,
+              maxHeight: isPortraitLayout ? "26vh" : "none",
+              overflowY: isPortraitLayout ? "auto" : "visible",
               background:
                 "radial-gradient(140% 110% at 100% 0%, rgba(49, 136, 255, 0.22), rgba(49, 136, 255, 0) 55%), linear-gradient(155deg, rgba(8, 24, 56, 0.9), rgba(4, 14, 38, 0.84) 55%, rgba(7, 30, 72, 0.86) 100%)",
               border: "1px solid rgba(88, 168, 255, 0.45)",
@@ -1224,7 +1260,14 @@ export default function GobalMap() {
         </>
       )}
 
-      <div style={{ position: "fixed", top: 24, right: 24, zIndex: 50 }}>
+      <div
+        style={{
+          position: "fixed",
+          top: isPortraitLayout ? 12 : 24,
+          right: isPortraitLayout ? 12 : 24,
+          zIndex: 50,
+        }}
+      >
         {(view === "india" || view === "kerala") && (
           <button
             className="holo-border map-preview-switch"
