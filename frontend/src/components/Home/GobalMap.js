@@ -187,6 +187,7 @@ const INDIA_COLOR_DETAILS = Object.freeze({
 const INDIA_CLASS_ORDER = Object.keys(INDIA_COLOR_DETAILS)
   .filter((className) => className !== "IndiaSVG-20")
   .sort((a, b) => Number(a.replace("IndiaSVG-", "")) - Number(b.replace("IndiaSVG-", "")));
+const INDIA_PORTRAIT_PAGE_SIZE = 6;
 
 
 
@@ -212,10 +213,12 @@ export default function GobalMap() {
   const hoverColorClassRef = useRef(null);
   const activeIndiaClassRef = useRef(null);
   const hoverIndiaClassRef = useRef(null);
+  const indiaPortraitTouchStartXRef = useRef(null);
   const [activeColorClass, setActiveColorClass] = useState(null);
   const [hoverColorClass, setHoverColorClass] = useState(null);
   const [activeIndiaClass, setActiveIndiaClass] = useState(null);
   const [hoverIndiaClass, setHoverIndiaClass] = useState(null);
+  const [indiaPortraitPage, setIndiaPortraitPage] = useState(0);
   const [indiaZoomComplete, setIndiaZoomComplete] = useState(false);
   const [keralaZoomComplete, setKeralaZoomComplete] = useState(false);
   const [isSoilImageZoomed, setIsSoilImageZoomed] = useState(false);
@@ -268,6 +271,40 @@ export default function GobalMap() {
     ? MAP_BACKDROP_POSITION_KERALA
     : MAP_BACKDROP_POSITION_INDIA;
   const activeBackdropRepeat = isKerala ? MAP_BACKDROP_REPEAT_KERALA : MAP_BACKDROP_REPEAT_INDIA;
+  const indiaPortraitPageCount = Math.ceil(INDIA_CLASS_ORDER.length / INDIA_PORTRAIT_PAGE_SIZE);
+  const indiaPortraitPages = Array.from({ length: indiaPortraitPageCount }, (_, pageIndex) =>
+    INDIA_CLASS_ORDER.slice(
+      pageIndex * INDIA_PORTRAIT_PAGE_SIZE,
+      (pageIndex + 1) * INDIA_PORTRAIT_PAGE_SIZE
+    )
+  );
+  const clearIndiaSelection = () => {
+    activeIndiaClassRef.current = null;
+    hoverIndiaClassRef.current = null;
+    setHoverIndiaClass(null);
+    setActiveIndiaClass(null);
+  };
+  const toggleIndiaSelection = (className) => {
+    if (activeIndiaClassRef.current === className) {
+      clearIndiaSelection();
+      return;
+    }
+    activeIndiaClassRef.current = className;
+    hoverIndiaClassRef.current = null;
+    setHoverIndiaClass(null);
+    setActiveIndiaClass(className);
+  };
+  const handleIndiaPortraitSwipeEnd = (event) => {
+    if (indiaPortraitTouchStartXRef.current == null || indiaPortraitPageCount <= 1) return;
+    const touchX = event.changedTouches?.[0]?.clientX;
+    if (typeof touchX !== "number") return;
+    const deltaX = touchX - indiaPortraitTouchStartXRef.current;
+    indiaPortraitTouchStartXRef.current = null;
+    if (Math.abs(deltaX) < 36) return;
+    setIndiaPortraitPage((prev) =>
+      Math.max(0, Math.min(indiaPortraitPageCount - 1, prev + (deltaX < 0 ? 1 : -1)))
+    );
+  };
 
   useEffect(() => {
     const updateViewport = () => {
@@ -278,6 +315,24 @@ export default function GobalMap() {
     window.addEventListener("resize", updateViewport);
     return () => window.removeEventListener("resize", updateViewport);
   }, []);
+
+  useEffect(() => {
+    if (!isPortraitLayout || isKerala) return;
+    if (!selectedIndiaClass) return;
+    const classIndex = INDIA_CLASS_ORDER.indexOf(selectedIndiaClass);
+    if (classIndex < 0) return;
+    setIndiaPortraitPage(Math.floor(classIndex / INDIA_PORTRAIT_PAGE_SIZE));
+  }, [isKerala, isPortraitLayout, selectedIndiaClass]);
+
+  useEffect(() => {
+    if (!isPortraitLayout) {
+      setIndiaPortraitPage(0);
+      return;
+    }
+    if (indiaPortraitPage > indiaPortraitPageCount - 1) {
+      setIndiaPortraitPage(Math.max(0, indiaPortraitPageCount - 1));
+    }
+  }, [indiaPortraitPage, indiaPortraitPageCount, isPortraitLayout]);
 
   /* SCROLL TRIGGER */
   useEffect(() => {
@@ -1079,124 +1134,166 @@ export default function GobalMap() {
       )}
       {!isKerala && showOverlay && (
         <>
-          <aside
-            style={{
-              position: "fixed",
-              top: isPortraitLayout ? "auto" : "50%",
-              left: isPortraitLayout ? 12 : 24,
-              right: isPortraitLayout ? 12 : "auto",
-              bottom: isPortraitLayout ? 12 : "auto",
-              transform: isPortraitLayout ? "none" : "translateY(-50%)",
-              zIndex: 60,
-              width: isPortraitLayout ? "auto" : "min(300px, 28vw)",
-              minWidth: isPortraitLayout ? 0 : 230,
-              maxHeight: isPortraitLayout ? "38vh" : "calc(100vh - 48px)",
-              overflowY: "auto",
-              background:
-                "radial-gradient(140% 110% at 100% 0%, rgba(49, 136, 255, 0.22), rgba(49, 136, 255, 0) 55%), linear-gradient(155deg, rgba(8, 24, 56, 0.9), rgba(4, 14, 38, 0.84) 55%, rgba(7, 30, 72, 0.86) 100%)",
-              border: "1px solid rgba(88, 168, 255, 0.45)",
-              borderRadius: 18,
-              padding: "14px 12px",
-              color: "#eaf3ff",
-              backdropFilter: "blur(14px) saturate(122%)",
-              WebkitBackdropFilter: "blur(14px) saturate(122%)",
-              boxShadow:
-                "0 0 0 1px rgba(124, 194, 255, 0.24), 0 0 35px rgba(49, 142, 255, 0.32), 0 20px 50px rgba(2, 8, 26, 0.68), inset 0 0 40px rgba(38, 118, 255, 0.18), inset 0 1px 0 rgba(196, 228, 255, 0.32)",
-            }}
-          >
+          {isPortraitLayout ? (
+            <aside className="india-portrait-swiper-panel">
+              <div className="india-portrait-swiper-head">
+                <h3>India Soil</h3>
+                <p>Click or tap a region on the map to view soil data.</p>
+              </div>
 
-        <div
+              <div
+                className="india-portrait-swiper-window"
+                onTouchStart={(event) => {
+                  indiaPortraitTouchStartXRef.current = event.touches?.[0]?.clientX ?? null;
+                }}
+                onTouchEnd={handleIndiaPortraitSwipeEnd}
+              >
+                <div
+                  className="india-portrait-swiper-track"
+                  style={{
+                    transform: `translateX(-${indiaPortraitPage * 100}%)`,
+                  }}
+                >
+                  {indiaPortraitPages.map((pageItems, pageIndex) => (
+                    <div className="india-portrait-swiper-page" key={`india-portrait-page-${pageIndex}`}>
+                      {pageItems.map((className) => {
+                        const item = INDIA_COLOR_DETAILS[className];
+                        const isSelected = selectedIndiaClass === className;
+                        return (
+                          <button
+                            key={className}
+                            type="button"
+                            className={`india-portrait-soil-card${isSelected ? " active" : ""}`}
+                            onClick={() => toggleIndiaSelection(className)}
+                          >
+                            <span
+                              className="india-portrait-soil-dot"
+                              style={{ background: item.color }}
+                              aria-hidden="true"
+                            />
+                            <span>{item.label}</span>
+                          </button>
+                        );
+                      })}
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              <div className="india-portrait-swiper-footer">
+                <button className="see-all-section-btn" type="button" onClick={clearIndiaSelection}>
+                  See all section
+                </button>
+                <div className="india-portrait-swiper-dots" aria-label="India soil pages">
+                  {indiaPortraitPages.map((_, pageIndex) => (
+                    <button
+                      key={`india-portrait-dot-${pageIndex}`}
+                      type="button"
+                      className={`india-portrait-swiper-dot${
+                        indiaPortraitPage === pageIndex ? " active" : ""
+                      }`}
+                      onClick={() => setIndiaPortraitPage(pageIndex)}
+                    />
+                  ))}
+                </div>
+              </div>
+            </aside>
+          ) : (
+            <aside
               style={{
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "space-between",
-                gap: 12,
-                marginBottom: 12,
+                position: "fixed",
+                top: "50%",
+                left: 24,
+                transform: "translateY(-50%)",
+                zIndex: 60,
+                width: "min(300px, 28vw)",
+                minWidth: 230,
+                maxHeight: "calc(100vh - 48px)",
+                overflowY: "auto",
+                background:
+                  "radial-gradient(140% 110% at 100% 0%, rgba(49, 136, 255, 0.22), rgba(49, 136, 255, 0) 55%), linear-gradient(155deg, rgba(8, 24, 56, 0.9), rgba(4, 14, 38, 0.84) 55%, rgba(7, 30, 72, 0.86) 100%)",
+                border: "1px solid rgba(88, 168, 255, 0.45)",
+                borderRadius: 18,
+                padding: "14px 12px",
+                color: "#eaf3ff",
+                backdropFilter: "blur(14px) saturate(122%)",
+                WebkitBackdropFilter: "blur(14px) saturate(122%)",
+                boxShadow:
+                  "0 0 0 1px rgba(124, 194, 255, 0.24), 0 0 35px rgba(49, 142, 255, 0.32), 0 20px 50px rgba(2, 8, 26, 0.68), inset 0 0 40px rgba(38, 118, 255, 0.18), inset 0 1px 0 rgba(196, 228, 255, 0.32)",
               }}
             >
               <div
                 style={{
-                  fontSize: 13,
-                  letterSpacing: "0.35px",
-                  color: "rgba(226, 241, 255, 0.95)",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "space-between",
+                  gap: 12,
+                  marginBottom: 12,
                 }}
               >
-                India Soil Types
+                <div
+                  style={{
+                    fontSize: 13,
+                    letterSpacing: "0.35px",
+                    color: "rgba(226, 241, 255, 0.95)",
+                  }}
+                >
+                  India Soil Types
+                </div>
+                <button className="see-all-section-btn" type="button" onClick={clearIndiaSelection}>
+                  See all section
+                </button>
               </div>
-              <button
-                className="see-all-section-btn"
-                type="button"
-                onClick={() => {
-                  activeIndiaClassRef.current = null;
-                  hoverIndiaClassRef.current = null;
-                  setHoverIndiaClass(null);
-                  setActiveIndiaClass(null);
-                }}
-              >
-                See all section
-              </button>
-            </div>
 
-            <div style={{ display: "grid", gap: 6 }}>
-              {INDIA_CLASS_ORDER.map((className) => {
-                const item = INDIA_COLOR_DETAILS[className];
-                const isSelected = selectedIndiaClass === className;
-                return (
-                  <button
-                    className={`holo-border soil-type-btn${isSelected ? " soil-type-btn-active" : ""}`}
-                    key={className}
-                    type="button"
-                    onClick={() => {
-                      if (activeIndiaClassRef.current === className) {
-                        activeIndiaClassRef.current = null;
-                        hoverIndiaClassRef.current = null;
-                        setHoverIndiaClass(null);
-                        setActiveIndiaClass(null);
-                        return;
-                      }
-                      activeIndiaClassRef.current = className;
-                      hoverIndiaClassRef.current = null;
-                      setHoverIndiaClass(null);
-                      setActiveIndiaClass(className);
-                    }}
-                    style={{
-                      display: "flex",
-                      alignItems: "center",
-                      gap: 8,
-                      width: "100%",
-                      textAlign: "left",
-                      padding: "7px 8px",
-                      borderRadius: 11,
-                      border: "none",
-                      background: isSelected
-                        ? "linear-gradient(135deg, rgba(37, 152, 255, 0.24), rgba(41, 255, 212, 0.2))"
-                        : "linear-gradient(135deg, rgba(25, 62, 118, 0.54), rgba(12, 34, 72, 0.42))",
-                      color: "#eaf3ff",
-                      cursor: "pointer",
-                      fontSize: 13,
-                      boxShadow: isSelected
-                        ? "0 0 20px rgba(56, 202, 255, 0.34), inset 0 0 22px rgba(90, 255, 219, 0.22)"
-                        : "inset 0 0 18px rgba(50, 119, 224, 0.16)",
-                      transition: "all 0.2s ease",
-                    }}
-                  >
-                    <span
+              <div style={{ display: "grid", gap: 6 }}>
+                {INDIA_CLASS_ORDER.map((className) => {
+                  const item = INDIA_COLOR_DETAILS[className];
+                  const isSelected = selectedIndiaClass === className;
+                  return (
+                    <button
+                      className={`holo-border soil-type-btn${isSelected ? " soil-type-btn-active" : ""}`}
+                      key={className}
+                      type="button"
+                      onClick={() => toggleIndiaSelection(className)}
                       style={{
-                        width: 12,
-                        height: 12,
-                        borderRadius: 999,
-                        background: item.color,
-                        border: "1px solid rgba(210, 236, 255, 0.72)",
-                        flex: "0 0 auto",
-                        boxShadow: "0 0 8px rgba(255,255,255,0.26)",
+                        display: "flex",
+                        alignItems: "center",
+                        gap: 8,
+                        width: "100%",
+                        textAlign: "left",
+                        padding: "7px 8px",
+                        borderRadius: 11,
+                        border: "none",
+                        background: isSelected
+                          ? "linear-gradient(135deg, rgba(37, 152, 255, 0.24), rgba(41, 255, 212, 0.2))"
+                          : "linear-gradient(135deg, rgba(25, 62, 118, 0.54), rgba(12, 34, 72, 0.42))",
+                        color: "#eaf3ff",
+                        cursor: "pointer",
+                        fontSize: 13,
+                        boxShadow: isSelected
+                          ? "0 0 20px rgba(56, 202, 255, 0.34), inset 0 0 22px rgba(90, 255, 219, 0.22)"
+                          : "inset 0 0 18px rgba(50, 119, 224, 0.16)",
+                        transition: "all 0.2s ease",
                       }}
-                    />
-                    <span>{item.label}</span>
-                  </button>
-                );
-              })}
-            </div>
-          </aside>
+                    >
+                      <span
+                        style={{
+                          width: 12,
+                          height: 12,
+                          borderRadius: 999,
+                          background: item.color,
+                          border: "1px solid rgba(210, 236, 255, 0.72)",
+                          flex: "0 0 auto",
+                          boxShadow: "0 0 8px rgba(255,255,255,0.26)",
+                        }}
+                      />
+                      <span>{item.label}</span>
+                    </button>
+                  );
+                })}
+              </div>
+            </aside>
+          )}
 
           <aside
             style={{
