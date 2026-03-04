@@ -72,24 +72,24 @@ const INDIA_PORTRAIT_PRESETS = Object.freeze({
     overlayYAfter: 12,
   },
   medium: {
-    widthBefore: "min(72vw, 700px)",
-    heightBefore: "70vh",
-    widthAfter: "min(68vw, 660px)",
-    heightAfter: "67vh",
+    widthBefore: "min(68vw, 620px)",
+    heightBefore: "64vh",
+    widthAfter: "min(64vw, 580px)",
+    heightAfter: "61vh",
     overlayXBefore: 0,
-    overlayYBefore: 20,
+    overlayYBefore: -2,
     overlayXAfter: 0,
-    overlayYAfter: 10,
+    overlayYAfter: -14,
   },
   compact: {
-    widthBefore: "min(78vw, 650px)",
-    heightBefore: "72vh",
-    widthAfter: "min(74vw, 620px)",
-    heightAfter: "69vh",
+    widthBefore: "min(74vw, 590px)",
+    heightBefore: "66vh",
+    widthAfter: "min(70vw, 560px)",
+    heightAfter: "63vh",
     overlayXBefore: 0,
-    overlayYBefore: 26,
+    overlayYBefore: -6,
     overlayXAfter: 0,
-    overlayYAfter: 14,
+    overlayYAfter: -16,
   },
 });
 
@@ -117,8 +117,9 @@ const KERALA_PORTRAIT_PRESETS = Object.freeze({
 function getPortraitPreset(width, height) {
   const safeWidth = Math.max(width, 1);
   const aspectRatio = height / safeWidth;
+  const isTallPortrait = aspectRatio >= 1.25;
 
-  if (safeWidth <= 800) {
+  if (safeWidth <= 820 || (safeWidth <= 960 && isTallPortrait)) {
     return {
       india: INDIA_PORTRAIT_PRESETS.compact,
       kerala: KERALA_PORTRAIT_PRESETS.compact,
@@ -1305,13 +1306,13 @@ export default function GobalMap() {
             style={{
               position: "fixed",
               top: isPortraitLayout ? 14 : "50%",
-              right: isPortraitLayout ? 12 : 24,
+              right: isPortraitLayout ? "auto" : 24,
               left: isPortraitLayout ? 12 : "auto",
               transform: isPortraitLayout ? "none" : "translateY(-50%)",
               zIndex: 60,
-              width: isPortraitLayout ? "50%" : "min(340px, 32vw)",
+              width: isPortraitLayout ? "min(540px, calc(100vw - 280px))" : "min(340px, 32vw)",
               minWidth: isPortraitLayout ? 0 : 240,
-              maxHeight: isPortraitLayout ? "26vh" : "none",
+              maxHeight: isPortraitLayout ? "22vh" : "none",
               overflowY: isPortraitLayout ? "auto" : "visible",
               background:
                 "radial-gradient(140% 110% at 100% 0%, rgba(49, 136, 255, 0.22), rgba(49, 136, 255, 0) 55%), linear-gradient(155deg, rgba(8, 24, 56, 0.9), rgba(4, 14, 38, 0.84) 55%, rgba(7, 30, 72, 0.86) 100%)",
