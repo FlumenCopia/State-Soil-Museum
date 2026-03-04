@@ -42,13 +42,13 @@ const ZOOM_DELAY_AFTER_BLUR = 0.08;
 
 const INDIA_WIDTH_BEFORE = "min(80vw, 800px)";
 const INDIA_HEIGHT_BEFORE = "80vh";
-const INDIA_WIDTH_BEFORE_PORTRAIT = "min(65vw, 650px)";
-const INDIA_HEIGHT_BEFORE_PORTRAIT = "650px";
+const INDIA_WIDTH_BEFORE_PORTRAIT = "min(68vw, 680px)";
+const INDIA_HEIGHT_BEFORE_PORTRAIT = "68vh";
 
-const INDIA_WIDTH_AFTER = "min(650vw, 65px)";
-const INDIA_HEIGHT_AFTER = "650px";
-const INDIA_WIDTH_AFTER_PORTRAIT = "650px";
-const INDIA_HEIGHT_AFTER_PORTRAIT = "650vh";
+const INDIA_WIDTH_AFTER = "min(90vw, 900px)";
+const INDIA_HEIGHT_AFTER = "90vh";
+const INDIA_WIDTH_AFTER_PORTRAIT = "min(65vw,650px)";
+const INDIA_HEIGHT_AFTER_PORTRAIT = "65vh";
 
 const KERALA_WIDTH_BEFORE = "min(72vw, 720px)";
 const KERALA_HEIGHT_BEFORE = "68vh";
@@ -61,34 +61,83 @@ const KERALA_WIDTH_AFTER_PORTRAIT = "min(96vw, 640px)";
 const KERALA_HEIGHT_AFTER_PORTRAIT = "76vh";
 
 const INDIA_PORTRAIT_PRESETS = Object.freeze({
-  default: Object.freeze({
+  base: {
     widthBefore: INDIA_WIDTH_BEFORE_PORTRAIT,
     heightBefore: INDIA_HEIGHT_BEFORE_PORTRAIT,
     widthAfter: INDIA_WIDTH_AFTER_PORTRAIT,
     heightAfter: INDIA_HEIGHT_AFTER_PORTRAIT,
-    overlayXBefore: INDIA_OVERLAY_POSITION_X_BEFORE,
-    overlayYBefore: INDIA_OVERLAY_POSITION_Y_BEFORE,
-    overlayXAfter: INDIA_OVERLAY_POSITION_X_AFTER,
-    overlayYAfter: INDIA_OVERLAY_POSITION_Y_AFTER,
-  }),
+    overlayXBefore: 0,
+    overlayYBefore: 24,
+    overlayXAfter: 0,
+    overlayYAfter: 12,
+  },
+  medium: {
+    widthBefore: "min(68vw, 620px)",
+    heightBefore: "64vh",
+    widthAfter: "min(64vw, 580px)",
+    heightAfter: "61vh",
+    overlayXBefore: 0,
+    overlayYBefore: -2,
+    overlayXAfter: 0,
+    overlayYAfter: -14,
+  },
+  compact: {
+    widthBefore: "min(74vw, 590px)",
+    heightBefore: "66vh",
+    widthAfter: "min(70vw, 560px)",
+    heightAfter: "63vh",
+    overlayXBefore: 0,
+    overlayYBefore: -6,
+    overlayXAfter: 0,
+    overlayYAfter: -16,
+  },
 });
 
 const KERALA_PORTRAIT_PRESETS = Object.freeze({
-  default: Object.freeze({
+  base: {
     widthBefore: KERALA_WIDTH_BEFORE_PORTRAIT,
     heightBefore: KERALA_HEIGHT_BEFORE_PORTRAIT,
     widthAfter: KERALA_WIDTH_AFTER_PORTRAIT,
     heightAfter: KERALA_HEIGHT_AFTER_PORTRAIT,
-  }),
+  },
+  medium: {
+    widthBefore: "min(88vw, 560px)",
+    heightBefore: "68vh",
+    widthAfter: "min(100vw, 680px)",
+    heightAfter: "80vh",
+  },
+  compact: {
+    widthBefore: "min(92vw, 520px)",
+    heightBefore: "70vh",
+    widthAfter: "min(100vw, 620px)",
+    heightAfter: "82vh",
+  },
 });
 
-function getPortraitPreset() {
+function getPortraitPreset(width, height) {
+  const safeWidth = Math.max(width, 1);
+  const aspectRatio = height / safeWidth;
+  const isTallPortrait = aspectRatio >= 1.25;
+
+  if (safeWidth <= 820 || (safeWidth <= 960 && isTallPortrait)) {
+    return {
+      india: INDIA_PORTRAIT_PRESETS.compact,
+      kerala: KERALA_PORTRAIT_PRESETS.compact,
+    };
+  }
+
+  if (safeWidth <= 960 || aspectRatio >= 1.7) {
+    return {
+      india: INDIA_PORTRAIT_PRESETS.medium,
+      kerala: KERALA_PORTRAIT_PRESETS.medium,
+    };
+  }
+
   return {
-    india: INDIA_PORTRAIT_PRESETS.default,
-    kerala: KERALA_PORTRAIT_PRESETS.default,
+    india: INDIA_PORTRAIT_PRESETS.base,
+    kerala: KERALA_PORTRAIT_PRESETS.base,
   };
 }
-
 
 const MAP_BACKDROP_BACKGROUND_KERALA = `
   radial-gradient(120% 95% at 50% 46%, rgba(34, 98, 198, 0.34) 0%, rgba(12, 32, 68, 0.78) 46%, rgba(4, 12, 28, 0.96) 100%),
@@ -1109,7 +1158,7 @@ export default function GobalMap() {
                 </div>
                 <div
                   style={{
-                    width: "100%",
+                    width: "90%",
                     height: 135,
                     borderRadius: 12,
                     overflow: "hidden",
@@ -1124,8 +1173,8 @@ export default function GobalMap() {
                     onClick={() => setIsSoilImageZoomed((prev) => !prev)}
                     title={isSoilImageZoomed ? "Click to reset image zoom" : "Click to zoom image"}
                     style={{
-                      width: "100%",
-                      height: "100%",
+                      width: "90",
+                      height: "90%",
                       objectFit: "cover",
                       transform: isSoilImageZoomed ? "scale(6)" : "scale(1)",
                       transformOrigin: "center center",
