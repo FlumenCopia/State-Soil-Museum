@@ -27,13 +27,24 @@
 
 @media (min-height: 1081px) and (max-width: 960px) and (orientation: portrait) {
   .INDIA_WIDTH_AFTER_PORTRAIT {
-    --india-svg-after-width: min(55vw, 550px);
-    --india-svg-after-height: 55vh;
+    --india-svg-after-width: min(56vw, 560px);
+    --india-svg-after-height: 56vh;
   }
 }
 
+@media (max-width: 1024px) and (orientation: portrait) {
+  .INDIA_WIDTH_AFTER_PORTRAIT {
+    --india-svg-after-width: min(50vw, 500px);
+    --india-svg-after-height: 50vh;
+  }
+}
 
-
+@media (max-width: 864px) and (orientation: portrait) {
+  .INDIA_WIDTH_AFTER_PORTRAIT {
+    --india-svg-after-width: min(45vw, 450px);
+    --india-svg-after-height: 45vh;
+  }
+}
 
 
 .hover-orange:hover {
