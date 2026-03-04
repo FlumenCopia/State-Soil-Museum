@@ -39,6 +39,8 @@ const ZOOM_DURATION = 0.55;
 const BLUR_FADE_IN_DURATION = 0.45;
 const BLUR_DELAY_AFTER_FILL = 0.06;
 const ZOOM_DELAY_AFTER_BLUR = 0.08;
+const PANEL_ENTRY_OFFSET_X = 88;
+const PANEL_SCROLL_DRIFT_X = 18;
 
 const INDIA_WIDTH_BEFORE = "var(--india-svg-width)";
 const INDIA_HEIGHT_BEFORE = "var(--india-svg-height)";
@@ -447,6 +449,67 @@ export default function GobalMap() {
     window.addEventListener("hero:explore-map", handleExploreMap);
     return () => window.removeEventListener("hero:explore-map", handleExploreMap);
   }, [setOverlayMapView, setView]);
+
+  useEffect(() => {
+    const root = scrollRef.current;
+    if (!root) return;
+
+    const leftPanels = Array.from(root.querySelectorAll('[data-map-side="left"]'));
+    const rightPanels = Array.from(root.querySelectorAll('[data-map-side="right"]'));
+    const allPanels = [...leftPanels, ...rightPanels];
+
+    if (!allPanels.length) return;
+
+    gsap.killTweensOf(allPanels);
+    const previousTrigger = ScrollTrigger.getById("map-side-panels-motion");
+    if (previousTrigger) previousTrigger.kill();
+
+    if (!showOverlay || isPortraitLayout) {
+      gsap.set(leftPanels, { x: -PANEL_ENTRY_OFFSET_X, opacity: 0 });
+      gsap.set(rightPanels, { x: PANEL_ENTRY_OFFSET_X, opacity: 0 });
+      return;
+    }
+
+    gsap.fromTo(
+      leftPanels,
+      { x: -PANEL_ENTRY_OFFSET_X, opacity: 0 },
+      { x: 0, opacity: 1, duration: 0.58, ease: "power2.out", stagger: 0.06, overwrite: "auto" }
+    );
+    gsap.fromTo(
+      rightPanels,
+      { x: PANEL_ENTRY_OFFSET_X, opacity: 0 },
+      { x: 0, opacity: 1, duration: 0.58, ease: "power2.out", stagger: 0.06, overwrite: "auto" }
+    );
+
+    const panelMotionTrigger = ScrollTrigger.create({
+      id: "map-side-panels-motion",
+      trigger: "#india-section",
+      start: "top center",
+      end: "#kerala-section bottom center",
+      scrub: 0.8,
+      invalidateOnRefresh: true,
+      onUpdate: (self) => {
+        const drift = (self.progress - 0.5) * 2;
+        gsap.to(leftPanels, {
+          x: -drift * PANEL_SCROLL_DRIFT_X,
+          duration: 0.2,
+          ease: "none",
+          overwrite: "auto",
+        });
+        gsap.to(rightPanels, {
+          x: drift * PANEL_SCROLL_DRIFT_X,
+          duration: 0.2,
+          ease: "none",
+          overwrite: "auto",
+        });
+      },
+    });
+
+    return () => {
+      panelMotionTrigger.kill();
+      gsap.killTweensOf(allPanels);
+    };
+  }, [showOverlay, isPortraitLayout, view, isKerala]);
 
   /* BLUR + OVERLAY ANIMATION */
   useEffect(() => {
@@ -1024,6 +1087,7 @@ export default function GobalMap() {
       {isKerala && showOverlay && (
         <>
           <aside
+            data-map-side="left"
             style={{
               position: "fixed",
               top: "50%",
@@ -1139,6 +1203,7 @@ export default function GobalMap() {
           </aside>
 
           <aside
+            data-map-side="right"
             style={{
               position: "fixed",
               top: "50%",
@@ -1235,6 +1300,7 @@ export default function GobalMap() {
             />
           ) : (
             <aside
+              data-map-side="left"
               style={{
                 position: "fixed",
                 top: "50%",
@@ -1331,6 +1397,7 @@ export default function GobalMap() {
           )}
 
           <aside
+            data-map-side="right"
             style={{
               position: "fixed",
               top: isPortraitLayout ? 14 : "50%",
