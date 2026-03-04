@@ -282,6 +282,7 @@ const INDIA_CLASS_ORDER = Object.keys(INDIA_COLOR_DETAILS)
 export default function GobalMap() {
   const view = useAppStore((s) => s.view);
   const setView = useAppStore((s) => s.setView);
+  const setOverlayMapView = useAppStore((s) => s.setOverlayMapView);
   const indiaRevealReady = useAppStore((s) => s.indiaRevealReady);
   const overlayMapView = useAppStore((s) => s.overlayMapView);
 
@@ -411,7 +412,7 @@ export default function GobalMap() {
     gsap.registerPlugin(ScrollTrigger);
     setView("globe");
 
-    ScrollTrigger.create({
+    const indiaTrigger = ScrollTrigger.create({
       trigger: "#india-section",
       start: "top bottom",
       end: "center center",
@@ -420,7 +421,32 @@ export default function GobalMap() {
       onEnter: () => setView("india"),
       onLeaveBack: () => setView("globe"),
     });
+
+    const keralaTrigger = ScrollTrigger.create({
+      trigger: "#kerala-section",
+      start: "top bottom",
+      end: "center center",
+      scrub: 1.2,
+      invalidateOnRefresh: true,
+      onEnter: () => setView("kerala"),
+      onLeaveBack: () => setView("india"),
+    });
+
+    return () => {
+      indiaTrigger.kill();
+      keralaTrigger.kill();
+    };
   }, [setView]);
+
+  useEffect(() => {
+    const handleExploreMap = () => {
+      setOverlayMapView("india");
+      setView("india");
+    };
+
+    window.addEventListener("hero:explore-map", handleExploreMap);
+    return () => window.removeEventListener("hero:explore-map", handleExploreMap);
+  }, [setOverlayMapView, setView]);
 
   /* BLUR + OVERLAY ANIMATION */
   useEffect(() => {
