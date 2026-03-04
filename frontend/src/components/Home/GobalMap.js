@@ -1223,12 +1223,12 @@ export default function GobalMap() {
           <aside
             style={{
               position: "fixed",
-              top: isPortraitLayout ? 94 : "50%",
+              top: isPortraitLayout ? 14 : "50%",
               right: isPortraitLayout ? 12 : 24,
               left: isPortraitLayout ? 12 : "auto",
               transform: isPortraitLayout ? "none" : "translateY(-50%)",
               zIndex: 60,
-              width: isPortraitLayout ? "auto" : "min(340px, 32vw)",
+              width: isPortraitLayout ? "50%" : "min(340px, 32vw)",
               minWidth: isPortraitLayout ? 0 : 240,
               maxHeight: isPortraitLayout ? "26vh" : "none",
               overflowY: isPortraitLayout ? "auto" : "visible",
@@ -1238,6 +1238,9 @@ export default function GobalMap() {
               borderRadius: 18,
               padding: "16px",
               color: "#eaf3ff",
+              display: "flex",
+              flexDirection: "column",
+              gap: 8,
               backdropFilter: "blur(14px) saturate(122%)",
               WebkitBackdropFilter: "blur(14px) saturate(122%)",
               boxShadow:
@@ -1246,30 +1249,44 @@ export default function GobalMap() {
           >
             <div
               style={{
-                fontSize: 15,
-                letterSpacing: "0.35px",
-                color: "rgba(226, 241, 255, 0.95)",
-                marginBottom: 10,
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "space-between",
+                gap: 10,
+                flexWrap: "wrap",
               }}
             >
-              India Soil 
-            </div>
-            {selectedIndiaDetails ? (
-              <>
-                <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 10 }}>
+              <span
+                style={{
+                  fontSize: 15,
+                  letterSpacing: "0.35px",
+                  color: "rgba(226, 241, 255, 0.95)",
+                }}
+              >
+                India Soil
+              </span>
+              {selectedIndiaDetails && (
+                <span style={{ display: "inline-flex", alignItems: "center", gap: 8, minWidth: 0 }}>
                   <span
                     style={{
-                      width: 14,
-                      height: 14,
+                      width: 12,
+                      height: 12,
                       borderRadius: 999,
                       background: selectedIndiaDetails.color,
                       border: "1px solid rgba(255,255,255,0.55)",
                       display: "inline-block",
+                      flex: "0 0 auto",
                     }}
                   />
-                  <strong style={{ fontSize: 14 }}>{selectedIndiaDetails.label}</strong>
-                </div>
-                <div style={{ fontSize: 15, lineHeight: 1.45, opacity: 0.95 }}>
+                  <strong style={{ fontSize: isPortraitLayout ? 13 : 14, lineHeight: 1.2 }}>
+                    {selectedIndiaDetails.label}
+                  </strong>
+                </span>
+              )}
+            </div>
+            {selectedIndiaDetails ? (
+              <>
+                <div style={{ fontSize: isPortraitLayout ? 14 : 15, lineHeight: 1.45, opacity: 0.95 }}>
                   {selectedIndiaDetails.details}
                 </div>
               </>
