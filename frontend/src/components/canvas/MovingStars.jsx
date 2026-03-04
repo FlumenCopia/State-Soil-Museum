@@ -27,6 +27,8 @@ export default function MovingStars() {
         fade 
         speed={0} 
       />
+
+     
     </group>
   );
 }

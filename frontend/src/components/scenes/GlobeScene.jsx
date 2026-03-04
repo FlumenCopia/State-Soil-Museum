@@ -18,19 +18,33 @@ export default function GlobeScene() {
   const earthGroup = useRef();
   const cloudsRef = useRef();
   const previousViewRef = useRef("globe");
-  const { gl } = useThree();
+  const { gl, scene } = useThree();
   const { view } = useAppStore();
+  const sceneBackground = useTexture("/images/g.png");
   const earthColor = useTexture("/images/e4.webp");
   const earthNormal = useTexture("/images/earth_normal.webp");
   const cloudsTexture = useTexture("/images/e1.webp");
+
   useEffect(() => {
-    [earthColor, earthNormal, cloudsTexture].forEach((tex) => {
+    if (!sceneBackground) return;
+    sceneBackground.colorSpace = THREE.SRGBColorSpace;
+    scene.background = sceneBackground;
+
+    return () => {
+      if (scene.background === sceneBackground) {
+        scene.background = null;
+      }
+    };
+  }, [sceneBackground, scene]);
+
+  useEffect(() => {
+    [sceneBackground, earthColor, earthNormal, cloudsTexture].forEach((tex) => {
       if (!tex) return;
       tex.anisotropy = gl.capabilities.getMaxAnisotropy();
       tex.needsUpdate = true;
     });
     if (earthColor) earthColor.colorSpace = THREE.SRGBColorSpace;
-  }, [earthColor, earthNormal, cloudsTexture, gl]);
+  }, [sceneBackground, earthColor, earthNormal, cloudsTexture, gl]);
   useEffect(() => {
     if (earthGroup.current && (view === "india" || view === "kerala")) {
       const targets = {
@@ -130,16 +144,6 @@ export default function GlobeScene() {
         />
       </Sphere>
 
-      {/* Atmosphere */}
-      {/* <Sphere args={[104, 128, 128]}>
-        <meshBasicMaterial
-          color="#4ea9ff"
-          transparent
-        //   opacity={0.12}
-          opacity={0.06}
-          side={THREE.BackSide}
-        />
-      </Sphere> */}
 
 
       <Sphere args={[102, 128, 128]}> 
