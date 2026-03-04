@@ -47,8 +47,8 @@ const INDIA_HEIGHT_BEFORE_PORTRAIT = "var(--india-svg-height)";
 
 const INDIA_WIDTH_AFTER = "min(90vw, 900px)";
 const INDIA_HEIGHT_AFTER = "90vh";
-const INDIA_WIDTH_AFTER_PORTRAIT = "var(--india-svg-after-width)";
-const INDIA_HEIGHT_AFTER_PORTRAIT = "var(--india-svg-after-height)";
+const INDIA_WIDTH_AFTER_PORTRAIT = "var(--india-svg-after-width, min(70vw, 700px))";
+const INDIA_HEIGHT_AFTER_PORTRAIT = "var(--india-svg-after-height, 70vh)";
 
 const KERALA_WIDTH_BEFORE = "min(72vw, 720px)";
 const KERALA_HEIGHT_BEFORE = "68vh";
@@ -66,7 +66,30 @@ const INDIA_PORTRAIT_PRESETS = Object.freeze({
     heightBefore: INDIA_HEIGHT_BEFORE_PORTRAIT,
     widthAfter: INDIA_WIDTH_AFTER_PORTRAIT,
     heightAfter: INDIA_HEIGHT_AFTER_PORTRAIT,
-   
+    overlayXBefore: INDIA_OVERLAY_POSITION_X_BEFORE,
+    overlayYBefore: INDIA_OVERLAY_POSITION_Y_BEFORE,
+    overlayXAfter: INDIA_OVERLAY_POSITION_X_AFTER,
+    overlayYAfter: INDIA_OVERLAY_POSITION_Y_AFTER,
+  },
+  medium: {
+    widthBefore: INDIA_WIDTH_BEFORE_PORTRAIT,
+    heightBefore: INDIA_HEIGHT_BEFORE_PORTRAIT,
+    widthAfter: INDIA_WIDTH_AFTER_PORTRAIT,
+    heightAfter: INDIA_HEIGHT_AFTER_PORTRAIT,
+    overlayXBefore: INDIA_OVERLAY_POSITION_X_BEFORE,
+    overlayYBefore: INDIA_OVERLAY_POSITION_Y_BEFORE,
+    overlayXAfter: INDIA_OVERLAY_POSITION_X_AFTER,
+    overlayYAfter: INDIA_OVERLAY_POSITION_Y_AFTER,
+  },
+  compact: {
+    widthBefore: INDIA_WIDTH_BEFORE_PORTRAIT,
+    heightBefore: INDIA_HEIGHT_BEFORE_PORTRAIT,
+    widthAfter: INDIA_WIDTH_AFTER_PORTRAIT,
+    heightAfter: INDIA_HEIGHT_AFTER_PORTRAIT,
+    overlayXBefore: INDIA_OVERLAY_POSITION_X_BEFORE,
+    overlayYBefore: INDIA_OVERLAY_POSITION_Y_BEFORE,
+    overlayXAfter: INDIA_OVERLAY_POSITION_X_AFTER,
+    overlayYAfter: INDIA_OVERLAY_POSITION_Y_AFTER,
   },
 
 });
@@ -950,7 +973,7 @@ export default function GobalMap() {
             {shouldRenderIndiaSvg && (
               <IndiaSVG
                 ref={indiaSvgRef}
-                className={isPortraitLayout && indiaZoomComplete ? "INDIA_WIDTH_AFTER_PORTRAIT" : undefined}
+                className={isPortraitLayout ? "INDIA_WIDTH_AFTER_PORTRAIT" : undefined}
                 width={indiaSvgWidth}
                 height={indiaSvgHeight}
                 showLabels={indiaZoomComplete && !isPortraitLayout}
