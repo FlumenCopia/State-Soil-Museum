@@ -834,3 +834,41 @@ svg rect.selected-highlight {
     padding: 6px 9px;
   }
 }
+
+@media (max-width: 1080px) and (min-height: 1280px) and (orientation: portrait) {
+  .india-portrait-swiper-panel {
+    left: 10px;
+    right: 10px;
+    bottom: 10px;
+    padding: 6px;
+    border-radius: 18px;
+  }
+
+  .india-portrait-swiper-head {
+    margin-bottom: 8px;
+    padding: 6px 8px;
+  }
+
+  .india-portrait-swiper-head h3 {
+    font-size: 20px;
+  }
+
+  .india-portrait-swiper-head p {
+    margin-top: 4px;
+    font-size: 12px;
+  }
+
+  .india-portrait-swiper-page {
+    gap: 7px;
+  }
+
+  .india-portrait-soil-card {
+    min-height: 48px;
+    padding: 7px 8px;
+    font-size: 11px;
+  }
+
+  .india-portrait-swiper-footer {
+    margin-top: 8px;
+  }
+}
