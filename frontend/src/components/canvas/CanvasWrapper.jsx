@@ -11,8 +11,9 @@ export default function CanvasWrapper({ children }) {
     <div style={{ width: "100vw", height: "100vh", pointerEvents: "none" }}>
       <Canvas
         dpr={[1, 2]}
+        gl={{ alpha: true }}
         camera={{ fov: 45, near: 0.1, far: 5000, position: [0, 0, 320] }}
-        style={{ pointerEvents: "none",background: "black"  }}
+        style={{ pointerEvents: "none", background: "transparent" }}
              >
         <Suspense fallback={null}>
           <MovingStars />
