@@ -976,7 +976,7 @@ export default function GobalMap() {
                 className={isPortraitLayout ? "INDIA_WIDTH_AFTER_PORTRAIT" : undefined}
                 width={indiaSvgWidth}
                 height={indiaSvgHeight}
-                showLabels={indiaZoomComplete && !isPortraitLayout}
+                showLabels={indiaZoomComplete}
                 showFilter={indiaZoomComplete}
               />
             )}
