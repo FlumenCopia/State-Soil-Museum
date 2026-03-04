@@ -468,7 +468,7 @@ export default function GobalMap() {
   }, [showOverlay, isKerala, indiaOverlayXBefore, indiaOverlayYBefore]);
 
   // India sequence:
-  // small image -> outline draw -> fill reveal -> blur background -> zoom to full.
+  // small image -> blur background -> outline draw -> fill reveal -> zoom to full.
   useEffect(() => {
     if (!showOverlay || !indiaSvgRef.current || isKerala) return;
     setIndiaZoomComplete(false);
@@ -502,6 +502,11 @@ export default function GobalMap() {
     });
 
     const tl = gsap.timeline();
+    tl.to(blur, {
+      opacity: 1,
+      duration: BLUR_FADE_IN_DURATION,
+      ease: "power2.out",
+    });
     tl.to({}, { duration: OUTLINE_DELAY_SECONDS });
     tl.to(drawPaths, {
       strokeDashoffset: 0,
@@ -514,15 +519,6 @@ export default function GobalMap() {
       ease: "power2.out",
     });
     tl.to(
-      blur,
-      {
-        opacity: 1,
-        duration: BLUR_FADE_IN_DURATION,
-        ease: "power2.out",
-      },
-      `>+${BLUR_DELAY_AFTER_FILL}`
-    );
-    tl.to(
       overlay,
       {
         scale: OVERLAY_FINAL_SCALE,
@@ -533,7 +529,7 @@ export default function GobalMap() {
         ease: "power3.out",
         force3D: true,
       },
-      `>+${ZOOM_DELAY_AFTER_BLUR}`
+      `>+${BLUR_DELAY_AFTER_FILL + ZOOM_DELAY_AFTER_BLUR}`
     );
     tl.eventCallback("onComplete", () => setIndiaZoomComplete(true));
 
@@ -578,7 +574,7 @@ export default function GobalMap() {
   }, [isKerala]);
 
   // Kerala sequence:
-  // small image -> outline -> color -> blur background -> zoom to full.
+  // small image -> blur background -> outline -> color -> zoom to full.
   useEffect(() => {
     if (!showOverlay || !keralaSvgRef.current || !isKerala) return;
     setKeralaZoomComplete(false);
@@ -612,6 +608,11 @@ export default function GobalMap() {
     });
 
     const tl = gsap.timeline();
+    tl.to(blur, {
+      opacity: 1,
+      duration: BLUR_FADE_IN_DURATION,
+      ease: "power2.out",
+    });
     tl.to({}, { duration: OUTLINE_DELAY_SECONDS });
     tl.to(drawPaths, {
       strokeDashoffset: 0,
@@ -624,15 +625,6 @@ export default function GobalMap() {
       ease: "power2.out",
     });
     tl.to(
-      blur,
-      {
-        opacity: 1,
-        duration: BLUR_FADE_IN_DURATION,
-        ease: "power2.out",
-      },
-      `>+${BLUR_DELAY_AFTER_FILL}`
-    );
-    tl.to(
       overlay,
       {
         scale: OVERLAY_FINAL_SCALE,
@@ -643,7 +635,7 @@ export default function GobalMap() {
         ease: "power3.out",
         force3D: true,
       },
-      `>+${ZOOM_DELAY_AFTER_BLUR}`
+      `>+${BLUR_DELAY_AFTER_FILL + ZOOM_DELAY_AFTER_BLUR}`
     );
     tl.eventCallback("onComplete", () => setKeralaZoomComplete(true));
 
