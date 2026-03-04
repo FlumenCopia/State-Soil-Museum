@@ -32,6 +32,16 @@
   }
 }
 
+
+
+
+@media  (max-width: 1100px) and (orientation: portrait) {
+  .INDIA_WIDTH_AFTER_PORTRAIT {
+    --india-svg-after-width: min(58vw, 580px);
+    --india-svg-after-height: 58vh;
+  }
+}
+
 @media (max-width: 1024px) and (orientation: portrait) {
   .INDIA_WIDTH_AFTER_PORTRAIT {
     --india-svg-after-width: min(50vw, 500px);
@@ -798,45 +808,26 @@ svg rect.selected-highlight {
 
 @media (max-width: 1100px) and (orientation: portrait) {
   .map-preview-switch {
-    width: min(240px, 66vw);
+    width: min(240px, 50vw);
     min-width: 0;
     padding: 8px;
-    grid-template-columns: 72px 1fr;
-    gap: 8px;
+    grid-template-columns: 71px 1fr;
+    gap: 7px;
   }
-
   .map-preview-switch__media {
     width: 72px;
     height: 54px;
   }
-
-  .map-preview-switch__label {
-    font-size: 14px;
-  }
-
-  .map-preview-switch__hint {
-    font-size: 10px;
-  }
-
   .see-all-section-btn {
-    min-width: 116px;
-    padding: 7px 12px;
-    font-size: 12px;
+    min-width: 110px;
+    padding: 6px 10px;
   }
-
   .india-portrait-swiper-head h3 {
     font-size: 18px;
   }
-
-  .india-portrait-swiper-head p {
-    font-size: 12px;
-  }
-
   .india-portrait-soil-card {
     min-height: 50px;
-    font-size: 11px;
   }
-
   .india-portrait-swiper-footer .see-all-section-btn {
     min-width: 110px;
   }
@@ -844,82 +835,3 @@ svg rect.selected-highlight {
 
 
 
-@media (max-width: 960px) and (min-height: 1180px) and (orientation: portrait) {
-  .india-portrait-swiper-panel {
-    left: 10px;
-    right: 10px;
-    bottom: 10px;
-    padding: 6px;
-    border-radius: 18px;
-  }
-
-  .india-portrait-swiper-head {
-    margin-bottom: 6px;
-    padding: 8px 10px;
-  }
-
-
-
-  .india-portrait-swiper-head p {
-    margin-top: 4px;
-  }
-
-  .india-portrait-swiper-page {
-    gap: 6px;
-  }
-
-  .india-portrait-soil-card {
-    min-height: 44px;
-    padding: 6px 7px;
- 
-  }
-
-  .india-portrait-swiper-footer {
-    margin-top: 8px;
-  }
-
-  .india-portrait-swiper-footer .see-all-section-btn {
-    min-width: 104px;
-    padding: 5px 8px;
-  }
-}
-
-
-
-@media (max-width: 1080px) and (min-height: 1280px) and (orientation: portrait) {
-  .india-portrait-swiper-panel {
-    left: 10px;
-    right: 10px;
-    bottom: 10px;
-    padding: 6px;
-    border-radius: 18px;
-  }
-
-  .india-portrait-swiper-head {
-    margin-bottom: 8px;
-    padding: 6px 8px;
-  }
-
-  .india-portrait-swiper-head h3 {
-    font-size: 18px;
-  }
-
-  .india-portrait-swiper-head p {
-    margin-top: 4px;
-    font-size: 12px;
-  }
-
-  .india-portrait-swiper-page {
-    gap: 7px;
-  }
-
-  .india-portrait-soil-card {
-    min-height: 48px;
-    padding: 6px 7px;
-    font-size: 11px;
-  }
-
-  .india-portrait-swiper-footer {
-    margin-top: 8px;
-  }
-}
