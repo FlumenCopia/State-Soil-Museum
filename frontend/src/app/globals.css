@@ -737,7 +737,8 @@ svg rect.selected-highlight {
   box-shadow:
     0 0 0 1px rgba(88, 173, 255, 0.2),
     inset 0 0 18px rgba(36, 96, 190, 0.26);
-  font-size: 12px;
+  font-size: 15px;
+  letter-spacing: 1px;
   line-height: 1.15;
   font-weight: 700;
   cursor: pointer;
