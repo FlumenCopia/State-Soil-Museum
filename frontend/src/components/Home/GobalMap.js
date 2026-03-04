@@ -60,6 +60,84 @@ const KERALA_HEIGHT_AFTER = "92vh";
 const KERALA_WIDTH_AFTER_PORTRAIT = "min(96vw, 640px)";
 const KERALA_HEIGHT_AFTER_PORTRAIT = "76vh";
 
+const INDIA_PORTRAIT_PRESETS = Object.freeze({
+  base: {
+    widthBefore: INDIA_WIDTH_BEFORE_PORTRAIT,
+    heightBefore: INDIA_HEIGHT_BEFORE_PORTRAIT,
+    widthAfter: INDIA_WIDTH_AFTER_PORTRAIT,
+    heightAfter: INDIA_HEIGHT_AFTER_PORTRAIT,
+    overlayXBefore: 0,
+    overlayYBefore: 24,
+    overlayXAfter: 0,
+    overlayYAfter: 12,
+  },
+  medium: {
+    widthBefore: "min(72vw, 700px)",
+    heightBefore: "70vh",
+    widthAfter: "min(68vw, 660px)",
+    heightAfter: "67vh",
+    overlayXBefore: 0,
+    overlayYBefore: 20,
+    overlayXAfter: 0,
+    overlayYAfter: 10,
+  },
+  compact: {
+    widthBefore: "min(78vw, 650px)",
+    heightBefore: "72vh",
+    widthAfter: "min(74vw, 620px)",
+    heightAfter: "69vh",
+    overlayXBefore: 0,
+    overlayYBefore: 26,
+    overlayXAfter: 0,
+    overlayYAfter: 14,
+  },
+});
+
+const KERALA_PORTRAIT_PRESETS = Object.freeze({
+  base: {
+    widthBefore: KERALA_WIDTH_BEFORE_PORTRAIT,
+    heightBefore: KERALA_HEIGHT_BEFORE_PORTRAIT,
+    widthAfter: KERALA_WIDTH_AFTER_PORTRAIT,
+    heightAfter: KERALA_HEIGHT_AFTER_PORTRAIT,
+  },
+  medium: {
+    widthBefore: "min(88vw, 560px)",
+    heightBefore: "68vh",
+    widthAfter: "min(100vw, 680px)",
+    heightAfter: "80vh",
+  },
+  compact: {
+    widthBefore: "min(92vw, 520px)",
+    heightBefore: "70vh",
+    widthAfter: "min(100vw, 620px)",
+    heightAfter: "82vh",
+  },
+});
+
+function getPortraitPreset(width, height) {
+  const safeWidth = Math.max(width, 1);
+  const aspectRatio = height / safeWidth;
+
+  if (safeWidth <= 800) {
+    return {
+      india: INDIA_PORTRAIT_PRESETS.compact,
+      kerala: KERALA_PORTRAIT_PRESETS.compact,
+    };
+  }
+
+  if (safeWidth <= 960 || aspectRatio >= 1.7) {
+    return {
+      india: INDIA_PORTRAIT_PRESETS.medium,
+      kerala: KERALA_PORTRAIT_PRESETS.medium,
+    };
+  }
+
+  return {
+    india: INDIA_PORTRAIT_PRESETS.base,
+    kerala: KERALA_PORTRAIT_PRESETS.base,
+  };
+}
+
 const MAP_BACKDROP_BACKGROUND_KERALA = `
   radial-gradient(120% 95% at 50% 46%, rgba(34, 98, 198, 0.34) 0%, rgba(12, 32, 68, 0.78) 46%, rgba(4, 12, 28, 0.96) 100%),
   radial-gradient(52% 42% at 16% 19%, rgba(92, 170, 255, 0.26) 0%, rgba(92, 170, 255, 0) 72%),
@@ -234,40 +312,51 @@ export default function GobalMap() {
   const isKerala = overlayMapView === "kerala";
   const isPortrait = viewportSize.height > viewportSize.width;
   const isPortraitLayout = isPortrait;
+  const portraitPreset = getPortraitPreset(viewportSize.width, viewportSize.height);
+  const indiaPortraitPreset = portraitPreset.india;
+  const keralaPortraitPreset = portraitPreset.kerala;
   const shouldRenderIndiaSvg = showOverlay && !isKerala;
   const shouldRenderKeralaSvg = showOverlay && isKerala;
   const indiaSvgWidth = isPortraitLayout
     ? indiaZoomComplete
-      ? INDIA_WIDTH_AFTER_PORTRAIT
-      : INDIA_WIDTH_BEFORE_PORTRAIT
+      ? indiaPortraitPreset.widthAfter
+      : indiaPortraitPreset.widthBefore
     : indiaZoomComplete
       ? INDIA_WIDTH_AFTER
       : INDIA_WIDTH_BEFORE;
   const indiaSvgHeight = isPortraitLayout
     ? indiaZoomComplete
-      ? INDIA_HEIGHT_AFTER_PORTRAIT
-      : INDIA_HEIGHT_BEFORE_PORTRAIT
+      ? indiaPortraitPreset.heightAfter
+      : indiaPortraitPreset.heightBefore
     : indiaZoomComplete
       ? INDIA_HEIGHT_AFTER
       : INDIA_HEIGHT_BEFORE;
   const keralaSvgWidth = isPortraitLayout
     ? keralaZoomComplete
-      ? KERALA_WIDTH_AFTER_PORTRAIT
-      : KERALA_WIDTH_BEFORE_PORTRAIT
+      ? keralaPortraitPreset.widthAfter
+      : keralaPortraitPreset.widthBefore
     : keralaZoomComplete
       ? KERALA_WIDTH_AFTER
       : KERALA_WIDTH_BEFORE;
   const keralaSvgHeight = isPortraitLayout
     ? keralaZoomComplete
-      ? KERALA_HEIGHT_AFTER_PORTRAIT
-      : KERALA_HEIGHT_BEFORE_PORTRAIT
+      ? keralaPortraitPreset.heightAfter
+      : keralaPortraitPreset.heightBefore
     : keralaZoomComplete
       ? KERALA_HEIGHT_AFTER
       : KERALA_HEIGHT_BEFORE;
-  const indiaOverlayXBefore = isPortraitLayout ? 0 : INDIA_OVERLAY_POSITION_X_BEFORE;
-  const indiaOverlayYBefore = isPortraitLayout ? 24 : INDIA_OVERLAY_POSITION_Y_BEFORE;
-  const indiaOverlayXAfter = isPortraitLayout ? 0 : INDIA_OVERLAY_POSITION_X_AFTER;
-  const indiaOverlayYAfter = isPortraitLayout ? 12 : INDIA_OVERLAY_POSITION_Y_AFTER;
+  const indiaOverlayXBefore = isPortraitLayout
+    ? indiaPortraitPreset.overlayXBefore
+    : INDIA_OVERLAY_POSITION_X_BEFORE;
+  const indiaOverlayYBefore = isPortraitLayout
+    ? indiaPortraitPreset.overlayYBefore
+    : INDIA_OVERLAY_POSITION_Y_BEFORE;
+  const indiaOverlayXAfter = isPortraitLayout
+    ? indiaPortraitPreset.overlayXAfter
+    : INDIA_OVERLAY_POSITION_X_AFTER;
+  const indiaOverlayYAfter = isPortraitLayout
+    ? indiaPortraitPreset.overlayYAfter
+    : INDIA_OVERLAY_POSITION_Y_AFTER;
   const selectedColorClass = hoverColorClass || activeColorClass;
   const selectedIndiaClass = hoverIndiaClass || activeIndiaClass;
   const selectedColorDetails = selectedColorClass
