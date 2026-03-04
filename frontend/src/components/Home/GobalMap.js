@@ -42,15 +42,23 @@ const ZOOM_DELAY_AFTER_BLUR = 0.08;
 
 const INDIA_WIDTH_BEFORE = "min(80vw, 800px)";
 const INDIA_HEIGHT_BEFORE = "80vh";
+const INDIA_WIDTH_BEFORE_PORTRAIT = "min(68vw, 680px)";
+const INDIA_HEIGHT_BEFORE_PORTRAIT = "68vh";
 
-const INDIA_WIDTH_AFTER = "min(80vw, 800px)";
-const INDIA_HEIGHT_AFTER = "80vh";
+const INDIA_WIDTH_AFTER = "min(100vw, 1000px)";
+const INDIA_HEIGHT_AFTER = "100vh";
+const INDIA_WIDTH_AFTER_PORTRAIT = "min(65vw,650px)";
+const INDIA_HEIGHT_AFTER_PORTRAIT = "65vh";
 
 const KERALA_WIDTH_BEFORE = "min(72vw, 720px)";
 const KERALA_HEIGHT_BEFORE = "68vh";
+const KERALA_WIDTH_BEFORE_PORTRAIT = "min(84vw, 520px)";
+const KERALA_HEIGHT_BEFORE_PORTRAIT = "66vh";
 
 const KERALA_WIDTH_AFTER = "min(92vw, 920px)";
 const KERALA_HEIGHT_AFTER = "92vh";
+const KERALA_WIDTH_AFTER_PORTRAIT = "min(96vw, 640px)";
+const KERALA_HEIGHT_AFTER_PORTRAIT = "76vh";
 
 const MAP_BACKDROP_BACKGROUND_KERALA = `
   radial-gradient(120% 95% at 50% 46%, rgba(34, 98, 198, 0.34) 0%, rgba(12, 32, 68, 0.78) 46%, rgba(4, 12, 28, 0.96) 100%),
@@ -225,26 +233,37 @@ export default function GobalMap() {
   const showOverlay = (view === "india" || view === "kerala") && indiaRevealReady;
   const isKerala = overlayMapView === "kerala";
   const isPortrait = viewportSize.height > viewportSize.width;
-  const isCompactViewport = viewportSize.width > 0 && viewportSize.width <= 1100;
-  const isPortraitLayout = isCompactViewport && isPortrait;
+  const isPortraitLayout = isPortrait;
   const shouldRenderIndiaSvg = showOverlay && !isKerala;
   const shouldRenderKeralaSvg = showOverlay && isKerala;
   const indiaSvgWidth = isPortraitLayout
     ? indiaZoomComplete
-      ? "min(92vw, 620px)"
-      : "min(84vw, 520px)"
+      ? INDIA_WIDTH_AFTER_PORTRAIT
+      : INDIA_WIDTH_BEFORE_PORTRAIT
     : indiaZoomComplete
       ? INDIA_WIDTH_AFTER
       : INDIA_WIDTH_BEFORE;
   const indiaSvgHeight = isPortraitLayout
     ? indiaZoomComplete
-      ? "74vh"
-      : "66vh"
+      ? INDIA_HEIGHT_AFTER_PORTRAIT
+      : INDIA_HEIGHT_BEFORE_PORTRAIT
     : indiaZoomComplete
       ? INDIA_HEIGHT_AFTER
       : INDIA_HEIGHT_BEFORE;
-  const keralaSvgWidth = keralaZoomComplete ? KERALA_WIDTH_AFTER : KERALA_WIDTH_BEFORE;
-  const keralaSvgHeight = keralaZoomComplete ? KERALA_HEIGHT_AFTER : KERALA_HEIGHT_BEFORE;
+  const keralaSvgWidth = isPortraitLayout
+    ? keralaZoomComplete
+      ? KERALA_WIDTH_AFTER_PORTRAIT
+      : KERALA_WIDTH_BEFORE_PORTRAIT
+    : keralaZoomComplete
+      ? KERALA_WIDTH_AFTER
+      : KERALA_WIDTH_BEFORE;
+  const keralaSvgHeight = isPortraitLayout
+    ? keralaZoomComplete
+      ? KERALA_HEIGHT_AFTER_PORTRAIT
+      : KERALA_HEIGHT_BEFORE_PORTRAIT
+    : keralaZoomComplete
+      ? KERALA_HEIGHT_AFTER
+      : KERALA_HEIGHT_BEFORE;
   const indiaOverlayXBefore = isPortraitLayout ? 0 : INDIA_OVERLAY_POSITION_X_BEFORE;
   const indiaOverlayYBefore = isPortraitLayout ? 24 : INDIA_OVERLAY_POSITION_Y_BEFORE;
   const indiaOverlayXAfter = isPortraitLayout ? 0 : INDIA_OVERLAY_POSITION_X_AFTER;

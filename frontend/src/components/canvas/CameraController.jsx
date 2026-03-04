@@ -12,7 +12,7 @@ const CAMERA_TRANSITION_EASE = "power3.inOut";
 
 const INDIA_CAMERA_POSITION = new THREE.Vector3(0, 0, 190);
 const INDIA_CAMERA_TARGET = new THREE.Vector3(0, 0, 0);
-const INDIA_CAMERA_POSITION_PORTRAIT = new THREE.Vector3(0, 6, 240);
+const INDIA_CAMERA_POSITION_PORTRAIT = new THREE.Vector3(7, -6, 220);
 const INDIA_CAMERA_TARGET_PORTRAIT = new THREE.Vector3(0, 4, 0);
 
 const CAMERA_POSES = {
@@ -40,7 +40,6 @@ export default function CameraController() {
   const isPortraitIndiaView =
     view === "india" &&
     viewportSize.width > 0 &&
-    viewportSize.width <= 1100 &&
     viewportSize.height > viewportSize.width;
 
   useEffect(() => {
