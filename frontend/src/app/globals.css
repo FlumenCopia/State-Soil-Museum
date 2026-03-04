@@ -1,3 +1,40 @@
+
+:root {
+  --india-svg-width: min(80vw, 800px);
+  --india-svg-height: 80vh;
+}
+
+@media (orientation: portrait) {
+  :root {
+    --india-svg-width: min(70vw, 700px);
+    --india-svg-height: 70vh;
+  }
+}
+
+.INDIA_WIDTH_AFTER_PORTRAIT {
+  --india-svg-after-width: min(70vw, 700px);
+  --india-svg-after-height: 70vh;
+}
+
+
+@media  (min-height: 1281px)and (max-width: 1081px) and (orientation: portrait) {
+  .INDIA_WIDTH_AFTER_PORTRAIT {
+    --india-svg-after-width: min(65vw, 650px);
+    --india-svg-after-height: 65vh;
+  }
+}
+
+@media  (min-height: 1081px)and (max-width: 960px) and (orientation: portrait) {
+  .INDIA_WIDTH_AFTER_PORTRAIT {
+    --india-svg-after-width: min(55vw, 550px) !important;
+    --india-svg-after-height: 55vh !important;
+  }
+}
+
+
+
+
+
 .hover-orange:hover {
   color: #fd7e14 !important;
 }
@@ -831,9 +868,11 @@ svg rect.selected-highlight {
 
   .india-portrait-swiper-footer .see-all-section-btn {
     min-width: 104px;
-    padding: 6px 9px;
+    padding: 5px 8px;
   }
 }
+
+
 
 @media (max-width: 1080px) and (min-height: 1280px) and (orientation: portrait) {
   .india-portrait-swiper-panel {
@@ -850,7 +889,7 @@ svg rect.selected-highlight {
   }
 
   .india-portrait-swiper-head h3 {
-    font-size: 20px;
+    font-size: 18px;
   }
 
   .india-portrait-swiper-head p {
@@ -864,7 +903,7 @@ svg rect.selected-highlight {
 
   .india-portrait-soil-card {
     min-height: 48px;
-    padding: 7px 8px;
+    padding: 6px 7px;
     font-size: 11px;
   }
 

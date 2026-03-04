@@ -65,10 +65,11 @@ const SEA_LABEL_STYLE = {
 
 
 
-const IndiaSVG = forwardRef(({ width, height, showLabels = true, showFilter = true }, ref) => {
+const IndiaSVG = forwardRef(({ width, height, showLabels = true, showFilter = true, className }, ref) => {
   return (
     <svg
       ref={ref}
+      className={className}
       // viewBox="0 0 883 1280"
 
       viewBox="0 0 628.96 895.39"

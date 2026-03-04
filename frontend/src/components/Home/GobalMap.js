@@ -40,15 +40,15 @@ const BLUR_FADE_IN_DURATION = 0.45;
 const BLUR_DELAY_AFTER_FILL = 0.06;
 const ZOOM_DELAY_AFTER_BLUR = 0.08;
 
-const INDIA_WIDTH_BEFORE = "min(80vw, 800px)";
-const INDIA_HEIGHT_BEFORE = "80vh";
-const INDIA_WIDTH_BEFORE_PORTRAIT = "min(68vw, 680px)";
-const INDIA_HEIGHT_BEFORE_PORTRAIT = "68vh";
+const INDIA_WIDTH_BEFORE = "var(--india-svg-width)";
+const INDIA_HEIGHT_BEFORE = "var(--india-svg-height)";
+const INDIA_WIDTH_BEFORE_PORTRAIT = "var(--india-svg-width)";
+const INDIA_HEIGHT_BEFORE_PORTRAIT = "var(--india-svg-height)";
 
 const INDIA_WIDTH_AFTER = "min(90vw, 900px)";
 const INDIA_HEIGHT_AFTER = "90vh";
-const INDIA_WIDTH_AFTER_PORTRAIT = "min(65vw,650px)";
-const INDIA_HEIGHT_AFTER_PORTRAIT = "65vh";
+const INDIA_WIDTH_AFTER_PORTRAIT = "var(--india-svg-after-width)";
+const INDIA_HEIGHT_AFTER_PORTRAIT = "var(--india-svg-after-height)";
 
 const KERALA_WIDTH_BEFORE = "min(72vw, 720px)";
 const KERALA_HEIGHT_BEFORE = "68vh";
@@ -66,31 +66,9 @@ const INDIA_PORTRAIT_PRESETS = Object.freeze({
     heightBefore: INDIA_HEIGHT_BEFORE_PORTRAIT,
     widthAfter: INDIA_WIDTH_AFTER_PORTRAIT,
     heightAfter: INDIA_HEIGHT_AFTER_PORTRAIT,
-    overlayXBefore: 0,
-    overlayYBefore: 24,
-    overlayXAfter: 0,
-    overlayYAfter: 12,
+   
   },
-  medium: {
-    widthBefore: "min(68vw, 620px)",
-    heightBefore: "64vh",
-    widthAfter: "min(64vw, 580px)",
-    heightAfter: "61vh",
-    overlayXBefore: 0,
-    overlayYBefore: -2,
-    overlayXAfter: 0,
-    overlayYAfter: -14,
-  },
-  compact: {
-    widthBefore: "min(74vw, 590px)",
-    heightBefore: "66vh",
-    widthAfter: "min(70vw, 560px)",
-    heightAfter: "63vh",
-    overlayXBefore: 0,
-    overlayYBefore: -6,
-    overlayXAfter: 0,
-    overlayYAfter: -16,
-  },
+
 });
 
 const KERALA_PORTRAIT_PRESETS = Object.freeze({
@@ -117,7 +95,7 @@ const KERALA_PORTRAIT_PRESETS = Object.freeze({
 function getPortraitPreset(width, height) {
   const safeWidth = Math.max(width, 1);
   const aspectRatio = height / safeWidth;
-  const isTallPortrait = aspectRatio >= 1.25;
+  const isTallPortrait = aspectRatio >= 1.20;
 
   if (safeWidth <= 820 || (safeWidth <= 960 && isTallPortrait)) {
     return {
@@ -972,6 +950,7 @@ export default function GobalMap() {
             {shouldRenderIndiaSvg && (
               <IndiaSVG
                 ref={indiaSvgRef}
+                className={isPortraitLayout && indiaZoomComplete ? "INDIA_WIDTH_AFTER_PORTRAIT" : undefined}
                 width={indiaSvgWidth}
                 height={indiaSvgHeight}
                 showLabels={indiaZoomComplete && !isPortraitLayout}
