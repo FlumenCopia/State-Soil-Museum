@@ -455,8 +455,10 @@ export default function GobalMap() {
     if (!root) return;
 
     const leftPanels = Array.from(root.querySelectorAll('[data-map-side="left"]'));
+    const leftTopPanels = Array.from(root.querySelectorAll('[data-map-side="left-top"]'));
     const rightPanels = Array.from(root.querySelectorAll('[data-map-side="right"]'));
-    const allPanels = [...leftPanels, ...rightPanels];
+    const allLeftPanels = [...leftPanels, ...leftTopPanels];
+    const allPanels = [...allLeftPanels, ...rightPanels];
 
     if (!allPanels.length) return;
 
@@ -464,14 +466,19 @@ export default function GobalMap() {
     const previousTrigger = ScrollTrigger.getById("map-side-panels-motion");
     if (previousTrigger) previousTrigger.kill();
 
-    if (!showOverlay || isPortraitLayout) {
-      gsap.set(leftPanels, { x: -PANEL_ENTRY_OFFSET_X, opacity: 0 });
+    if (!showOverlay) {
+      gsap.set(allLeftPanels, { x: -PANEL_ENTRY_OFFSET_X, opacity: 0 });
       gsap.set(rightPanels, { x: PANEL_ENTRY_OFFSET_X, opacity: 0 });
       return;
     }
 
+    if (isPortraitLayout) {
+      gsap.set(allPanels, { x: 0, opacity: 1 });
+      return;
+    }
+
     gsap.fromTo(
-      leftPanels,
+      allLeftPanels,
       { x: -PANEL_ENTRY_OFFSET_X, opacity: 0 },
       { x: 0, opacity: 1, duration: 0.58, ease: "power2.out", stagger: 0.06, overwrite: "auto" }
     );
@@ -490,7 +497,7 @@ export default function GobalMap() {
       invalidateOnRefresh: true,
       onUpdate: (self) => {
         const drift = (self.progress - 0.5) * 2;
-        gsap.to(leftPanels, {
+        gsap.to(allLeftPanels, {
           x: -drift * PANEL_SCROLL_DRIFT_X,
           duration: 0.2,
           ease: "none",
@@ -1203,7 +1210,7 @@ export default function GobalMap() {
           </aside>
 
           <aside
-            data-map-side="right"
+            data-map-side={isPortraitLayout ? "left-top" : "right"}
             style={{
               position: "fixed",
               top: "50%",
@@ -1424,6 +1431,25 @@ export default function GobalMap() {
                 "0 0 0 1px rgba(124, 194, 255, 0.24), 0 0 35px rgba(49, 142, 255, 0.32), 0 20px 50px rgba(2, 8, 26, 0.68), inset 0 0 40px rgba(38, 118, 255, 0.18), inset 0 1px 0 rgba(196, 228, 255, 0.32)",
             }}
           >
+            {isPortraitLayout && (
+              <div
+                style={{
+                  alignSelf: "flex-start",
+                  fontSize: 11,
+                  letterSpacing: "0.14em",
+                  textTransform: "uppercase",
+                  padding: "3px 8px",
+                  borderRadius: 999,
+                  border: "1px solid rgba(163, 224, 255, 0.56)",
+                  background: "rgba(25, 104, 214, 0.34)",
+                  color: "rgba(222, 242, 255, 0.95)",
+                  fontWeight: 700,
+                  marginBottom: 6,
+                }}
+              >
+                Portrait View
+              </div>
+            )}
             <div
               style={{
                 display: "flex",
