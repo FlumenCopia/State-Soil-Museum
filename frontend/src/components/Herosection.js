@@ -16,6 +16,29 @@ const Herosection = () => {
       { opacity: 0, y: 18 },
       { opacity: 1, y: 0, duration: 0.75, stagger: 0.08, ease: "power2.out" }
     );
+
+    const heroSection = document.getElementById("hero-section");
+    if (!heroSection) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (!entry.isIntersecting) return;
+          gsap.to(items, {
+            opacity: 1,
+            y: 0,
+            duration: 0.45,
+            stagger: 0.06,
+            ease: "power2.out",
+            overwrite: "auto",
+          });
+        });
+      },
+      { threshold: 0.45 }
+    );
+
+    observer.observe(heroSection);
+    return () => observer.disconnect();
   }, []);
 
   const goToIndiaSection = () => {

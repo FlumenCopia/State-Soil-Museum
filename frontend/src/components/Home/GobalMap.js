@@ -1085,6 +1085,7 @@ export default function GobalMap() {
           position: "fixed",
           inset: 0,
           zIndex: 30,
+          pointerEvents: view === "globe" ? "none" : "auto",
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
