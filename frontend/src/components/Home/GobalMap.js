@@ -11,6 +11,7 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import IndiaSVG from "../Svg/IndiaSVG";
 import KeralaSVG from "../Svg/KeralaSVG";
 import IndiaPortraitPanel from "./IndiaPortraitPanel";
+import KeralaPortraitPanel from "./KeralaPortraitPanel";
 
 /* CONSTANTS */
 const SCALE_OUT = 0.5;
@@ -59,7 +60,7 @@ const KERALA_HEIGHT_BEFORE_PORTRAIT = "66vh";
 
 const KERALA_WIDTH_AFTER = "min(92vw, 920px)";
 const KERALA_HEIGHT_AFTER = "92vh";
-const KERALA_WIDTH_AFTER_PORTRAIT = "min(96vw, 640px)";
+const KERALA_WIDTH_AFTER_PORTRAIT = "min(96vw, 840px)";
 const KERALA_HEIGHT_AFTER_PORTRAIT = "76vh";
 
 const INDIA_PORTRAIT_PRESETS = Object.freeze({
@@ -388,6 +389,12 @@ export default function GobalMap() {
     setHoverIndiaClass(null);
     setActiveIndiaClass(null);
   };
+  const clearKeralaSelection = () => {
+    activeColorClassRef.current = null;
+    hoverColorClassRef.current = null;
+    setHoverColorClass(null);
+    setActiveColorClass(null);
+  };
   const toggleIndiaSelection = (className) => {
     if (activeIndiaClassRef.current === className) {
       clearIndiaSelection();
@@ -397,6 +404,16 @@ export default function GobalMap() {
     hoverIndiaClassRef.current = null;
     setHoverIndiaClass(null);
     setActiveIndiaClass(className);
+  };
+  const toggleKeralaSelection = (className) => {
+    if (activeColorClassRef.current === className) {
+      clearKeralaSelection();
+      return;
+    }
+    activeColorClassRef.current = className;
+    hoverColorClassRef.current = null;
+    setHoverColorClass(null);
+    setActiveColorClass(className);
   };
 
   useEffect(() => {
@@ -1093,132 +1110,123 @@ export default function GobalMap() {
 
       {isKerala && showOverlay && (
         <>
-          <aside
-            data-map-side="left"
-            style={{
-              position: "fixed",
-              top: "50%",
-              left: 24,
-              transform: "translateY(-50%)",
-              zIndex: 60,
-              width: "min(280px, 26vw)",
-              minWidth: 220,
-              background:
-                "radial-gradient(140% 110% at 100% 0%, rgba(49, 136, 255, 0.22), rgba(49, 136, 255, 0) 55%), linear-gradient(155deg, rgba(8, 24, 56, 0.9), rgba(4, 14, 38, 0.84) 55%, rgba(7, 30, 72, 0.86) 100%)",
-              border: "1px solid rgba(88, 168, 255, 0.45)",
-              borderRadius: 18,
-              padding: "16px 14px",
-              color: "#eaf3ff",
-              backdropFilter: "blur(14px) saturate(122%)",
-              WebkitBackdropFilter: "blur(14px) saturate(122%)",
-              boxShadow:
-                "0 0 0 1px rgba(124, 194, 255, 0.24), 0 0 35px rgba(49, 142, 255, 0.32), 0 20px 50px rgba(2, 8, 26, 0.68), inset 0 0 40px rgba(38, 118, 255, 0.18), inset 0 1px 0 rgba(196, 228, 255, 0.32)",
-            }}
-          >
-
-            <div
+          {isPortraitLayout ? (
+            <KeralaPortraitPanel
+              classOrder={KERALA_CLASS_ORDER}
+              colorDetails={KERALA_COLOR_DETAILS}
+              selectedClass={selectedColorClass}
+              onToggleSelection={toggleKeralaSelection}
+              onClearSelection={clearKeralaSelection}
+            />
+          ) : (
+            <aside
+              data-map-side="left"
               style={{
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "space-between",
-                gap: 12,
-                marginBottom: 12,
+                position: "fixed",
+                top: "50%",
+                left: 24,
+                transform: "translateY(-50%)",
+                zIndex: 60,
+                width: "min(280px, 26vw)",
+                minWidth: 220,
+                background:
+                  "radial-gradient(140% 110% at 100% 0%, rgba(49, 136, 255, 0.22), rgba(49, 136, 255, 0) 55%), linear-gradient(155deg, rgba(8, 24, 56, 0.9), rgba(4, 14, 38, 0.84) 55%, rgba(7, 30, 72, 0.86) 100%)",
+                border: "1px solid rgba(88, 168, 255, 0.45)",
+                borderRadius: 18,
+                padding: "16px 14px",
+                color: "#eaf3ff",
+                backdropFilter: "blur(14px) saturate(122%)",
+                WebkitBackdropFilter: "blur(14px) saturate(122%)",
+                boxShadow:
+                  "0 0 0 1px rgba(124, 194, 255, 0.24), 0 0 35px rgba(49, 142, 255, 0.32), 0 20px 50px rgba(2, 8, 26, 0.68), inset 0 0 40px rgba(38, 118, 255, 0.18), inset 0 1px 0 rgba(196, 228, 255, 0.32)",
               }}
             >
               <div
                 style={{
-                  fontSize: 13,
-                  letterSpacing: "0.35px",
-                  color: "rgba(226, 241, 255, 0.95)",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "space-between",
+                  gap: 12,
+                  marginBottom: 12,
                 }}
               >
-                Kerala Soil Types
+                <div
+                  style={{
+                    fontSize: 13,
+                    letterSpacing: "0.35px",
+                    color: "rgba(226, 241, 255, 0.95)",
+                  }}
+                >
+                  Kerala Soil Types
+                </div>
+                <button className="see-all-section-btn" type="button" onClick={clearKeralaSelection}>
+                  See all section
+                </button>
               </div>
-              <button
-                className="see-all-section-btn"
-                type="button"
-                onClick={() => {
-                  activeColorClassRef.current = null;
-                  hoverColorClassRef.current = null;
-                  setHoverColorClass(null);
-                  setActiveColorClass(null);
-                }}
-              >
-                See all section
-              </button>
-            </div>
 
-            <div style={{ display: "grid", gap: 8 }}>
-              {KERALA_CLASS_ORDER.map((className) => {
-                const item = KERALA_COLOR_DETAILS[className];
-                const isSelected = selectedColorClass === className;
-                return (
-                  <button
-                    className={`holo-border soil-type-btn${isSelected ? " soil-type-btn-active" : ""}`}
-                    key={className}
-                    type="button"
-                    onClick={() => {
-                      if (activeColorClassRef.current === className) {
-                        activeColorClassRef.current = null;
-                        hoverColorClassRef.current = null;
-                        setHoverColorClass(null);
-                        setActiveColorClass(null);
-                        return;
-                      }
-                      activeColorClassRef.current = className;
-                      hoverColorClassRef.current = null;
-                      setHoverColorClass(null);
-                      setActiveColorClass(className);
-                    }}
-                    style={{
-                      display: "flex",
-                      alignItems: "center",
-                      gap: 10,
-                      width: "100%",
-                      textAlign: "left",
-                      padding: "9px 10px",
-                      borderRadius: 11,
-                      border: "none",
-                      background: isSelected
-                        ? "linear-gradient(135deg, rgba(37, 152, 255, 0.24), rgba(41, 255, 212, 0.2))"
-                        : "linear-gradient(135deg, rgba(25, 62, 118, 0.54), rgba(12, 34, 72, 0.42))",
-                      color: "#eaf3ff",
-                      cursor: "pointer",
-                      fontSize: 12.5,
-                      boxShadow: isSelected
-                        ? "0 0 20px rgba(56, 202, 255, 0.34), inset 0 0 22px rgba(90, 255, 219, 0.22)"
-                        : "inset 0 0 18px rgba(50, 119, 224, 0.16)",
-                      transition: "all 0.2s ease",
-                    }}
-                  >
-                    <span
+              <div style={{ display: "grid", gap: 8 }}>
+                {KERALA_CLASS_ORDER.map((className) => {
+                  const item = KERALA_COLOR_DETAILS[className];
+                  const isSelected = selectedColorClass === className;
+                  return (
+                    <button
+                      className={`holo-border soil-type-btn${isSelected ? " soil-type-btn-active" : ""}`}
+                      key={className}
+                      type="button"
+                      onClick={() => toggleKeralaSelection(className)}
                       style={{
-                        width: 12,
-                        height: 12,
-                        borderRadius: 999,
-                        background: item.color,
-                        border: "1px solid rgba(210, 236, 255, 0.72)",
-                        flex: "0 0 auto",
-                        boxShadow: "0 0 8px rgba(255,255,255,0.26)",
+                        display: "flex",
+                        alignItems: "center",
+                        gap: 10,
+                        width: "100%",
+                        textAlign: "left",
+                        padding: "9px 10px",
+                        borderRadius: 11,
+                        border: "none",
+                        background: isSelected
+                          ? "linear-gradient(135deg, rgba(37, 152, 255, 0.24), rgba(41, 255, 212, 0.2))"
+                          : "linear-gradient(135deg, rgba(25, 62, 118, 0.54), rgba(12, 34, 72, 0.42))",
+                        color: "#eaf3ff",
+                        cursor: "pointer",
+                        fontSize: 12.5,
+                        boxShadow: isSelected
+                          ? "0 0 20px rgba(56, 202, 255, 0.34), inset 0 0 22px rgba(90, 255, 219, 0.22)"
+                          : "inset 0 0 18px rgba(50, 119, 224, 0.16)",
+                        transition: "all 0.2s ease",
                       }}
-                    />
-                    <span>{item.label}</span>
-                  </button>
-                );
-              })}
-            </div>
-          </aside>
+                    >
+                      <span
+                        style={{
+                          width: 12,
+                          height: 12,
+                          borderRadius: 999,
+                          background: item.color,
+                          border: "1px solid rgba(210, 236, 255, 0.72)",
+                          flex: "0 0 auto",
+                          boxShadow: "0 0 8px rgba(255,255,255,0.26)",
+                        }}
+                      />
+                      <span>{item.label}</span>
+                    </button>
+                  );
+                })}
+              </div>
+            </aside>
+          )}
 
           <aside
             data-map-side={isPortraitLayout ? "left-top" : "right"}
             style={{
               position: "fixed",
-              top: "50%",
-              right: 24,
-              transform: "translateY(-50%)",
+              top: isPortraitLayout ? 14 : "50%",
+              right: isPortraitLayout ? "auto" : 24,
+              left: isPortraitLayout ? 12 : "auto",
+              transform: isPortraitLayout ? "none" : "translateY(-50%)",
               zIndex: 60,
-              width: "min(340px, 32vw)",
-              minWidth: 240,
+              width: isPortraitLayout ? "min(540px, calc(100vw - 280px))" : "min(340px, 32vw)",
+              minWidth: isPortraitLayout ? 0 : 240,
+              maxHeight: isPortraitLayout ? "22vh" : "none",
+              overflowY: isPortraitLayout ? "auto" : "visible",
               background:
                 "radial-gradient(140% 110% at 100% 0%, rgba(49, 136, 255, 0.22), rgba(49, 136, 255, 0) 55%), linear-gradient(155deg, rgba(8, 24, 56, 0.9), rgba(4, 14, 38, 0.84) 55%, rgba(7, 30, 72, 0.86) 100%)",
               border: "1px solid rgba(88, 168, 255, 0.45)",
@@ -1289,7 +1297,9 @@ export default function GobalMap() {
               </>
             ) : (
               <div style={{ fontSize: 13, lineHeight: 1.45, opacity: 0.85 }}>
-                Select a soil type from the left list or hover/click a Kerala section.
+                {isPortraitLayout
+                  ? "Select a soil type from the bottom swiper or tap a Kerala section."
+                  : "Select a soil type from the left list or hover/click a Kerala section."}
               </div>
             )}
           </aside>
