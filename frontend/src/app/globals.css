@@ -2,7 +2,18 @@
 :root {
   --india-svg-width: min(80vw, 800px);
   --india-svg-height: 80vh;
+  --kerala-svg-after-width: min(90vw, 900px);
+  --kerala-svg-after-height: 76vh;
 }
+
+
+
+
+
+
+
+
+
 
 @media (orientation: portrait) {
   :root {

@@ -56,17 +56,17 @@ const INDIA_WIDTH_AFTER = "min(90vw, 900px)";
 const INDIA_HEIGHT_AFTER = "90vh";
 const INDIA_WIDTH_AFTER_PORTRAIT = "var(--india-svg-after-width, min(70vw, 700px))";
 const INDIA_HEIGHT_AFTER_PORTRAIT = "var(--india-svg-after-height, 70vh)";
-
 const KERALA_WIDTH_BEFORE = "min(72vw, 720px)";
 const KERALA_HEIGHT_BEFORE = "68vh";
-const KERALA_WIDTH_BEFORE_PORTRAIT = "min(84vw, 520px)";
-const KERALA_HEIGHT_BEFORE_PORTRAIT = "66vh";
-
 const KERALA_WIDTH_AFTER = "min(92vw, 920px)";
 const KERALA_HEIGHT_AFTER = "92vh";
-const KERALA_WIDTH_AFTER_PORTRAIT = "min(96vw, 940px)";
-const KERALA_HEIGHT_AFTER_PORTRAIT = "76vh";
 
+
+
+const KERALA_WIDTH_BEFORE_PORTRAIT = "  var(--kerala-svg-after-width)";
+const KERALA_HEIGHT_BEFORE_PORTRAIT = "var(--kerala-svg-after-height)";
+const KERALA_WIDTH_AFTER_PORTRAIT = " var(--kerala-svg-after-width)";
+const KERALA_HEIGHT_AFTER_PORTRAIT = "var(--kerala-svg-after-height)";
 const INDIA_PORTRAIT_PRESETS = Object.freeze({
   base: {
     widthBefore: INDIA_WIDTH_BEFORE_PORTRAIT,
@@ -108,12 +108,22 @@ const KERALA_PORTRAIT_PRESETS = Object.freeze({
     widthAfter: KERALA_WIDTH_AFTER_PORTRAIT,
     heightAfter: KERALA_HEIGHT_AFTER_PORTRAIT,
   },
-  medium: {
-    widthBefore: "min(88vw, 560px)",
-    heightBefore: "68vh",
-    widthAfter: "min(100vw, 680px)",
-    heightAfter: "80vh",
+
+    medium: {
+    widthBefore: KERALA_WIDTH_BEFORE_PORTRAIT,
+    heightBefore: KERALA_HEIGHT_BEFORE_PORTRAIT,
+    widthAfter: KERALA_WIDTH_AFTER_PORTRAIT,
+    heightAfter: KERALA_HEIGHT_AFTER_PORTRAIT,
   },
+    compute: {
+    widthBefore: KERALA_WIDTH_BEFORE_PORTRAIT,
+    heightBefore: KERALA_HEIGHT_BEFORE_PORTRAIT,
+    widthAfter: KERALA_WIDTH_AFTER_PORTRAIT,
+    heightAfter: KERALA_HEIGHT_AFTER_PORTRAIT,
+  },
+
+
+
   compact: {
     widthBefore: "min(92vw, 520px)",
     heightBefore: "70vh",
