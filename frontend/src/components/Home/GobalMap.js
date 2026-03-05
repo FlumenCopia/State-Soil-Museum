@@ -441,6 +441,7 @@ export default function GobalMap() {
     setActiveColorClass(null);
   };
   const toggleIndiaSelection = (className) => {
+    if (!indiaZoomComplete) return;
     if (activeIndiaClassRef.current === className) {
       clearIndiaSelection();
       return;
@@ -665,6 +666,10 @@ export default function GobalMap() {
   useEffect(() => {
     if (!showOverlay || !indiaSvgRef.current || isKerala) return;
     setIndiaZoomComplete(false);
+    activeIndiaClassRef.current = null;
+    hoverIndiaClassRef.current = null;
+    setActiveIndiaClass(null);
+    setHoverIndiaClass(null);
 
     const svg = indiaSvgRef.current;
     const drawPaths = svg.querySelectorAll(".IndiaSVG-draw-path");
@@ -960,7 +965,12 @@ export default function GobalMap() {
 
   useEffect(() => {
     const container = indiaContainerRef.current;
-    if (!container || !showOverlay || isKerala) return;
+    if (!container || !showOverlay || isKerala || !indiaZoomComplete) {
+      if (container) {
+        container.classList.remove("india-has-focus");
+      }
+      return;
+    }
 
     const elements = Array.from(container.querySelectorAll("path, polygon, rect"));
     const getColorClass = (el) =>
@@ -1069,9 +1079,21 @@ export default function GobalMap() {
       });
       indiaColorElementsRef.current = [];
     };
-  }, [isKerala, showOverlay]);
+  }, [isKerala, showOverlay, indiaZoomComplete]);
 
   useEffect(() => {
+    if (!indiaZoomComplete) {
+      const container = indiaContainerRef.current;
+      if (container) {
+        container.classList.remove("india-has-focus");
+      }
+      indiaColorElementsRef.current.forEach((el) => {
+        el.classList.remove("highlight");
+        el.classList.remove("selected-highlight");
+      });
+      return;
+    }
+
     const selectedClass = activeIndiaClassRef.current;
     const hoveredClass = hoverIndiaClassRef.current;
     const container = indiaContainerRef.current;
@@ -1089,7 +1111,7 @@ export default function GobalMap() {
         el.classList.add("highlight");
       }
     });
-  }, [activeIndiaClass, hoverIndiaClass]);
+  }, [activeIndiaClass, hoverIndiaClass, indiaZoomComplete]);
 
   useEffect(() => {
     setIsSoilImageZoomed(false);
