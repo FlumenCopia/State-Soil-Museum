@@ -19,7 +19,7 @@ const SCALE_OUT = 0.5;
 const OVERLAY_INITIAL_SCALE = 1;
 const OVERLAY_FINAL_SCALE = 1;
 const OVERLAY_POSITION_X_BEFORE = -18;
-const OVERLAY_POSITION_Y_BEFORE = 130;
+const OVERLAY_POSITION_Y_BEFORE = 0;
 const OVERLAY_POSITION_X_AFTER = 0;
 const OVERLAY_POSITION_Y_AFTER = 0;
 const KERALA_OVERLAY_POSITION_X_BEFORE_PORTRAIT = 0;
@@ -405,6 +405,29 @@ export default function GobalMap() {
     scrollViewRef.current = view;
   }, [view]);
 
+  useEffect(() => {
+    if (view !== "kerala") return;
+    const previousBodyOverflow = document.body.style.overflow;
+    const previousHtmlOverflow = document.documentElement.style.overflow;
+    document.body.style.overflow = "hidden";
+    document.documentElement.style.overflow = "hidden";
+    return () => {
+      document.body.style.overflow = previousBodyOverflow;
+      document.documentElement.style.overflow = previousHtmlOverflow;
+    };
+  }, [view]);
+
+  const scrollToMapSection = () => {
+    const indiaSection = document.getElementById("india-section");
+    if (!indiaSection) return;
+    indiaSection.scrollIntoView({ behavior: "auto", block: "start" });
+  };
+
+  const handleMapPreviewSwitch = () => {
+    scrollToMapSection();
+    setView(view === "india" ? "kerala" : "india");
+  };
+
   const clearIndiaSelection = () => {
     activeIndiaClassRef.current = null;
     hoverIndiaClassRef.current = null;
@@ -454,15 +477,14 @@ export default function GobalMap() {
     let rafId = null;
 
     const resolveViewFromScroll = () => {
+      // Keep Kerala as an explicit button-driven view.
+      if (view === "kerala") return;
       const indiaSection = document.getElementById("india-section");
-      const keralaSection = document.getElementById("kerala-section");
-      if (!indiaSection || !keralaSection) return;
+      if (!indiaSection) return;
 
       const scrollY = window.scrollY || window.pageYOffset || 0;
       const indiaTop = indiaSection.offsetTop;
-      const keralaTop = keralaSection.offsetTop;
       const indiaSwitchY = indiaTop - window.innerHeight * 0.5;
-      const keralaSwitchY = keralaTop - window.innerHeight * 0.5;
       const currentView = scrollViewRef.current;
       let nextView = currentView;
 
@@ -471,11 +493,7 @@ export default function GobalMap() {
       } else if (currentView === "india") {
         if (scrollY < indiaSwitchY - HYSTERESIS_PX) {
           nextView = "globe";
-        } else if (scrollY >= keralaSwitchY + HYSTERESIS_PX) {
-          nextView = "kerala";
         }
-      } else if (currentView === "kerala" && scrollY < keralaSwitchY - HYSTERESIS_PX) {
-        nextView = "india";
       }
 
       if (nextView !== currentView) {
@@ -510,7 +528,7 @@ export default function GobalMap() {
       window.removeEventListener("scroll", onScroll);
       window.removeEventListener("resize", onResize);
     };
-  }, [setView]);
+  }, [setView, view]);
 
   useEffect(() => {
     const handleExploreMap = () => {
@@ -560,13 +578,12 @@ export default function GobalMap() {
 
     const updatePanelDrift = () => {
       const indiaSection = document.getElementById("india-section");
-      const keralaSection = document.getElementById("kerala-section");
-      if (!indiaSection || !keralaSection) return;
+      if (!indiaSection) return;
 
       const scrollY = window.scrollY || window.pageYOffset || 0;
       const viewportCenterY = scrollY + window.innerHeight * 0.5;
       const start = indiaSection.offsetTop;
-      const end = keralaSection.offsetTop + keralaSection.offsetHeight;
+      const end = indiaSection.offsetTop + indiaSection.offsetHeight;
       const range = Math.max(1, end - start);
       const progress = Math.min(1, Math.max(0, (viewportCenterY - start) / range));
       const drift = (progress - 0.5) * 2;
@@ -1592,7 +1609,7 @@ export default function GobalMap() {
         {(view === "india" || view === "kerala") && (
           <button
             className="holo-border map-preview-switch"
-            onClick={() => setView(view === "india" ? "kerala" : "india")}
+            onClick={handleMapPreviewSwitch}
             type="button"
           >
             <div className="map-preview-switch__media">
@@ -1605,7 +1622,6 @@ export default function GobalMap() {
               <span className="map-preview-switch__label">
                 {view === "india" ? "Explore Kerala" : "Back to India"}
               </span>
-              <span className="map-preview-switch__hint">Tap to switch map</span>
             </div>
           </button>
         )}
@@ -1614,7 +1630,6 @@ export default function GobalMap() {
       <div style={{ position: "relative", zIndex: 10 }}>
         <section id="globe-section" style={{ height: "100vh" }} />
         <section id="india-section" style={{ height: "100vh" }} />
-        <section id="kerala-section" style={{ height: "100vh" }} />
       </div>
     </main>
   );
