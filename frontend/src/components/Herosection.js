@@ -69,11 +69,11 @@ const Herosection = () => {
         >
           <div style={{ width: "16px", height: "2px", backgroundColor: "rgba(255,255,255,0.8)" }} />
           <span
-            className="text-uppercase fw-semibold"
+            className="text-uppercase "
             style={{
               fontSize: "clamp(0.95rem, 1.15vw, 1.35rem)",
               letterSpacing: "0.2em",
-              color: "rgba(255,255,255,0.86)",
+              color: "#fff",
             }}
           >
             DIGITAL SOIL ATLAS
@@ -82,13 +82,15 @@ const Herosection = () => {
 
         <h1
           data-hero-item
-          className="text-white fw-bold mb-4"
+          className="text-white  mb-4 "
           style={{
-            fontSize: "clamp(3rem, 7.2vw, 6.6rem)",
+            fontSize: "clamp(3rem, 7.2vw, 5.6rem)",
             lineHeight: 0.96,
             letterSpacing: "-0.03em",
             textTransform: "uppercase",
             textShadow: "0 20px 48px rgba(1, 6, 20, 0.62)",
+
+             letterSpacing: "0.04em",
           }}
         >
           State Soil Museum
@@ -98,11 +100,12 @@ const Herosection = () => {
           data-hero-item
           className="mx-auto mb-5"
           style={{
-            maxWidth: "900px",
+            maxWidth: "700px",
             color: "rgba(240,245,255,0.9)",
-            fontSize: "clamp(1.2rem, 1.8vw, 2rem)",
+            fontSize: "clamp(1.2rem, 1.8vw, 1.3rem)",
             lineHeight: 1.45,
-            fontWeight: 500,
+           
+            fontWeight: 200,
             textShadow: "0 10px 30px rgba(1, 6, 20, 0.55)",
           }}
         >
@@ -129,7 +132,7 @@ const Herosection = () => {
           data-hero-item
           style={{ marginTop: "56px", color: "rgba(229,239,255,0.7)", fontSize: "clamp(1.4rem, 1.8vw, 2rem)" }}
         >
-          &bull; Scroll
+        <i class="fa-solid fa-chevron-down"></i> Scroll
         </div>
       </div>
     </section>
