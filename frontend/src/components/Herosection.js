@@ -56,41 +56,56 @@ const Herosection = () => {
     >
       <div
         className="position-absolute top-0 start-0 w-100 h-100"
-        style={{
-          background:
-            "radial-gradient(80% 70% at 50% 52%, rgba(9, 27, 62, 0.18) 0%, rgba(1, 8, 24, 0.48) 52%, rgba(2, 8, 18, 0.78) 100%)",
-        }}
+     
       />
 
-      <div ref={contentRef} className="position-relative z-3 container text-center">
+      <div
+        ref={contentRef}
+        className="position-relative z-3  text-center"
+        style={{ marginTop: "clamp(50px, 20vh, 100px)" }}
+      >
         <div
           data-hero-item
-          className="d-inline-flex align-items-center justify-content-center gap-2 mb-4"
+          className="d-flex align-items-center justify-content-center gap-3 mb-4 mx-auto"
+          style={{ width: "fit-content" }}
         >
-          <div style={{ width: "16px", height: "2px", backgroundColor: "rgba(255,255,255,0.8)" }} />
           <span
-            className="text-uppercase "
+            aria-hidden="true"
             style={{
-              fontSize: "clamp(0.95rem, 1.15vw, 1.35rem)",
-              letterSpacing: "0.2em",
-              color: "#fff",
+              width: "clamp(28px, 3.6vw, 44px)",
+              height: "1px",
+              backgroundColor: "rgba(255,255,255,0.8)",
+            }}
+          />
+          <span
+            className="text-uppercase"
+            style={{
+              fontSize: "clamp(0.85rem, 1vw, 1.1rem)",
+              letterSpacing: "0.24em",
+              color: "rgba(240, 247, 255, 0.92)",
             }}
           >
             DIGITAL SOIL ATLAS
           </span>
+          <span
+            aria-hidden="true"
+            style={{
+              width: "clamp(28px, 3.6vw, 44px)",
+              height: "1px",
+              backgroundColor: "rgba(255,255,255,0.8)",
+            }}
+          />
         </div>
 
         <h1
           data-hero-item
-          className="text-white  mb-4 "
+          className="text-white mb-4"
           style={{
             fontSize: "clamp(3rem, 7.2vw, 5.6rem)",
             lineHeight: 0.96,
-            letterSpacing: "-0.03em",
+            letterSpacing: "0.03em",
             textTransform: "uppercase",
             textShadow: "0 20px 48px rgba(1, 6, 20, 0.62)",
-
-             letterSpacing: "0.04em",
           }}
         >
           State Soil Museum
@@ -104,9 +119,10 @@ const Herosection = () => {
             color: "rgba(240,245,255,0.9)",
             fontSize: "clamp(1.2rem, 1.8vw, 1.3rem)",
             lineHeight: 1.45,
-           
             fontWeight: 200,
             textShadow: "0 10px 30px rgba(1, 6, 20, 0.55)",
+                          letterSpacing: "0.1em",
+
           }}
         >
           Explore Kerala&apos;s soil profiles, horizons, and geochemical layers through an
@@ -130,9 +146,13 @@ const Herosection = () => {
 
         <div
           data-hero-item
-          style={{ marginTop: "56px", color: "rgba(229,239,255,0.7)", fontSize: "clamp(1.4rem, 1.8vw, 2rem)" }}
+          style={{
+            marginTop: "56px",
+            color: "rgba(229,239,255,0.7)",
+            fontSize: "clamp(1.4rem, 1.8vw, 1.5rem)",
+          }}
         >
-        <i class="fa-solid fa-chevron-down"></i> Scroll
+          <i className="fa-solid fa-chevron-down"></i> Scroll
         </div>
       </div>
     </section>
