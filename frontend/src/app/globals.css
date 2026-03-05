@@ -719,6 +719,8 @@ svg rect.selected-highlight {
 
 .india-portrait-swiper-window {
   overflow: hidden;
+  touch-action: pan-y;
+  user-select: none;
 }
 
 .india-portrait-swiper-track {

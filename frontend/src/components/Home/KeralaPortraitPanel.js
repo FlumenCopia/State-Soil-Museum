@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 
 const KERALA_PORTRAIT_PAGE_SIZE = 6;
+const SWIPE_THRESHOLD_PX = 42;
 
 export default function KeralaPortraitPanel({
   classOrder,
@@ -11,8 +12,11 @@ export default function KeralaPortraitPanel({
   onToggleSelection,
   onClearSelection,
 }) {
-  const touchStartXRef = useRef(null);
+  const dragStartXRef = useRef(null);
+  const dragDeltaXRef = useRef(0);
+  const draggingRef = useRef(false);
   const [page, setPage] = useState(0);
+  const [dragOffsetPx, setDragOffsetPx] = useState(0);
   const pageCount = Math.ceil(classOrder.length / KERALA_PORTRAIT_PAGE_SIZE);
   const pages = Array.from({ length: pageCount }, (_, pageIndex) =>
     classOrder.slice(pageIndex * KERALA_PORTRAIT_PAGE_SIZE, (pageIndex + 1) * KERALA_PORTRAIT_PAGE_SIZE)
@@ -31,13 +35,29 @@ export default function KeralaPortraitPanel({
     }
   }, [page, pageCount]);
 
-  const handleSwipeEnd = (event) => {
-    if (touchStartXRef.current == null || pageCount <= 1) return;
-    const touchX = event.changedTouches?.[0]?.clientX;
-    if (typeof touchX !== "number") return;
-    const deltaX = touchX - touchStartXRef.current;
-    touchStartXRef.current = null;
-    if (Math.abs(deltaX) < 36) return;
+  const beginDrag = (event) => {
+    if (pageCount <= 1) return;
+    draggingRef.current = true;
+    dragStartXRef.current = event.clientX;
+    dragDeltaXRef.current = 0;
+  };
+
+  const moveDrag = (event) => {
+    if (!draggingRef.current || dragStartXRef.current == null) return;
+    const deltaX = event.clientX - dragStartXRef.current;
+    dragDeltaXRef.current = deltaX;
+    setDragOffsetPx(deltaX);
+  };
+
+  const endDrag = () => {
+    if (!draggingRef.current) return;
+    draggingRef.current = false;
+    setDragOffsetPx(0);
+
+    const deltaX = dragDeltaXRef.current;
+    dragStartXRef.current = null;
+    dragDeltaXRef.current = 0;
+    if (Math.abs(deltaX) < SWIPE_THRESHOLD_PX) return;
     setPage((prev) => Math.max(0, Math.min(pageCount - 1, prev + (deltaX < 0 ? 1 : -1))));
   };
 
@@ -51,15 +71,17 @@ export default function KeralaPortraitPanel({
 
       <div
         className="india-portrait-swiper-window"
-        onTouchStart={(event) => {
-          touchStartXRef.current = event.touches?.[0]?.clientX ?? null;
-        }}
-        onTouchEnd={handleSwipeEnd}
+        onPointerDown={beginDrag}
+        onPointerMove={moveDrag}
+        onPointerUp={endDrag}
+        onPointerCancel={endDrag}
+        onPointerLeave={endDrag}
       >
         <div
           className="india-portrait-swiper-track"
           style={{
-            transform: `translateX(-${page * 100}%)`,
+            transform: `translateX(calc(-${page * 100}% + ${dragOffsetPx}px))`,
+            transition: draggingRef.current ? "none" : undefined,
           }}
         >
           {pages.map((pageItems, pageIndex) => (
