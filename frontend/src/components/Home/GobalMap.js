@@ -6,7 +6,6 @@ import GlobeScene from "@/components/scenes/GlobeScene";
 import StateScene from "@/components/scenes/StateScene";
 import { useAppStore } from "@/store/useAppStore";
 import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 import IndiaSVG from "../Svg/IndiaSVG";
 import KeralaSVG from "../Svg/KeralaSVG";
@@ -304,6 +303,7 @@ export default function GobalMap() {
   const keralaContainerRef = useRef(null);
   const keralaAnimRef = useRef(null);
   const indiaAnimRef = useRef(null);
+  const scrollViewRef = useRef("globe");
   const colorElementsRef = useRef([]);
   const indiaColorElementsRef = useRef([]);
   const activeColorClassRef = useRef(null);
@@ -400,6 +400,11 @@ export default function GobalMap() {
     ? MAP_BACKDROP_POSITION_KERALA
     : MAP_BACKDROP_POSITION_INDIA;
   const activeBackdropRepeat = isKerala ? MAP_BACKDROP_REPEAT_KERALA : MAP_BACKDROP_REPEAT_INDIA;
+
+  useEffect(() => {
+    scrollViewRef.current = view;
+  }, [view]);
+
   const clearIndiaSelection = () => {
     activeIndiaClassRef.current = null;
     hoverIndiaClassRef.current = null;
@@ -443,34 +448,67 @@ export default function GobalMap() {
     return () => window.removeEventListener("resize", updateViewport);
   }, []);
 
-  /* SCROLL TRIGGER */
+  /* SECTION VIEW TRANSITIONS */
   useEffect(() => {
-    gsap.registerPlugin(ScrollTrigger);
-    setView("globe");
+    const HYSTERESIS_PX = 64;
+    let rafId = null;
 
-    const indiaTrigger = ScrollTrigger.create({
-      trigger: "#india-section",
-      start: "top bottom",
-      end: "center center",
-      scrub: 1.2,
-      invalidateOnRefresh: true,
-      onEnter: () => setView("india"),
-      onLeaveBack: () => setView("globe"),
-    });
+    const resolveViewFromScroll = () => {
+      const indiaSection = document.getElementById("india-section");
+      const keralaSection = document.getElementById("kerala-section");
+      if (!indiaSection || !keralaSection) return;
 
-    const keralaTrigger = ScrollTrigger.create({
-      trigger: "#kerala-section",
-      start: "top bottom",
-      end: "center center",
-      scrub: 1.2,
-      invalidateOnRefresh: true,
-      onEnter: () => setView("kerala"),
-      onLeaveBack: () => setView("india"),
-    });
+      const scrollY = window.scrollY || window.pageYOffset || 0;
+      const indiaTop = indiaSection.offsetTop;
+      const keralaTop = keralaSection.offsetTop;
+      const indiaSwitchY = indiaTop - window.innerHeight * 0.5;
+      const keralaSwitchY = keralaTop - window.innerHeight * 0.5;
+      const currentView = scrollViewRef.current;
+      let nextView = currentView;
 
+      if (currentView === "globe" && scrollY >= indiaSwitchY + HYSTERESIS_PX) {
+        nextView = "india";
+      } else if (currentView === "india") {
+        if (scrollY < indiaSwitchY - HYSTERESIS_PX) {
+          nextView = "globe";
+        } else if (scrollY >= keralaSwitchY + HYSTERESIS_PX) {
+          nextView = "kerala";
+        }
+      } else if (currentView === "kerala" && scrollY < keralaSwitchY - HYSTERESIS_PX) {
+        nextView = "india";
+      }
+
+      if (nextView !== currentView) {
+        scrollViewRef.current = nextView;
+        setView(nextView);
+      }
+    };
+
+    const onScroll = () => {
+      if (rafId != null) return;
+      rafId = window.requestAnimationFrame(() => {
+        rafId = null;
+        resolveViewFromScroll();
+      });
+    };
+
+    const onResize = () => {
+      if (rafId != null) {
+        window.cancelAnimationFrame(rafId);
+        rafId = null;
+      }
+      resolveViewFromScroll();
+    };
+
+    resolveViewFromScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("resize", onResize);
     return () => {
-      indiaTrigger.kill();
-      keralaTrigger.kill();
+      if (rafId != null) {
+        window.cancelAnimationFrame(rafId);
+      }
+      window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("resize", onResize);
     };
   }, [setView]);
 
@@ -497,8 +535,6 @@ export default function GobalMap() {
     if (!allPanels.length) return;
 
     gsap.killTweensOf(allPanels);
-    const previousTrigger = ScrollTrigger.getById("map-side-panels-motion");
-    if (previousTrigger) previousTrigger.kill();
 
     if (!showOverlay) {
       gsap.set(allLeftPanels, { x: -PANEL_ENTRY_OFFSET_X, opacity: 0 });
@@ -522,32 +558,40 @@ export default function GobalMap() {
       { x: 0, opacity: 1, duration: 0.58, ease: "power2.out", stagger: 0.06, overwrite: "auto" }
     );
 
-    const panelMotionTrigger = ScrollTrigger.create({
-      id: "map-side-panels-motion",
-      trigger: "#india-section",
-      start: "top center",
-      end: "#kerala-section bottom center",
-      scrub: 0.8,
-      invalidateOnRefresh: true,
-      onUpdate: (self) => {
-        const drift = (self.progress - 0.5) * 2;
-        gsap.to(allLeftPanels, {
-          x: -drift * PANEL_SCROLL_DRIFT_X,
-          duration: 0.2,
-          ease: "none",
-          overwrite: "auto",
-        });
-        gsap.to(rightPanels, {
-          x: drift * PANEL_SCROLL_DRIFT_X,
-          duration: 0.2,
-          ease: "none",
-          overwrite: "auto",
-        });
-      },
-    });
+    const updatePanelDrift = () => {
+      const indiaSection = document.getElementById("india-section");
+      const keralaSection = document.getElementById("kerala-section");
+      if (!indiaSection || !keralaSection) return;
+
+      const scrollY = window.scrollY || window.pageYOffset || 0;
+      const viewportCenterY = scrollY + window.innerHeight * 0.5;
+      const start = indiaSection.offsetTop;
+      const end = keralaSection.offsetTop + keralaSection.offsetHeight;
+      const range = Math.max(1, end - start);
+      const progress = Math.min(1, Math.max(0, (viewportCenterY - start) / range));
+      const drift = (progress - 0.5) * 2;
+
+      gsap.to(allLeftPanels, {
+        x: -drift * PANEL_SCROLL_DRIFT_X,
+        duration: 0.2,
+        ease: "none",
+        overwrite: "auto",
+      });
+      gsap.to(rightPanels, {
+        x: drift * PANEL_SCROLL_DRIFT_X,
+        duration: 0.2,
+        ease: "none",
+        overwrite: "auto",
+      });
+    };
+
+    updatePanelDrift();
+    window.addEventListener("scroll", updatePanelDrift, { passive: true });
+    window.addEventListener("resize", updatePanelDrift);
 
     return () => {
-      panelMotionTrigger.kill();
+      window.removeEventListener("scroll", updatePanelDrift);
+      window.removeEventListener("resize", updatePanelDrift);
       gsap.killTweensOf(allPanels);
     };
   }, [showOverlay, isPortraitLayout, view, isKerala]);

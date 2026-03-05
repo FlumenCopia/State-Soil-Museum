@@ -170,16 +170,6 @@ const Herosection = () => {
           </button>
         </div>
 
-        <div
-          data-hero-item
-          style={{
-            marginTop: "56px",
-            color: "rgba(229,239,255,0.7)",
-            fontSize: "clamp(1.4rem, 1.8vw, 1.5rem)",
-          }}
-        >
-          <i className="fa-solid fa-chevron-down"></i> Scroll
-        </div>
       </div>
     </section>
   );
