@@ -23,6 +23,10 @@ const OVERLAY_POSITION_X_BEFORE = -18;
 const OVERLAY_POSITION_Y_BEFORE = 130;
 const OVERLAY_POSITION_X_AFTER = 0;
 const OVERLAY_POSITION_Y_AFTER = 0;
+const KERALA_OVERLAY_POSITION_X_BEFORE_PORTRAIT = 0;
+const KERALA_OVERLAY_POSITION_Y_BEFORE_PORTRAIT = 0;
+const KERALA_OVERLAY_POSITION_X_AFTER_PORTRAIT =-100;
+const KERALA_OVERLAY_POSITION_Y_AFTER_PORTRAIT = -160;
 const OVERLAY_ROTATION_BEFORE = -10;
 const OVERLAY_ROTATION_AFTER = 0;
 
@@ -60,7 +64,7 @@ const KERALA_HEIGHT_BEFORE_PORTRAIT = "66vh";
 
 const KERALA_WIDTH_AFTER = "min(92vw, 920px)";
 const KERALA_HEIGHT_AFTER = "92vh";
-const KERALA_WIDTH_AFTER_PORTRAIT = "min(96vw, 840px)";
+const KERALA_WIDTH_AFTER_PORTRAIT = "min(96vw, 940px)";
 const KERALA_HEIGHT_AFTER_PORTRAIT = "76vh";
 
 const INDIA_PORTRAIT_PRESETS = Object.freeze({
@@ -363,6 +367,18 @@ export default function GobalMap() {
   const indiaOverlayYAfter = isPortraitLayout
     ? indiaPortraitPreset.overlayYAfter
     : INDIA_OVERLAY_POSITION_Y_AFTER;
+  const keralaOverlayXBefore = isPortraitLayout
+    ? KERALA_OVERLAY_POSITION_X_BEFORE_PORTRAIT
+    : OVERLAY_POSITION_X_BEFORE;
+  const keralaOverlayYBefore = isPortraitLayout
+    ? KERALA_OVERLAY_POSITION_Y_BEFORE_PORTRAIT
+    : OVERLAY_POSITION_Y_BEFORE;
+  const keralaOverlayXAfter = isPortraitLayout
+    ? KERALA_OVERLAY_POSITION_X_AFTER_PORTRAIT
+    : OVERLAY_POSITION_X_AFTER;
+  const keralaOverlayYAfter = isPortraitLayout
+    ? KERALA_OVERLAY_POSITION_Y_AFTER_PORTRAIT
+    : OVERLAY_POSITION_Y_AFTER;
   const selectedColorClass = hoverColorClass || activeColorClass;
   const selectedIndiaClass = hoverIndiaClass || activeIndiaClass;
   const selectedColorDetails = selectedColorClass
@@ -552,8 +568,8 @@ export default function GobalMap() {
     }
 
     gsap.set(overlay, {
-      x: isKerala ? OVERLAY_POSITION_X_BEFORE : indiaOverlayXBefore,
-      y: isKerala ? OVERLAY_POSITION_Y_BEFORE : indiaOverlayYBefore,
+      x: isKerala ? keralaOverlayXBefore : indiaOverlayXBefore,
+      y: isKerala ? keralaOverlayYBefore : indiaOverlayYBefore,
       rotation: isKerala ? OVERLAY_ROTATION_BEFORE : INDIA_OVERLAY_ROTATION_BEFORE,
       transformOrigin: "50% 50%",
     });
@@ -564,8 +580,8 @@ export default function GobalMap() {
         .to(overlay, {
           opacity: 0,
           scale: SCALE_OUT,
-          x: isKerala ? OVERLAY_POSITION_X_BEFORE : indiaOverlayXBefore,
-          y: isKerala ? OVERLAY_POSITION_Y_BEFORE : indiaOverlayYBefore,
+          x: isKerala ? keralaOverlayXBefore : indiaOverlayXBefore,
+          y: isKerala ? keralaOverlayYBefore : indiaOverlayYBefore,
           rotation: isKerala ? OVERLAY_ROTATION_BEFORE : INDIA_OVERLAY_ROTATION_BEFORE,
           duration: 0.5,
         })
@@ -580,7 +596,7 @@ export default function GobalMap() {
     } else {
       gsap.set(blur, { opacity: 0 });
     }
-  }, [showOverlay, isKerala, indiaOverlayXBefore, indiaOverlayYBefore]);
+  }, [showOverlay, isKerala, indiaOverlayXBefore, indiaOverlayYBefore, keralaOverlayXBefore, keralaOverlayYBefore]);
 
   // India sequence:
   // small image -> blur background -> outline draw -> fill reveal -> zoom to full.
@@ -706,8 +722,8 @@ export default function GobalMap() {
     gsap.set(overlay, {
       opacity: 1,
       scale: OVERLAY_INITIAL_SCALE,
-      x: OVERLAY_POSITION_X_BEFORE,
-      y: OVERLAY_POSITION_Y_BEFORE,
+      x: keralaOverlayXBefore,
+      y: keralaOverlayYBefore,
       rotation: OVERLAY_ROTATION_BEFORE,
       transformOrigin: "50% 50%",
     });
@@ -743,8 +759,8 @@ export default function GobalMap() {
       overlay,
       {
         scale: OVERLAY_FINAL_SCALE,
-        x: OVERLAY_POSITION_X_AFTER,
-        y: OVERLAY_POSITION_Y_AFTER,
+        x: keralaOverlayXAfter,
+        y: keralaOverlayYAfter,
         rotation: OVERLAY_ROTATION_AFTER,
         duration: ZOOM_DURATION,
         ease: "power3.out",
@@ -759,7 +775,7 @@ export default function GobalMap() {
       tl.kill();
       keralaAnimRef.current = null;
     };
-  }, [isKerala, showOverlay]);
+  }, [isKerala, showOverlay, keralaOverlayXAfter, keralaOverlayXBefore, keralaOverlayYAfter, keralaOverlayYBefore]);
 
   useEffect(() => {
     const container = keralaContainerRef.current;
