@@ -56,7 +56,10 @@ const Herosection = () => {
     >
       <div
         className="position-absolute top-0 start-0 w-100 h-100"
-     
+        style={{
+          background:
+            "radial-gradient(80% 70% at 50% 52%, rgba(9, 27, 62, 0.18) 0%, rgba(1, 8, 24, 0.48) 52%, rgba(2, 8, 18, 0.78) 100%)",
+        }}
       />
 
       <div
