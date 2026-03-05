@@ -25,7 +25,7 @@ const CAMERA_POSES = {
     target: INDIA_CAMERA_TARGET,
   },
   kerala: {
-    position: new THREE.Vector3(0, 0, 125), 
+    position: new THREE.Vector3(0, 0, 155), 
     target: new THREE.Vector3(0, 0, 0),
   },
 };
