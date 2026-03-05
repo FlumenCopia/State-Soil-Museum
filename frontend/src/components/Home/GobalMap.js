@@ -1255,16 +1255,30 @@ export default function GobalMap() {
                 "0 0 0 1px rgba(124, 194, 255, 0.24), 0 0 35px rgba(49, 142, 255, 0.32), 0 20px 50px rgba(2, 8, 26, 0.68), inset 0 0 40px rgba(38, 118, 255, 0.18), inset 0 1px 0 rgba(196, 228, 255, 0.32)",
             }}
           >
-            <div
-              style={{
-                fontSize: 13,
-                letterSpacing: "0.35px",
-                color: "rgba(226, 241, 255, 0.95)",
-                marginBottom: 10,
-              }}
-            >
-              Kerala Soil Data
-            </div>
+      
+             
+            
+<div
+                style={{
+                  alignSelf: "flex-start",
+                  fontSize: 11,
+                  letterSpacing: "0.14em",
+                  textTransform: "uppercase",
+                  padding: "3px 8px",
+                  borderRadius: 999,
+                  border: "1px solid rgba(163, 224, 255, 0.56)",
+                  background: "rgba(25, 104, 214, 0.34)",
+                  color: "rgba(222, 242, 255, 0.95)",
+                  fontWeight: 700,
+                  marginBottom: 6,
+                  width: "fit-content",
+                }}
+              >
+                              Kerala Soil Data
+
+              </div>
+
+
             {selectedColorDetails ? (
               <>
                 <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 10 }}>
@@ -1473,7 +1487,7 @@ export default function GobalMap() {
                   marginBottom: 6,
                 }}
               >
-                Portrait View
+                India Soil
               </div>
             )}
             <div

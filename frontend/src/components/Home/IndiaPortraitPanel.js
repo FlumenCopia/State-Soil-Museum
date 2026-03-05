@@ -44,7 +44,7 @@ export default function IndiaPortraitPanel({
   return (
     <aside className="india-portrait-swiper-panel">
       <div className="india-portrait-swiper-head">
-        <h3>India Soil</h3>
+ 
         <p>Click or tap a region on the map to view soil data.</p>
       </div>
 
