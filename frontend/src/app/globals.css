@@ -1,24 +1,16 @@
-
 :root {
   --india-svg-width: min(80vw, 800px);
   --india-svg-height: 80vh;
-  --kerala-svg-after-width: min(90vw, 900px);
-  --kerala-svg-after-height: 76vh;
+  --kerala-svg-width: min(72vw, 860px);
+  --kerala-svg-height: 68vh;
 }
-
-
-
-
-
-
-
-
-
 
 @media (orientation: portrait) {
   :root {
     --india-svg-width: min(70vw, 700px);
     --india-svg-height: 70vh;
+    --kerala-svg-width: min(82vw, 860px);
+    --kerala-svg-height: 64vh;
   }
 }
 
@@ -27,45 +19,55 @@
   --india-svg-after-height: 70vh;
 }
 
-
-@media  (min-height: 1281px)and (max-width: 1081px) and (orientation: portrait) {
-  .INDIA_WIDTH_AFTER_PORTRAIT {
-    --india-svg-after-width: min(65vw, 650px);
-    --india-svg-after-height: 65vh;
-  }
+.KERALA_WIDTH_AFTER_PORTRAIT {
+  --kerala-svg-after-width: min(90vw, 840px);
+  --kerala-svg-after-height: 74vh;
 }
 
-
-@media (min-height: 1081px) and (max-width: 960px) and (orientation: portrait) {
+@media (max-width: 1080px) and (orientation: portrait) {
   .INDIA_WIDTH_AFTER_PORTRAIT {
-    --india-svg-after-width: min(56vw, 560px);
-    --india-svg-after-height: 56vh;
-  }
-}
-
-
-
-
-@media  (max-width: 1100px) and (orientation: portrait) {
-  .INDIA_WIDTH_AFTER_PORTRAIT {
-    --india-svg-after-width: min(58vw, 580px);
+    --india-svg-after-width: min(58vw,690px);
     --india-svg-after-height: 58vh;
+  }
+  .KERALA_WIDTH_AFTER_PORTRAIT {
+    --kerala-svg-after-width: min(94vw, 800px);
+    --kerala-svg-after-height: 65vh;
   }
 }
 
 @media (max-width: 1024px) and (orientation: portrait) {
   .INDIA_WIDTH_AFTER_PORTRAIT {
-    --india-svg-after-width: min(50vw, 500px);
-    --india-svg-after-height: 50vh;
+    --india-svg-after-width: min(58vw,690px);
+    --india-svg-after-height: 55vh;
+  }
+  .KERALA_WIDTH_AFTER_PORTRAIT {
+    --kerala-svg-after-width: min(94vw, 800px);
+    --kerala-svg-after-height: 63vh;
   }
 }
 
+
 @media (max-width: 864px) and (orientation: portrait) {
+
   .INDIA_WIDTH_AFTER_PORTRAIT {
-    --india-svg-after-width: min(45vw, 450px);
-    --india-svg-after-height: 45vh;
+    --india-svg-after-width: clamp(320px, 58vw, 690px);
+    --india-svg-after-height: clamp(300px, 55vh, 600px);
   }
+
+  .KERALA_WIDTH_AFTER_PORTRAIT {
+    --kerala-svg-after-width: clamp(420px, 94vw, 800px);
+    --kerala-svg-after-height: clamp(350px, 59vh, 700px);
+  }
+
 }
+
+
+
+
+
+
+
+
 
 
 .hover-orange:hover {
@@ -844,6 +846,7 @@ svg rect.selected-highlight {
     min-width: 110px;
   }
 }
+
 
 
 

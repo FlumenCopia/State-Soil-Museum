@@ -25,14 +25,13 @@ const OVERLAY_POSITION_X_AFTER = 0;
 const OVERLAY_POSITION_Y_AFTER = 0;
 const KERALA_OVERLAY_POSITION_X_BEFORE_PORTRAIT = 0;
 const KERALA_OVERLAY_POSITION_Y_BEFORE_PORTRAIT = 0;
-const KERALA_OVERLAY_POSITION_X_AFTER_PORTRAIT =-100;
-const KERALA_OVERLAY_POSITION_Y_AFTER_PORTRAIT = -160;
+const KERALA_OVERLAY_POSITION_X_AFTER_PORTRAIT = -100;
+const KERALA_OVERLAY_POSITION_Y_AFTER_PORTRAIT = -80;
 const OVERLAY_ROTATION_BEFORE = -10;
 const OVERLAY_ROTATION_AFTER = 0;
-
 // India-specific before/after positioning controls.
 const INDIA_OVERLAY_POSITION_X_BEFORE = 30;
-const INDIA_OVERLAY_POSITION_Y_BEFORE =10;
+const INDIA_OVERLAY_POSITION_Y_BEFORE = 10;
 const INDIA_OVERLAY_POSITION_X_AFTER = 30;
 const INDIA_OVERLAY_POSITION_Y_AFTER = 10;
 const INDIA_OVERLAY_ROTATION_BEFORE = 0;
@@ -63,10 +62,10 @@ const KERALA_HEIGHT_AFTER = "92vh";
 
 
 
-const KERALA_WIDTH_BEFORE_PORTRAIT = "  var(--kerala-svg-after-width)";
-const KERALA_HEIGHT_BEFORE_PORTRAIT = "var(--kerala-svg-after-height)";
-const KERALA_WIDTH_AFTER_PORTRAIT = " var(--kerala-svg-after-width)";
-const KERALA_HEIGHT_AFTER_PORTRAIT = "var(--kerala-svg-after-height)";
+const KERALA_WIDTH_BEFORE_PORTRAIT = "var(--kerala-svg-width, min(82vw, 860px))";
+const KERALA_HEIGHT_BEFORE_PORTRAIT = "var(--kerala-svg-height, 86vh)";
+const KERALA_WIDTH_AFTER_PORTRAIT = "var(--kerala-svg-after-width, min(86vw, 860px))";
+const KERALA_HEIGHT_AFTER_PORTRAIT = "var(--kerala-svg-after-height, 86vh)";
 const INDIA_PORTRAIT_PRESETS = Object.freeze({
   base: {
     widthBefore: INDIA_WIDTH_BEFORE_PORTRAIT,
@@ -109,26 +108,18 @@ const KERALA_PORTRAIT_PRESETS = Object.freeze({
     heightAfter: KERALA_HEIGHT_AFTER_PORTRAIT,
   },
 
-    medium: {
+  medium: {
     widthBefore: KERALA_WIDTH_BEFORE_PORTRAIT,
     heightBefore: KERALA_HEIGHT_BEFORE_PORTRAIT,
     widthAfter: KERALA_WIDTH_AFTER_PORTRAIT,
     heightAfter: KERALA_HEIGHT_AFTER_PORTRAIT,
   },
-    compute: {
-    widthBefore: KERALA_WIDTH_BEFORE_PORTRAIT,
-    heightBefore: KERALA_HEIGHT_BEFORE_PORTRAIT,
-    widthAfter: KERALA_WIDTH_AFTER_PORTRAIT,
-    heightAfter: KERALA_HEIGHT_AFTER_PORTRAIT,
-  },
-
-
 
   compact: {
-    widthBefore: "min(92vw, 520px)",
-    heightBefore: "70vh",
-    widthAfter: "min(100vw, 620px)",
-    heightAfter: "82vh",
+    widthBefore: KERALA_WIDTH_BEFORE_PORTRAIT,
+    heightBefore: KERALA_HEIGHT_BEFORE_PORTRAIT,
+    widthAfter: KERALA_WIDTH_AFTER_PORTRAIT,
+    heightAfter: KERALA_HEIGHT_AFTER_PORTRAIT,
   },
 });
 
@@ -254,7 +245,7 @@ const KERALA_COLOR_DETAILS = Object.freeze({
     details: "Transition zones containing mixed red and black soil traits.",
     image: "/images/hill.jpg",
   },
-    "cls-4": {
+  "cls-4": {
     label: "Water Body",
     color: "#3c36bc",
     details: "Leached lateritic soil common in high-rainfall and upland belts.",
@@ -281,9 +272,9 @@ const INDIA_COLOR_DETAILS = Object.freeze({
 
 
   "IndiaSVG-22": { label: "Terai Soils", color: "#d6e3a7", details: "Terai soils are fertile, moisture-retentive, and marshy alluvial soils found in a 15-30 km wide, humid, and forested belt along the Himalayan foothills. These fine-textured, clayey soils are rich in organic matter and nitrogen but deficient in phosphate, making them ideal for high-yield crops like sugarcane, rice and wheat." },
- "IndiaSVG-23": { label: "Laterite Soils", color: "#dccd67", details: "Laterite soil is a rusty-red, acidic, and nutrient-poor soil type formed by intense leaching and weathering of iron/aluminium-rich rocks in tropical regions with high temperature and heavy rainfall. The name “laterite” comes from word later(Latin) ie., soil becomes hard like brick when exposed to air." },
+  "IndiaSVG-23": { label: "Laterite Soils", color: "#dccd67", details: "Laterite soil is a rusty-red, acidic, and nutrient-poor soil type formed by intense leaching and weathering of iron/aluminium-rich rocks in tropical regions with high temperature and heavy rainfall. The name “laterite” comes from word later(Latin) ie., soil becomes hard like brick when exposed to air." },
 
- 
+
   "IndiaSVG-24": { label: "Sub Mountain Soils", color: "#fbf6b0", details: "Sub-mountain soils (or sub-montane soils) are variant of forest/mountain soils found in India's lower Himalayan, North-eastern hill, and valley regions.They are typically rich in humus, deep and acidic making them ideal for orchards, fruits crops and tea." },
   "IndiaSVG-27": { label: "Glaciers", color: "#f5f5ed", details: "Glacial soils are primarily found in the high-altitude regions of the Greater Himalayas, Karakoram, Ladakh, and Zaskar ranges, are immature, often frozen and possess low organic matter. These nutrient-rich mineral sediments are crucial for forming fertile soils in lower valleys, unsuitable for agriculture in the native form." },
   "IndiaSVG-28": { label: "Mixed Red and Black Soils", color: "#f3a75c", details: " Mixed red and black soils are fertile, hybrid soils formed by the mixture of red soil (from iron-rich crystalline rocks) and black soil (from volcanic lava). These soils are ideal for growing cotton and maize." },
@@ -396,10 +387,10 @@ export default function GobalMap() {
     : null;
   const selectedIndiaDetails = selectedIndiaClass
     ? INDIA_COLOR_DETAILS[selectedIndiaClass] ?? {
-        label: `India Soil Region ${selectedIndiaClass.replace("IndiaSVG-", "")}`,
-        color: "#6ab7ff",
-        details: "Region selected on India map. Soil details can be customized in INDIA_COLOR_DETAILS.",
-      }
+      label: `India Soil Region ${selectedIndiaClass.replace("IndiaSVG-", "")}`,
+      color: "#6ab7ff",
+      details: "Region selected on India map. Soil details can be customized in INDIA_COLOR_DETAILS.",
+    }
     : null;
   const activeBackdropBackground = isKerala
     ? MAP_BACKDROP_BACKGROUND_KERALA
@@ -1121,16 +1112,17 @@ export default function GobalMap() {
             )}
           </div>
 
-            <div ref={keralaContainerRef} style={{ gridArea: "1 / 1", opacity: 0 }}>
+          <div ref={keralaContainerRef} style={{ gridArea: "1 / 1", opacity: 0 }}>
               {shouldRenderKeralaSvg && (
                 <KeralaSVG
                   ref={keralaSvgRef}
+                  className={isPortraitLayout ? "KERALA_WIDTH_AFTER_PORTRAIT" : undefined}
                   width={keralaSvgWidth}
                   height={keralaSvgHeight}
                   isZoomed={keralaZoomComplete}
                 />
               )}
-            </div>
+          </div>
         </div>
       </div>
 
@@ -1249,7 +1241,7 @@ export default function GobalMap() {
               left: isPortraitLayout ? 12 : "auto",
               transform: isPortraitLayout ? "none" : "translateY(-50%)",
               zIndex: 60,
-              width: isPortraitLayout ? "min(540px, calc(100vw - 280px))" : "min(340px, 32vw)",
+              width: isPortraitLayout ? "min(450px, calc(100vw - 24px))" : "min(340px, 32vw)",
               minWidth: isPortraitLayout ? 0 : 240,
               maxHeight: isPortraitLayout ? "22vh" : "none",
               overflowY: isPortraitLayout ? "auto" : "visible",
@@ -1265,28 +1257,28 @@ export default function GobalMap() {
                 "0 0 0 1px rgba(124, 194, 255, 0.24), 0 0 35px rgba(49, 142, 255, 0.32), 0 20px 50px rgba(2, 8, 26, 0.68), inset 0 0 40px rgba(38, 118, 255, 0.18), inset 0 1px 0 rgba(196, 228, 255, 0.32)",
             }}
           >
-      
-             
-            
-<div
-                style={{
-                  alignSelf: "flex-start",
-                  fontSize: 11,
-                  letterSpacing: "0.14em",
-                  textTransform: "uppercase",
-                  padding: "3px 8px",
-                  borderRadius: 999,
-                  border: "1px solid rgba(163, 224, 255, 0.56)",
-                  background: "rgba(25, 104, 214, 0.34)",
-                  color: "rgba(222, 242, 255, 0.95)",
-                  fontWeight: 700,
-                  marginBottom: 6,
-                  width: "fit-content",
-                }}
-              >
-                              Kerala Soil Data
 
-              </div>
+
+
+            <div
+              style={{
+                alignSelf: "flex-start",
+                fontSize: 11,
+                letterSpacing: "0.14em",
+                textTransform: "uppercase",
+                padding: "3px 8px",
+                borderRadius: 999,
+                border: "1px solid rgba(163, 224, 255, 0.56)",
+                background: "rgba(25, 104, 214, 0.34)",
+                color: "rgba(222, 242, 255, 0.95)",
+                fontWeight: 700,
+                marginBottom: 6,
+                width: "fit-content",
+              }}
+            >
+              Kerala Soil Data
+
+            </div>
 
 
             {selectedColorDetails ? (
@@ -1462,7 +1454,7 @@ export default function GobalMap() {
               left: isPortraitLayout ? 12 : "auto",
               transform: isPortraitLayout ? "none" : "translateY(-50%)",
               zIndex: 60,
-              width: isPortraitLayout ? "min(540px, calc(100vw - 280px))" : "min(340px, 32vw)",
+              width: isPortraitLayout ? "min(450px, calc(100vw - 24px))" : "min(340px, 32vw)",
               minWidth: isPortraitLayout ? 0 : 240,
               maxHeight: isPortraitLayout ? "22vh" : "none",
               overflowY: isPortraitLayout ? "auto" : "visible",
@@ -1509,15 +1501,7 @@ export default function GobalMap() {
                 flexWrap: "wrap",
               }}
             >
-              <span
-                style={{
-                  fontSize: 15,
-                  letterSpacing: "0.35px",
-                  color: "rgba(226, 241, 255, 0.95)",
-                }}
-              >
-                India Soil
-              </span>
+ 
               {selectedIndiaDetails && (
                 <span style={{ display: "inline-flex", alignItems: "center", gap: 8, minWidth: 0 }}>
                   <span

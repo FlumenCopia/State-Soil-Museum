@@ -32,7 +32,7 @@ const KERALA_MAP_LABELS = [
   { text: "Forest & Hill Soils", x: 486, y: 726, side: "right", ax: 432, ay: 726 },
 ];
 
-const KeralaSVG = forwardRef(({ width, height, isZoomed = false }, ref) => {
+const KeralaSVG = forwardRef(({ className, width, height, isZoomed = false }, ref) => {
   return (
     
     
@@ -41,6 +41,7 @@ const KeralaSVG = forwardRef(({ width, height, isZoomed = false }, ref) => {
 
 <svg
   ref={ref}
+  className={className}
   viewBox="0 0 595.28 841.89"
   style={{
     width,
