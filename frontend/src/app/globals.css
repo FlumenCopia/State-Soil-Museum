@@ -690,32 +690,33 @@ svg rect.selected-highlight {
 }
 
 .india-portrait-swiper-head {
-  border-radius: 16px;
-  border: 1px solid rgba(112, 192, 255, 0.56);
-  background:
-    radial-gradient(130% 120% at 50% -20%, rgba(151, 214, 255, 0.54), rgba(151, 214, 255, 0) 54%),
-    linear-gradient(180deg, rgba(24, 83, 188, 0.86), rgba(14, 46, 120, 0.82) 55%, rgba(8, 30, 85, 0.84));
-  box-shadow:
-    0 0 18px rgba(65, 168, 255, 0.34),
-    inset 0 1px 0 rgba(232, 247, 255, 0.46);
-  padding: 12px 14px;
+  padding: 10px 14px 12px;
   text-align: center;
-  margin-bottom: 10px;
+  margin-bottom: 8px;
+  background: transparent;
+  border: none;
+  box-shadow: none;
 }
 
 .india-portrait-swiper-head h3 {
   margin: 0;
-  font-size: 22px;
+  font-size: 21px;
   line-height: 1.1;
-  font-weight: 800;
-  letter-spacing: 0.2px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgba(236, 246, 255, 0.96);
+  text-shadow:
+    0 0 10px rgba(86, 183, 255, 0.34),
+    0 1px 0 rgba(8, 18, 42, 0.8);
 }
 
 .india-portrait-swiper-head p {
-  margin: 6px 0 0;
-  font-size: 13px;
+  margin: 7px 0 0;
+  font-size: 12px;
   line-height: 1.35;
-  color: rgba(232, 244, 255, 0.92);
+  color: rgba(225, 239, 255, 0.88);
+  text-shadow: 0 1px 0 rgba(7, 16, 38, 0.72);
 }
 
 .india-portrait-swiper-window {
@@ -845,7 +846,7 @@ svg rect.selected-highlight {
     padding: 6px 10px;
   }
   .india-portrait-swiper-head h3 {
-    font-size: 18px;
+    font-size: 17px;
   }
   .india-portrait-soil-card {
     min-height: 50px;
