@@ -337,7 +337,8 @@ svg rect.selected-highlight {
 
 
 /* Hide fills initially */
-.fill-path {
+.fill-path,
+.IndiaSVG-fill-path {
   opacity: 0;
   stroke: rgba(13, 30, 53, 0.58);
   stroke-width: 0.9;

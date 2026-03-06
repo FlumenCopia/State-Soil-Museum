@@ -1421,7 +1421,7 @@ export default function GobalMap() {
           </aside>
         </>
       )}
-      {!isKerala && showOverlay && (
+      {!isKerala && showOverlay && indiaZoomComplete && (
         <>
           {isPortraitLayout ? (
             <IndiaPortraitPanel
