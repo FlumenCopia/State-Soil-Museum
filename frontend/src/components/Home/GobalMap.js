@@ -1394,6 +1394,7 @@ export default function GobalMap() {
                   <img
                     src={selectedColorDetails.image}
                     alt={selectedColorDetails.label}
+                    data-click-sound
                     onClick={() => setIsSoilImageZoomed((prev) => !prev)}
                     title={isSoilImageZoomed ? "Click to reset image zoom" : "Click to zoom image"}
                     style={{
