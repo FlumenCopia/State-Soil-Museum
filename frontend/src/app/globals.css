@@ -137,6 +137,44 @@ rgb(31, 114, 247)
   transform: translateY(-1px);
 }
 
+.grid-trail-effect {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  overflow: hidden;
+  mask-image: radial-gradient(circle at center, black 48%, transparent 100%);
+}
+
+.grid-trail-effect__glow {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(circle at 50% 50%, rgba(50, 132, 255, 0.12), rgba(50, 132, 255, 0) 34%),
+    linear-gradient(180deg, rgba(6, 20, 48, 0.08), rgba(6, 20, 48, 0));
+}
+
+.grid-trail-effect__grid {
+  position: absolute;
+  inset: -1px;
+  display: grid;
+}
+
+.grid-trail-effect__cell {
+  min-width: 24px;
+  min-height: 24px;
+  border: 1px solid rgba(98, 168, 255, 0.12);
+  background: transparent;
+  opacity: 0.16;
+  transform: scale(1);
+  transform-origin: center;
+  transition:
+    opacity 0.24s ease,
+    transform 0.24s ease,
+    border-color 0.24s ease,
+    box-shadow 0.24s ease;
+}
+
 @keyframes exploreMapOutlineSpin {
   0% {
     transform: rotate(0deg);
