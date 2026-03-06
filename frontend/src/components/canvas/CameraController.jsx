@@ -15,6 +15,10 @@ const INDIA_CAMERA_TARGET = new THREE.Vector3(0, 0, 0);
 const INDIA_CAMERA_POSITION_PORTRAIT = new THREE.Vector3(7, -6, 220);
 const INDIA_CAMERA_TARGET_PORTRAIT = new THREE.Vector3(0, 4, 0);
 
+const GLOBE_CAMERA_POSITION_PORTRAIT = new THREE.Vector3(0, 0, 520);
+const GLOBE_CAMERA_TARGET_PORTRAIT = new THREE.Vector3(0, 4, 0);
+
+
 const CAMERA_POSES = {
   globe: {
     position: new THREE.Vector3(0, 0, 320), 
@@ -41,6 +45,10 @@ export default function CameraController() {
     view === "india" &&
     viewportSize.width > 0 &&
     viewportSize.height > viewportSize.width;
+  const isPortraitGlobeView =
+    view === "globe" &&
+    viewportSize.width > 0 &&
+    viewportSize.height > viewportSize.width;
 
   useEffect(() => {
     const updateViewport = () => {
@@ -57,6 +65,11 @@ export default function CameraController() {
       ? {
           position: INDIA_CAMERA_POSITION_PORTRAIT,
           target: INDIA_CAMERA_TARGET_PORTRAIT,
+        }
+      : isPortraitGlobeView
+      ? {
+          position: GLOBE_CAMERA_POSITION_PORTRAIT,
+          target: GLOBE_CAMERA_TARGET_PORTRAIT,
         }
       : CAMERA_POSES[view];
     if (!pose) return;
@@ -103,7 +116,14 @@ export default function CameraController() {
       gsap.killTweensOf(camera.position);
       gsap.killTweensOf(lookAtTarget);
     };
-  }, [view, isPortraitIndiaView, camera, setIndiaRevealReady, setOverlayMapView]);
+  }, [
+    view,
+    isPortraitIndiaView,
+    isPortraitGlobeView,
+    camera,
+    setIndiaRevealReady,
+    setOverlayMapView,
+  ]);
 
   return null;
 }
