@@ -13,11 +13,15 @@ const KERALA_GLOBE_TARGET = Object.freeze({ lat: 10.55, lon: 75.27, tiltZ: -0.15
 const GLOBE_IDLE_ROTATION_SPEED = 0.08;
 const GLOBE_FOCUS_DURATION = 4.2;
 const GLOBE_FOCUS_EASE = "power3.inOut";
+const GLOBE_POINTER_TILT_X = 0.16;
+const GLOBE_POINTER_TILT_Z = 0.12;
+const GLOBE_POINTER_FOLLOW = 3.2;
 
 export default function GlobeScene() {
   const earthGroup = useRef();
   const cloudsRef = useRef();
   const previousViewRef = useRef("globe");
+  const pointerTiltRef = useRef({ x: 0, z: 0 });
   const { gl, scene } = useThree();
   const { view } = useAppStore();
   const sceneBackground = useTexture("/images/g.png");
@@ -45,6 +49,31 @@ export default function GlobeScene() {
     });
     if (earthColor) earthColor.colorSpace = THREE.SRGBColorSpace;
   }, [sceneBackground, earthColor, earthNormal, cloudsTexture, gl]);
+  useEffect(() => {
+    const handlePointerMove = (event) => {
+      const width = window.innerWidth || 1;
+      const height = window.innerHeight || 1;
+      const normalizedX = event.clientX / width - 0.5;
+      const normalizedY = event.clientY / height - 0.5;
+
+      pointerTiltRef.current.x = -normalizedY * GLOBE_POINTER_TILT_X * 2;
+      pointerTiltRef.current.z = -normalizedX * GLOBE_POINTER_TILT_Z * 2;
+    };
+
+    const resetPointerTilt = () => {
+      pointerTiltRef.current.x = 0;
+      pointerTiltRef.current.z = 0;
+    };
+
+    window.addEventListener("pointermove", handlePointerMove);
+    window.addEventListener("pointerleave", resetPointerTilt);
+
+    return () => {
+      window.removeEventListener("pointermove", handlePointerMove);
+      window.removeEventListener("pointerleave", resetPointerTilt);
+    };
+  }, []);
+
   useEffect(() => {
     if (earthGroup.current && (view === "india" || view === "kerala")) {
       const targets = {
@@ -80,6 +109,17 @@ export default function GlobeScene() {
   useFrame((_, delta) => {
     if (earthGroup.current && view === "globe") {
       earthGroup.current.rotation.y += delta * GLOBE_IDLE_ROTATION_SPEED;
+      const followStrength = 1 - Math.exp(-delta * GLOBE_POINTER_FOLLOW);
+      earthGroup.current.rotation.x = THREE.MathUtils.lerp(
+        earthGroup.current.rotation.x,
+        pointerTiltRef.current.x,
+        followStrength
+      );
+      earthGroup.current.rotation.z = THREE.MathUtils.lerp(
+        earthGroup.current.rotation.z,
+        pointerTiltRef.current.z,
+        followStrength
+      );
     }
   });
   useEffect(() => {

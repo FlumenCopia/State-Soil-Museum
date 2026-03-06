@@ -882,22 +882,13 @@ export default function GobalMap() {
       }
     };
 
-    const handleEnter = (e) => {
-      const colorClass = getColorClass(e.currentTarget);
-      if (!colorClass) return;
-      hoverColorClassRef.current = colorClass;
-      setHoverColorClass(colorClass);
-      paintHighlights();
-    };
-
-    const handleLeave = () => {
-      hoverColorClassRef.current = null;
-      setHoverColorClass(null);
-      paintHighlights();
-    };
-
     const handleClick = (e) => {
-      const colorClass = getColorClass(e.currentTarget);
+      const target = e.target;
+      if (!(target instanceof Element)) return;
+      const clickableElement = target.closest("path, polygon, rect");
+      if (!clickableElement || !container.contains(clickableElement)) return;
+
+      const colorClass = getColorClass(clickableElement);
       if (!colorClass) return;
       if (activeColorClassRef.current === colorClass) {
         activeColorClassRef.current = null;
@@ -923,22 +914,49 @@ export default function GobalMap() {
       paintHighlights();
     };
 
-    colorElements.forEach((el) => {
-      el.addEventListener("mouseenter", handleEnter);
-      el.addEventListener("mouseleave", handleLeave);
-      el.addEventListener("click", handleClick);
-    });
+    const handlePointerMove = (e) => {
+      if (e.pointerType === "touch") return;
+
+      const target = e.target;
+      if (!(target instanceof Element)) return;
+      const hoveredElement = target.closest("path, polygon, rect");
+
+      if (!hoveredElement || !container.contains(hoveredElement)) {
+        if (hoverColorClassRef.current !== null) {
+          hoverColorClassRef.current = null;
+          setHoverColorClass(null);
+          paintHighlights();
+        }
+        return;
+      }
+
+      const colorClass = getColorClass(hoveredElement);
+      if (hoverColorClassRef.current === colorClass) return;
+
+      hoverColorClassRef.current = colorClass;
+      setHoverColorClass(colorClass);
+      paintHighlights();
+    };
+
+    const handlePointerLeave = () => {
+      if (hoverColorClassRef.current === null) return;
+      hoverColorClassRef.current = null;
+      setHoverColorClass(null);
+      paintHighlights();
+    };
+
+    container.addEventListener("pointermove", handlePointerMove);
+    container.addEventListener("pointerleave", handlePointerLeave);
     container.addEventListener("click", handleContainerClick);
+    container.addEventListener("click", handleClick);
     paintHighlights();
 
     return () => {
       container.classList.remove("kerala-has-focus");
+      container.removeEventListener("pointermove", handlePointerMove);
+      container.removeEventListener("pointerleave", handlePointerLeave);
       container.removeEventListener("click", handleContainerClick);
-      colorElements.forEach((el) => {
-        el.removeEventListener("mouseenter", handleEnter);
-        el.removeEventListener("mouseleave", handleLeave);
-        el.removeEventListener("click", handleClick);
-      });
+      container.removeEventListener("click", handleClick);
       colorElementsRef.current = [];
     };
   }, [isKerala, showOverlay]);
@@ -1006,22 +1024,13 @@ export default function GobalMap() {
       }
     };
 
-    const handleEnter = (e) => {
-      const colorClass = getColorClass(e.currentTarget);
-      if (!colorClass) return;
-      hoverIndiaClassRef.current = colorClass;
-      setHoverIndiaClass(colorClass);
-      paintHighlights();
-    };
-
-    const handleLeave = () => {
-      hoverIndiaClassRef.current = null;
-      setHoverIndiaClass(null);
-      paintHighlights();
-    };
-
     const handleClick = (e) => {
-      const colorClass = getColorClass(e.currentTarget);
+      const target = e.target;
+      if (!(target instanceof Element)) return;
+      const clickableElement = target.closest("path, polygon, rect");
+      if (!clickableElement || !container.contains(clickableElement)) return;
+
+      const colorClass = getColorClass(clickableElement);
       if (!colorClass) return;
       if (activeIndiaClassRef.current === colorClass) {
         activeIndiaClassRef.current = null;
@@ -1047,6 +1056,37 @@ export default function GobalMap() {
       paintHighlights();
     };
 
+    const handlePointerMove = (e) => {
+      if (e.pointerType === "touch") return;
+
+      const target = e.target;
+      if (!(target instanceof Element)) return;
+      const hoveredElement = target.closest("path, polygon, rect");
+
+      if (!hoveredElement || !container.contains(hoveredElement)) {
+        if (hoverIndiaClassRef.current !== null) {
+          hoverIndiaClassRef.current = null;
+          setHoverIndiaClass(null);
+          paintHighlights();
+        }
+        return;
+      }
+
+      const colorClass = getColorClass(hoveredElement);
+      if (hoverIndiaClassRef.current === colorClass) return;
+
+      hoverIndiaClassRef.current = colorClass;
+      setHoverIndiaClass(colorClass);
+      paintHighlights();
+    };
+
+    const handlePointerLeave = () => {
+      if (hoverIndiaClassRef.current === null) return;
+      hoverIndiaClassRef.current = null;
+      setHoverIndiaClass(null);
+      paintHighlights();
+    };
+
     const handleDocumentPointerDown = (e) => {
       const target = e.target;
       if (!(target instanceof Node)) return;
@@ -1059,24 +1099,20 @@ export default function GobalMap() {
       paintHighlights();
     };
 
-    colorElements.forEach((el) => {
-      el.addEventListener("mouseenter", handleEnter);
-      el.addEventListener("mouseleave", handleLeave);
-      el.addEventListener("click", handleClick);
-    });
+    container.addEventListener("pointermove", handlePointerMove);
+    container.addEventListener("pointerleave", handlePointerLeave);
     container.addEventListener("click", handleContainerClick);
+    container.addEventListener("click", handleClick);
     document.addEventListener("pointerdown", handleDocumentPointerDown);
     paintHighlights();
 
     return () => {
       container.classList.remove("india-has-focus");
+      container.removeEventListener("pointermove", handlePointerMove);
+      container.removeEventListener("pointerleave", handlePointerLeave);
       container.removeEventListener("click", handleContainerClick);
+      container.removeEventListener("click", handleClick);
       document.removeEventListener("pointerdown", handleDocumentPointerDown);
-      colorElements.forEach((el) => {
-        el.removeEventListener("mouseenter", handleEnter);
-        el.removeEventListener("mouseleave", handleLeave);
-        el.removeEventListener("click", handleClick);
-      });
       indiaColorElementsRef.current = [];
     };
   }, [isKerala, showOverlay, indiaZoomComplete]);
