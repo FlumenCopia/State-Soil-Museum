@@ -1347,7 +1347,7 @@ export default function GobalMap() {
             <div
               style={{
                 alignSelf: "flex-start",
-                fontSize: 11,
+                fontSize: 18,
                 letterSpacing: "0.14em",
                 textTransform: "uppercase",
                 padding: "3px 8px",
@@ -1360,7 +1360,7 @@ export default function GobalMap() {
                 width: "fit-content",
               }}
             >
-              Kerala Soil Data
+              Kerala Soil 
 
             </div>
 
@@ -1407,12 +1407,12 @@ export default function GobalMap() {
                     }}
                   />
                 </div>
-                <div style={{ fontSize: 13, lineHeight: 1.45, opacity: 0.95 }}>
+                <div style={{ fontSize: 18, lineHeight: 1.45, opacity: 0.95 }}>
                   {selectedColorDetails.details}
                 </div>
               </>
             ) : (
-              <div style={{ fontSize: 13, lineHeight: 1.45, opacity: 0.85 }}>
+              <div style={{ fontSize: 18, lineHeight: 1.45, opacity: 0.85 }}>
                 {isPortraitLayout
                   ? "Select a soil type from the bottom swiper or tap a Kerala section."
                   : "Select a soil type from the left list or hover/click a Kerala section."}
@@ -1467,7 +1467,7 @@ export default function GobalMap() {
               >
                 <div
                   style={{
-                    fontSize: 13,
+                    fontSize: 18,
                     letterSpacing: "0.35px",
                     color: "rgba(226, 241, 255, 0.95)",
                   }}
@@ -1561,7 +1561,7 @@ export default function GobalMap() {
               <div
                 style={{
                   alignSelf: "flex-start",
-                  fontSize: 11,
+                  fontSize: 18,
                   letterSpacing: "0.14em",
                   textTransform: "uppercase",
                   padding: "3px 8px",
@@ -1599,7 +1599,7 @@ export default function GobalMap() {
                       flex: "0 0 auto",
                     }}
                   />
-                  <strong style={{ fontSize: isPortraitLayout ? 13 : 14, lineHeight: 1.2 }}>
+                  <strong style={{ fontSize: isPortraitLayout ? 18 : 18, lineHeight: 1.2 }}>
                     {selectedIndiaDetails.label}
                   </strong>
                 </span>
@@ -1607,12 +1607,12 @@ export default function GobalMap() {
             </div>
             {selectedIndiaDetails ? (
               <>
-                <div style={{ fontSize: isPortraitLayout ? 14 : 15, lineHeight: 1.45, opacity: 0.95 }}>
+                <div style={{ fontSize: isPortraitLayout ? 18 : 18, lineHeight: 1.45, opacity: 0.95 }}>
                   {selectedIndiaDetails.details}
                 </div>
               </>
             ) : (
-              <div style={{ fontSize: 13, lineHeight: 1.45, opacity: 0.85 }}>
+              <div style={{ fontSize: 18, lineHeight: 1.45, opacity: 0.85 }}>
                 Click or hover an India map region to view soil data.
               </div>
             )}
