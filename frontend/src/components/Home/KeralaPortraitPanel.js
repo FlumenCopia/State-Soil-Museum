@@ -94,6 +94,7 @@ export default function KeralaPortraitPanel({
                     key={className}
                     type="button"
                     className={`india-portrait-soil-card${isSelected ? " active" : ""}`}
+                    style={{ "--soil-accent": item.color }}
                     onClick={() => onToggleSelection(className)}
                   >
                     <span

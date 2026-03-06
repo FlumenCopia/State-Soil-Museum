@@ -45,9 +45,9 @@ const INDIA_SVG_35_LABEL_STYLE = {
   fill: "#7ec8ff",
   fontSize: 18,
   fontWeight: 500,
-  letterSpacing: 1,
+  letterSpacing: 2,
   stroke: "#0c2b66",
-  strokeWidth: 1.1,
+  strokeWidth: 2,
   paintOrder: "stroke",
   opacity: 0.95,
 };
@@ -56,7 +56,7 @@ const SEA_LABEL_STYLE = {
   fill: "#7ec8ff",
   fontSize: 18,
   fontWeight: 500,
-  letterSpacing: 1,
+  letterSpacing: 2,
   stroke: "#0c2b66",
   strokeWidth: 1.1,
   paintOrder: "stroke",
@@ -985,7 +985,7 @@ const IndiaSVG = forwardRef(({ width, height, showLabels = true, showFilter = tr
           style={{ filter: "none" }}
         >
         {showLabels && (
-          <text x="554" y="1128" style={INDIA_SVG_35_LABEL_STYLE}>
+          <text x="630" y="1040" style={INDIA_SVG_35_LABEL_STYLE}>
             Andaman & Nicobar
           </text>
         )}
@@ -1016,7 +1016,7 @@ const IndiaSVG = forwardRef(({ width, height, showLabels = true, showFilter = tr
           ARABIAN SEA
         </text>
                <text x="180" y="892" style={SEA_LABEL_STYLE}>
-          INDIAN SEA
+          INDIAN OCEAN
         </text> 
 
 
