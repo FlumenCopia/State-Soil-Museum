@@ -2,6 +2,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import InteractionSound from "@/components/InteractionSound";
+import HeroBackgroundMusic from "@/components/HeroBackgroundMusic";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -28,6 +29,7 @@ export default function RootLayout({ children }) {
 
       <body className={`${geistSans.variable} ${geistMono.variable}`}>
         <InteractionSound />
+        <HeroBackgroundMusic />
         {children}
       </body>
     </html>

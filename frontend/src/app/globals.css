@@ -137,6 +137,71 @@ rgb(31, 114, 247)
   transform: translateY(-1px);
 }
 
+.bg-music-toggle {
+  position: fixed;
+  right: 18px;
+  bottom: 18px;
+  z-index: 90;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  border: 1px solid rgba(135, 210, 255, 0.42);
+  border-radius: 999px;
+  padding: 10px 14px;
+  color: #eef7ff;
+  background:
+    radial-gradient(140% 140% at 50% 0%, rgba(113, 197, 255, 0.28), rgba(113, 197, 255, 0) 52%),
+    linear-gradient(135deg, rgba(7, 22, 52, 0.92), rgba(5, 14, 34, 0.92));
+  box-shadow:
+    0 0 0 1px rgba(98, 176, 255, 0.12),
+    0 14px 34px rgba(2, 8, 24, 0.4),
+    inset 0 0 20px rgba(52, 145, 255, 0.12);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+}
+
+.bg-music-toggle:hover {
+  transform: translateY(-2px);
+  border-color: rgba(158, 224, 255, 0.72);
+  box-shadow:
+    0 0 0 1px rgba(98, 176, 255, 0.18),
+    0 18px 38px rgba(2, 8, 24, 0.48),
+    0 0 24px rgba(69, 169, 255, 0.18),
+    inset 0 0 22px rgba(52, 145, 255, 0.18);
+}
+
+.bg-music-toggle__icon {
+  display: inline-grid;
+  place-items: center;
+  width: 30px;
+  height: 30px;
+  border-radius: 999px;
+  background: rgba(131, 201, 255, 0.12);
+  box-shadow: inset 0 0 0 1px rgba(169, 223, 255, 0.15);
+  font-size: 14px;
+}
+
+.bg-music-toggle__label {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+@media (max-width: 640px) {
+  .bg-music-toggle {
+    right: 12px;
+    bottom: 12px;
+    padding: 9px 12px;
+  }
+
+  .bg-music-toggle__label {
+    font-size: 11px;
+    letter-spacing: 0.08em;
+  }
+}
+
 .grid-trail-effect {
   position: absolute;
   inset: 0;
