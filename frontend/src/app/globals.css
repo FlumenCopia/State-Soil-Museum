@@ -365,6 +365,7 @@ svg rect.selected-highlight {
     drop-shadow(0 3px 0 #6a3f1f)
     drop-shadow(0 5px 0 #4b2b13)
         drop-shadow(0 6px 0 #371e0c)
+        /* drop-shadow(0 10px 0 #160e08) */
 
      /* drop-shadow(0 0 10px rgba(255, 237, 188, 0.44)) */
     /* drop-shadow(0 16px 12px rgba(0, 0, 0, 0.7)) */

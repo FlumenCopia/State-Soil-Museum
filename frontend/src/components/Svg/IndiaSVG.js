@@ -75,20 +75,30 @@ const SEA_LABEL_STYLE = {
 
 
 
-const IndiaSVG = forwardRef(({ width, height, showLabels = true, showFilter = true, className }, ref) => {
+const IndiaSVG = forwardRef(({ width, height, showLabels = true, showFilter = true, className, isZoomed = false }, ref) => {
   return (
     <svg
       ref={ref}
       className={className}
   viewBox="0 0 728.96 995.39"
       // viewBox="0 0 628.96 895.39"
+
+
+      
   style={{
     width,
     maxHeight: height,
     height: "auto",
     overflow: "visible",
     transition: "filter 0.45s ease",
+   
+    transform: isZoomed
+      ? " rotateX(16deg) rotateY(0deg) rotateZ(0deg) translateZ(0px) translateY(0px)"
+      : "none",
+    transformOrigin: "50% 50%",
+    /* keep parent clean so labels never get filtered */
     filter: "none",
+
   }}
     >
    <g
@@ -100,6 +110,8 @@ const IndiaSVG = forwardRef(({ width, height, showLabels = true, showFilter = tr
     drop-shadow(0 2px 0 #c2c2c2)
     drop-shadow(0 3px 0 #adadad)
     drop-shadow(0 4px 0 #999999)
+        drop-shadow(0 5px 0 #999999)
+
     drop-shadow(-10px -12px 18px rgba(255,255,255,0.22))
     drop-shadow(14px 18px 30px rgba(0,0,0,0.65))
     `
