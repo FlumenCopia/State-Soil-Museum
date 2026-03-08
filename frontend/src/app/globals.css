@@ -948,6 +948,11 @@ svg rect.selected-highlight {
 }
 
 @media (max-width: 1100px) and (orientation: portrait) {
+  .bg-music-toggle {
+    top: 120px;
+    right: 12px;
+    bottom: auto;
+  }
   .map-preview-switch {
     width: min(280px, 58vw);
     min-width: 0;
