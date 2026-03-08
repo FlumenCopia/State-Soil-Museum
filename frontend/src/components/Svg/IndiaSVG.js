@@ -3,41 +3,51 @@
 import { forwardRef } from "react";
 
 const INDIA_MAP_LABELS = [
-  { text: "jammu & kashmir", x: 332, y: 62, side: "right", ax: 248, ay: 62 },
-  { text: "Himachal Pradesh", x: 302, y: 152, side: "right", ax: 268, ay: 152 },
-  { text: "punjabe", x: 66, y: 168, side: "left", ax: 172, ay: 168 },
-  { text: "Rajasthan", x: -50, y: 268, side: "left", ax: 142, ay: 268 },
-  { text: "Delhi", x: 226, y: 260, },
-  { text: "Uttar Pradesh", x: 296, y: 290, },
-  { text: "Bihar", x: 446, y: 310, },
-  { text: "Uttarakhand", x: 352, y: 200, side: "right", ax: 308, ay: 200 },
-  { text: "Sikkim", x: 472, y: 250,  },
-  { text: "Assam", x: 562, y: 290,  },
-  { text: "Meghalaya", x: 552, y: 320,  },
-  { text: "Arunachal Pradesh", x: 582, y: 200,},
-  { text: "Tripura", x: 562, y: 360,  },
-  { text: "Nagaland", x: 690, y: 286, side: "right", ax: 658, ay: 286 },
-  { text: "Manipur", x: 680, y: 340, side: "right", ax: 658, ay: 340 },
-  { text: "Mizoram", x: 680, y: 410, side: "right", ax: 638, ay: 410 },
-  { text: "West Bengal", x: 520, y: 410, side: "right", ax: 498, ay: 410 },
-  { text: "Orissa", x: 512, y: 472, side: "right", ax: 418, ay: 472 },
-  { text: "Andhra Pradesh", x: 382, y: 572, side: "right", ax: 318, ay: 572 },
-  { text: "Tamil Nadu", x: 312, y: 732, side: "right", ax: 278, ay: 732 },
-  { text: "Jharkhand", x: 416, y: 370, },
-  { text: "Chhattisgarh", x: 316, y: 430, },
-  { text: "Madhya Pradesh", x: 206, y: 390, },
-  { text: "Gujarat", x: -80, y: 398, side: "left", ax: 80, ay: 398 },
-  { text: "Maharastra", x: -20, y: 520, side: "left", ax: 150, ay: 520 },
-  { text: "Goa", x: 70, y: 590, side: "left", ax: 140, ay: 590 },
-  { text: "Karnataka", x: 50, y: 650, side: "left", ax: 190, ay: 650 },
-  { text: "Kelala", x: 120, y: 740, side: "left", ax: 210, ay: 740 },
-  { text: "Telangana", x: 246, y: 530, },
+  { text: "jammu & kashmir", x: 412, y: 62, side: "right", ax: 348, ay: 62 },
+
+  { text: "Himachal Pradesh", x: 382, y: 202, side: "right", ax: 348, ay: 202 },
+
+  { text: "punjabe", x: 106, y: 218, side: "left", ax: 232, ay: 218 },
+    { text: "Rajasthan", x: -70, y: 368, side: "left", ax: 102, ay: 368 },
+
+    { text: "Uttarakhand", x: 452, y: 250, side: "right", ax: 358, ay: 250 },
+
+  { text: "Sikkim", x: 652, y: 310,  },
+  { text: "Uttar Pradesh", x: 376, y: 390, },
+  { text: "Bihar", x: 596, y: 410, },
+  { text: "Delhi", x: 306, y: 320, },
+  { text: "Haryana", x: 256, y: 290, },
+
+
+  { text: "Assam", x: 762, y: 360,  },
+  { text: "Meghalaya", x: 752, y: 400,  },
+  { text: "Arunachal Pradesh", x: 842, y: 240,},
+  { text: "Tripura", x: 762, y: 460,  },
+  { text: "Nagaland", x: 910, y: 350, side: "right", ax: 878, ay: 350 },
+  { text: "Manipur", x: 890, y: 410, side: "right", ax: 868, ay: 410 },
+  { text: "Mizoram", x: 880, y: 480, side: "right", ax: 838, ay: 480 },
+  { text: "West Bengal", x: 650, y: 520, },
+  { text: "Orissa", x: 642, y: 602, side: "right", ax: 578, ay: 602 },
+  { text: "Jharkhand", x: 530, y: 470, },
+  { text: "Chhattisgarh", x: 396, y: 630, },
+  { text: "Madhya Pradesh", x: 246, y: 520, },
+  { text: "Andhra Pradesh", x: 482, y: 762, side: "right", ax: 408, ay: 762 },
+  { text: "Gujarat", x: -80, y: 558, side: "left", ax: 80, ay: 558 },
+  { text: "Maharastra", x: 20, y: 670, side: "left", ax: 200, ay: 670 },
+  { text: "Goa", x: 100, y: 780, side: "left", ax: 190, ay: 780 },
+  { text: "Karnataka", x: 100, y: 850, side: "left", ax: 250, ay: 850 },
+  { text: "Kelala", x: 170, y: 940, side: "left", ax: 280, ay: 940 },
+  { text: "Tamil Nadu", x: 442, y: 932, side: "right", ax: 378, ay: 932 },
+
+
+  { text: "Telangana", x: 316, y: 710, },
+
 ];
 
 
 const indain_MAP_LABELS = INDIA_MAP_LABELS;
-const INDIA_SVG_35_POSITION = { x: -110, y: -300 };
-const INDIA_SVG_35_POSITION2 = { x: -200, y: -250 };
+const INDIA_SVG_35_POSITION = { x: 120, y: -180 };
+const INDIA_SVG_35_POSITION2 = { x: -100, y: -20 };
 
 
 
@@ -70,9 +80,8 @@ const IndiaSVG = forwardRef(({ width, height, showLabels = true, showFilter = tr
     <svg
       ref={ref}
       className={className}
-      // viewBox="0 0 883 1280"
-// viewBox="0 0 954.4 1020.02"
-      viewBox="0 0 628.96 895.39"
+  viewBox="0 0 728.96 995.39"
+      // viewBox="0 0 628.96 895.39"
   style={{
     width,
     maxHeight: height,
@@ -443,10 +452,10 @@ const IndiaSVG = forwardRef(({ width, height, showLabels = true, showFilter = tr
           filter: "none",
         }}
       >
-        <text x="-158" y="492" style={SEA_LABEL_STYLE}>
+        <text x="-128" y="692" style={SEA_LABEL_STYLE}>
           ARABIAN SEA
         </text>
-               <text x="180" y="892" style={SEA_LABEL_STYLE}>
+               <text x="280" y="1092" style={SEA_LABEL_STYLE}>
           INDIAN OCEAN
         </text> 
 
