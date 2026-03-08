@@ -21,7 +21,7 @@ const INDIA_MAP_LABELS = [
 
   { text: "Assam", x: 762, y: 360,  },
   { text: "Meghalaya", x: 752, y: 400,  },
-  { text: "Arunachal Pradesh", x: 842, y: 240,},
+  { text: "Arunachal Pradesh", x: 792, y: 240,},
   { text: "Tripura", x: 762, y: 460,  },
   { text: "Nagaland", x: 910, y: 350, side: "right", ax: 878, ay: 350 },
   { text: "Manipur", x: 890, y: 410, side: "right", ax: 868, ay: 410 },
@@ -53,7 +53,7 @@ const INDIA_SVG_35_POSITION2 = { x: -100, y: -20 };
 
 const INDIA_SVG_35_LABEL_STYLE = {
   fill: "#7ec8ff",
-  fontSize: 18,
+  fontSize: 23,
   fontWeight: 500,
   letterSpacing: 2,
   stroke: "#0c2b66",
@@ -64,7 +64,7 @@ const INDIA_SVG_35_LABEL_STYLE = {
 
 const SEA_LABEL_STYLE = {
   fill: "#7ec8ff",
-  fontSize: 18,
+  fontSize: 23,
   fontWeight: 500,
   letterSpacing: 2,
   stroke: "#0c2b66",
@@ -469,10 +469,10 @@ const IndiaSVG = forwardRef(({ width, height, showLabels = true, showFilter = tr
           filter: "none",
         }}
       >
-        <text x="-128" y="692" style={SEA_LABEL_STYLE}>
+        <text x="-98" y="722" style={SEA_LABEL_STYLE}>
           ARABIAN SEA
         </text>
-               <text x="280" y="1092" style={SEA_LABEL_STYLE}>
+               <text x="230" y="1112" style={SEA_LABEL_STYLE}>
           INDIAN OCEAN
         </text> 
 

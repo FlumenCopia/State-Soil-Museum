@@ -29,10 +29,10 @@ const KERALA_OVERLAY_POSITION_Y_AFTER_PORTRAIT = -140;
 const OVERLAY_ROTATION_BEFORE = -10;
 const OVERLAY_ROTATION_AFTER = 0;
 // India-specific before/after positioning controls.
-const INDIA_OVERLAY_POSITION_X_BEFORE = 0;
-const INDIA_OVERLAY_POSITION_Y_BEFORE = 10;
-const INDIA_OVERLAY_POSITION_X_AFTER = 0;
-const INDIA_OVERLAY_POSITION_Y_AFTER = 10;
+const INDIA_OVERLAY_POSITION_X_BEFORE = -80;
+const INDIA_OVERLAY_POSITION_Y_BEFORE = 0;
+const INDIA_OVERLAY_POSITION_X_AFTER = -80;
+const INDIA_OVERLAY_POSITION_Y_AFTER = 0;
 const INDIA_OVERLAY_ROTATION_BEFORE = 0;
 const INDIA_OVERLAY_ROTATION_AFTER = 0;
 const OUTLINE_DELAY_SECONDS = 0.30;
@@ -52,8 +52,8 @@ const INDIA_HEIGHT_BEFORE_PORTRAIT = "var(--india-svg-height)";
 
 const INDIA_WIDTH_AFTER = "min(80vw, 800px)";
 const INDIA_HEIGHT_AFTER = "80vh";
-const INDIA_WIDTH_AFTER_PORTRAIT = "var(--india-svg-after-width, min(80vw, 800px))";
-const INDIA_HEIGHT_AFTER_PORTRAIT = "var(--india-svg-after-height, 80vh)";
+const INDIA_WIDTH_AFTER_PORTRAIT = "var(--india-svg-after-width, min(70vw, 700px))";
+const INDIA_HEIGHT_AFTER_PORTRAIT = "var(--india-svg-after-height, 70vh)";
 const KERALA_WIDTH_BEFORE = "min(72vw, 720px)";
 const KERALA_HEIGHT_BEFORE = "68vh";
 const KERALA_WIDTH_AFTER = "min(92vw, 920px)";
