@@ -77,6 +77,8 @@ const KeralaSVG = forwardRef(({ className, width, height, isZoomed = false }, re
     drop-shadow(14px 18px 30px rgba(0,0,0,0.65))
     `
         : "none",
+      transition: "filter 0.42s ease, opacity 0.42s ease",
+      willChange: "filter",
     }}
   >
 
