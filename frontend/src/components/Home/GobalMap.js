@@ -906,12 +906,6 @@ export default function GobalMap() {
       if (!(target instanceof Element)) return;
       const clickedColorClass = getColorClass(target);
       if (clickedColorClass) return;
-
-      activeColorClassRef.current = null;
-      hoverColorClassRef.current = null;
-      setActiveColorClass(null);
-      setHoverColorClass(null);
-      paintHighlights();
     };
 
     const handlePointerMove = (e) => {
@@ -1048,12 +1042,6 @@ export default function GobalMap() {
       if (!(target instanceof Element)) return;
       const clickedColorClass = getColorClass(target);
       if (clickedColorClass) return;
-
-      activeIndiaClassRef.current = null;
-      hoverIndiaClassRef.current = null;
-      setActiveIndiaClass(null);
-      setHoverIndiaClass(null);
-      paintHighlights();
     };
 
     const handlePointerMove = (e) => {
@@ -1087,23 +1075,10 @@ export default function GobalMap() {
       paintHighlights();
     };
 
-    const handleDocumentPointerDown = (e) => {
-      const target = e.target;
-      if (!(target instanceof Node)) return;
-      if (container.contains(target)) return;
-
-      activeIndiaClassRef.current = null;
-      hoverIndiaClassRef.current = null;
-      setActiveIndiaClass(null);
-      setHoverIndiaClass(null);
-      paintHighlights();
-    };
-
     container.addEventListener("pointermove", handlePointerMove);
     container.addEventListener("pointerleave", handlePointerLeave);
     container.addEventListener("click", handleContainerClick);
     container.addEventListener("click", handleClick);
-    document.addEventListener("pointerdown", handleDocumentPointerDown);
     paintHighlights();
 
     return () => {
@@ -1112,7 +1087,6 @@ export default function GobalMap() {
       container.removeEventListener("pointerleave", handlePointerLeave);
       container.removeEventListener("click", handleContainerClick);
       container.removeEventListener("click", handleClick);
-      document.removeEventListener("pointerdown", handleDocumentPointerDown);
       indiaColorElementsRef.current = [];
     };
   }, [isKerala, showOverlay, indiaZoomComplete]);
