@@ -459,10 +459,10 @@ svg rect.selected-highlight {
 .cls-7{fill:#ceffc8;}
 .cls-8{fill:#ffff01;}
 .cls-9{fill:#f7c4a2;}
-.cls-10{fill:#fff;}
+.cls-10{fill:#000;}
 .cls-11{fill:#cc0033;}
 .cls-10 {
-  stroke: #fff;
+  stroke: #000;
   fill: none;
   stroke-width: 0.60;
   vector-effect: non-scaling-stroke;

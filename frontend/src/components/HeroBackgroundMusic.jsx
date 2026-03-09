@@ -18,7 +18,7 @@ export default function HeroBackgroundMusic() {
     audioRef.current = audio;
     audio.loop = true;
     audio.preload = "auto";
-    audio.volume = 0.82;
+    audio.volume = 0.42;
 
     const syncPlayingState = () => setIsPlaying(!audio.paused);
 
