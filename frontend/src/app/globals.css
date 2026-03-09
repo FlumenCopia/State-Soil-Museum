@@ -805,6 +805,12 @@ svg rect.selected-highlight {
     0 20px 44px rgba(2, 8, 26, 0.72),
     inset 0 0 36px rgba(38, 118, 255, 0.14),
     inset 0 1px 0 rgba(208, 235, 255, 0.28);
+  will-change: transform, opacity;
+  animation: portraitPanelReveal 0.52s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.kerala-portrait-swiper-panel {
+  animation-delay: 0.06s;
 }
 
 .india-portrait-swiper-head {
@@ -935,6 +941,19 @@ svg rect.selected-highlight {
   box-shadow: 0 0 12px rgba(82, 185, 255, 0.66);
 }
 
+@keyframes portraitPanelReveal {
+  0% {
+    opacity: 0;
+    transform: translateY(28px) scale(0.98);
+    filter: blur(10px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    filter: blur(0);
+  }
+}
+
 @keyframes holoSpin {
   to {
     --holo-angle: 1turn;
@@ -943,6 +962,11 @@ svg rect.selected-highlight {
 
 @media (prefers-reduced-motion: reduce) {
   .holo-border::before {
+    animation: none;
+  }
+
+  .india-portrait-swiper-panel,
+  .kerala-portrait-swiper-panel {
     animation: none;
   }
 }
