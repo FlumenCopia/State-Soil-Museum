@@ -334,7 +334,7 @@ const KeralaSVG = forwardRef(({ className, width, height, isZoomed = false }, re
                 fill="#fff"
                 fontSize={fontSize}
               >
-                {label.text}
+                {label.text.toUpperCase()}
               </text>
             </g>
           );

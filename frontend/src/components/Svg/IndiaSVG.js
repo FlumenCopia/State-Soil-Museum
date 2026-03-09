@@ -638,7 +638,7 @@ const IndiaSVG = forwardRef(({ width, height, showLabels = true, showFilter = tr
                 fill="#ffffff"
                 fontSize={fontSize}
               >
-                {label.text}
+                {label.text.toUpperCase()}
               </text>
             </g>
           );
