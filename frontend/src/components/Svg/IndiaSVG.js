@@ -73,6 +73,13 @@ const SEA_LABEL_STYLE = {
   opacity: 0.95,
 };
 
+const LABEL_LAYER_STYLE = (isVisible) => ({
+  pointerEvents: "none",
+  filter: "none",
+  opacity: isVisible ? 1 : 0,
+  transition: "opacity 0.42s ease",
+});
+
 
 
 const IndiaSVG = forwardRef(({ width, height, showLabels = true, showFilter = true, className, isZoomed = false }, ref) => {
@@ -419,11 +426,17 @@ const IndiaSVG = forwardRef(({ width, height, showLabels = true, showFilter = tr
           transform={`translate(${INDIA_SVG_35_POSITION2.x} ${INDIA_SVG_35_POSITION2.y})`}
           style={{ filter: "none" }}
         >
-        {showLabels && (
-          <text x="102" y="1042" style={INDIA_SVG_35_LABEL_STYLE}>
-            Lakshadweep
-          </text>
-        )}
+        <text
+          x="102"
+          y="1042"
+          style={{
+            ...INDIA_SVG_35_LABEL_STYLE,
+            opacity: showLabels ? INDIA_SVG_35_LABEL_STYLE.opacity : 0,
+            transition: "opacity 0.42s ease",
+          }}
+        >
+          Lakshadweep
+        </text>
         <path className="IndiaSVG-35 IndiaSVG-fill-path" d="M191.22,992.84c.35,1.83-.82,1.7-1.69,1.66s-2.43.5-2.38-1.26a2.46,2.46,0,0,1,1.82-2.42C190.64,990.49,190.65,992.18,191.22,992.84Z"/>
         <path className="IndiaSVG-35 IndiaSVG-fill-path" d="M212.58,1019.81c-1.46-.36-2.71-.86-2.89-2.39-.12-1,.69-.71,1.32-.65,1.29.12,2.8-.08,3.06,1.67C214.23,1019.48,213.09,1019.43,212.58,1019.81Z"/>
         <path className="IndiaSVG-35 IndiaSVG-fill-path" d="M194.86,997.65c1,.35,2.36.4,2.63,1.84.14.74-.48,1.22-1.2,1.24a2.69,2.69,0,0,1-2.64-2C193.33,997.86,194,997.66,194.86,997.65Z"/>
@@ -440,11 +453,17 @@ const IndiaSVG = forwardRef(({ width, height, showLabels = true, showFilter = tr
           transform={`translate(${INDIA_SVG_35_POSITION.x} ${INDIA_SVG_35_POSITION.y})`}
           style={{ filter: "none" }}
         >
-        {showLabels && (
-          <text x="630" y="1040" style={INDIA_SVG_35_LABEL_STYLE}>
-            Andaman & Nicobar
-          </text>
-        )}
+        <text
+          x="630"
+          y="1040"
+          style={{
+            ...INDIA_SVG_35_LABEL_STYLE,
+            opacity: showLabels ? INDIA_SVG_35_LABEL_STYLE.opacity : 0,
+            transition: "opacity 0.42s ease",
+          }}
+        >
+          Andaman & Nicobar
+        </text>
 
         <path className="IndiaSVG-35 IndiaSVG-fill-path" d="M715.61,994.5c-3.06-2.18-4.75-4-3.35-7.22,1.09-2.49-.92-4.34-1.76-6.31s-1-3.26.21-5.1c3-4.57,3.18-9.58,1.31-14.63-.89-2.41,0-4.63,0-6.92.11-4,1.53-7.83,1-11.77-.61-4.58,2.71-7.7,3.94-11.58.3-1,1.5-1.06,2.45-1,1.45.15,1,1.35,1,2.18,0,2.81.34,5.72-.23,8.43-1.32,6.26-3,12.37-.52,18.77.88,2.27-.72,4.43-1.58,6.48-2.45,5.9-1.08,12.12-1.7,18.17C716.12,987.31,715.92,990.6,715.61,994.5Z"/>
         <path className="IndiaSVG-35 IndiaSVG-fill-path" d="M760.18,1107.86c-.16,1.48-.19,3.36-2.58,3.52-2,.14-5.42-4.17-5.44-7.09,0-2,.86-3.57,3.23-3.64C757.26,1100.6,760.1,1104.72,760.18,1107.86Z"/>
@@ -462,12 +481,8 @@ const IndiaSVG = forwardRef(({ width, height, showLabels = true, showFilter = tr
 
 
 
-      {showLabels && (
       <g
-        style={{
-          pointerEvents: "none",
-          filter: "none",
-        }}
+        style={LABEL_LAYER_STYLE(showLabels)}
       >
         <text x="-98" y="722" style={SEA_LABEL_STYLE}>
           ARABIAN SEA
@@ -522,7 +537,6 @@ const IndiaSVG = forwardRef(({ width, height, showLabels = true, showFilter = tr
           );
         })}
       </g>
-    )}
     </svg>
 
 
