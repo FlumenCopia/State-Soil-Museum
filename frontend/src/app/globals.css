@@ -375,13 +375,13 @@ svg rect.selected-highlight {
 .kerala-has-focus svg path:not(.highlight):not(.selected-highlight),
 .kerala-has-focus svg polygon:not(.highlight):not(.selected-highlight),
 .kerala-has-focus svg rect:not(.highlight):not(.selected-highlight) {
-  opacity: 0.7 !important;
+  opacity: 0.5 !important;
 }
 
 .india-has-focus svg path:not(.highlight):not(.selected-highlight),
 .india-has-focus svg polygon:not(.highlight):not(.selected-highlight),
 .india-has-focus svg rect:not(.highlight):not(.selected-highlight) {
-  opacity: 0.7 !important;
+  opacity: 0.5 !important;
 }
 
 @keyframes keralaZigzagMotion {

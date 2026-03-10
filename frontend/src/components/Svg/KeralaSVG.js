@@ -7,27 +7,24 @@ const KERALA_FIXED_TRANSFORM =
 
 const KERALA_MAP_LABELS = [
   // { text: "Grey and Brown Soils", x: 130, y: 62, size: 14, side: "left", ax: 198, ay: 62 },
-  { text: "Kasaragod", x: 14, y: 130, side: "left", ax: 108, ay: 130 },
+  { text: "Kasaragod", x: -4, y: 130, side: "left", ax: 108, ay: 130 },
   { text: "Wayanad", x: 260, y: 175, side: "right", ax: 226, ay: 175 },
   // { text: "Kozhikode", x: 288, y: 205, side: "right", ax: 256, ay: 205 },
   { text: "kannur", x: 86, y: 240, side: "left", ax: 180, ay: 240 },
-    { text: "Kozhikode", x: 106, y: 310, side: "left", ax: 220, ay: 310 },
-
-  // { text: "Palakkad", x: 338, y: 278, side: "right", ax: 304, ay: 278 },
-  // { text: "Palakkad", x: 118, y: 378, side: "left", ax: 196, ay: 378 },
+    { text: "Kozhikode", x: 96, y: 310, side: "left", ax: 220, ay: 310 },
   { text: "Palakkad", x: 410, y: 338, side: "right", ax: 360, ay: 338 },
-  { text: "Thrissur", x: 180, y: 438, side: "left", ax: 272, ay: 438 },
+  { text: "Thrissur", x: 160, y: 438, side: "left", ax: 272, ay: 438 },
   // { text: "Thrissur", x: 440, y: 422, side: "right", ax: 404, ay: 422 },
-  { text: "Ernakulam", x: 186, y: 536, side: "left", ax: 294, ay: 536 },
+  { text: "Ernakulam", x: 176, y: 536, side: "left", ax: 294, ay: 536 },
   { text: "Idukki", x: 490, y: 548, side: "right", ax: 406, ay: 548 },
-  { text: "Alappuzha", x: 194, y: 610, side: "left", ax: 352, ay: 610 },
+  { text: "Alappuzha", x: 184, y: 610, side: "left", ax: 352, ay: 610 },
   { text: "Pathanamthitta", x: 499, y: 600, side: "right", ax: 432, ay: 600 },
   // { text: "Black Soils", x: 186, y: 674, side: "left", ax: 340, ay: 674 },
 
-  { text: "Kollam", x: 246, y: 674, side: "left", ax: 340, ay: 674 },
+  { text: "Kollam", x: 236, y: 674, side: "left", ax: 340, ay: 674 },
 
 
-  { text: "Trivandrum", x: 266, y: 774, side: "left", ax: 400, ay: 774 },
+  { text: "Trivandrum", x: 246, y: 774, side: "left", ax: 400, ay: 774 },
 
 
   { text: "Wetland Soils", x: 492, y: 676, side: "right", ax: 432, ay: 676 },
