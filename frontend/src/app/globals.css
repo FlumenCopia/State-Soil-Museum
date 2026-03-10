@@ -451,16 +451,19 @@ svg rect.selected-highlight {
   filter: drop-shadow(0 1px 0 rgba(177, 207, 255, 0.08));
 }
 .cls-1{fill:#888888;}
+.cls-7{fill:#ceffc8;}
+.cls-6{fill:#009900;}
+.cls-11{fill:#cc0033;}
+
+
+
 .cls-2{fill:#ff00fe;}
 .cls-3{fill:#96fffe;}
 .cls-4{fill:#3c36bc;}
 .cls-5{fill:#04b293;}
-.cls-6{fill:#009900;}
-.cls-7{fill:#ceffc8;}
 .cls-8{fill:#ffff01;}
 .cls-9{fill:#f7c4a2;}
 .cls-10{fill:#000;}
-.cls-11{fill:#cc0033;}
 .cls-10 {
   stroke: #000;
   fill: none;
