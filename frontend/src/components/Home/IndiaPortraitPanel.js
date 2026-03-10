@@ -64,9 +64,15 @@ export default function IndiaPortraitPanel({
   return (
     <aside className="india-portrait-swiper-panel">
       <div className="india-portrait-swiper-head">
-         <h3>India Soil</h3>
-
-        <p>Click or tap a region on the map to view soil data.</p>
+        <div className="india-portrait-swiper-head__row">
+          <div className="india-portrait-swiper-head__copy">
+            <h3>India Soil</h3>
+            <p>Click or tap a region on the map to view soil data.</p>
+          </div>
+          <button className="see-all-section-btn" type="button" onClick={onClearSelection}>
+            See all Colour
+          </button>
+        </div>
       </div>
 
       <div
@@ -112,9 +118,6 @@ export default function IndiaPortraitPanel({
       </div>
 
       <div className="india-portrait-swiper-footer">
-        <button className="see-all-section-btn" type="button" onClick={onClearSelection}>
-          See all section
-        </button>
         <div className="india-portrait-swiper-dots" aria-label="India soil pages">
           {pages.map((_, pageIndex) => (
             <button

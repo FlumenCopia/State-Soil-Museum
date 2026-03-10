@@ -827,11 +827,23 @@ svg rect.selected-highlight {
 
 .india-portrait-swiper-head {
   padding: 10px 14px 12px;
-  text-align: center;
   margin-bottom: 8px;
   background: transparent;
   border: none;
   box-shadow: none;
+}
+
+.india-portrait-swiper-head__row {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.india-portrait-swiper-head__copy {
+  flex: 1 1 auto;
+  min-width: 0;
+  text-align: left;
 }
 
 .india-portrait-swiper-head h3 {
@@ -925,7 +937,7 @@ svg rect.selected-highlight {
   margin-top: 10px;
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: center;
   gap: 10px;
 }
 
@@ -1007,11 +1019,19 @@ svg rect.selected-highlight {
   .india-portrait-swiper-head h3 {
     font-size: 17px;
   }
+  .india-portrait-swiper-head__row {
+    align-items: center;
+  }
+  .india-portrait-swiper-head .see-all-section-btn {
+    min-width: 110px;
+    padding: 6px 10px;
+    flex: 0 0 auto;
+  }
   .india-portrait-soil-card {
     min-height: 50px;
   }
-  .india-portrait-swiper-footer .see-all-section-btn {
-    min-width: 110px;
+  .india-portrait-swiper-footer {
+    justify-content: center;
   }
 }
 
