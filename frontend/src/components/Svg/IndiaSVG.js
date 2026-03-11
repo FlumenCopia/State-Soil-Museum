@@ -90,7 +90,7 @@ const IndiaSVG = forwardRef(({ width, height, showLabels = true, showFilter = tr
     <svg
       ref={ref}
       className={className}
-  viewBox="0 0 728.96 995.39"
+  viewBox="0 0 728.96 795.39"
       // viewBox="0 0 628.96 895.39"
 
 
@@ -105,7 +105,7 @@ const IndiaSVG = forwardRef(({ width, height, showLabels = true, showFilter = tr
     transform: isZoomed
       ? " rotateX(16deg) rotateY(0deg) rotateZ(0deg) translateZ(0px) translateY(0px)"
       : "none",
-    transformOrigin: "50% 50%",
+    transformOrigin: "0% 0%",
     /* keep parent clean so labels never get filtered */
     filter: "none",
 
