@@ -2,8 +2,6 @@
 
 import React, { forwardRef } from "react";
 
-const KERALA_FIXED_TRANSFORM =
-  "perspective(1300px) rotateX(22deg) rotateY(-8deg) rotateZ(0deg) translateZ(0px) translateY(0px)";
 
 const KERALA_MAP_LABELS = [
   { text: "Kasaragod", x: -4, y: 130, side: "left", ax: 108, ay: 130 },
@@ -48,11 +46,14 @@ const KeralaSVG = forwardRef(({ className, width, height, isZoomed = false }, re
     transition: "transform 0.45s ease, filter 0.45s ease",
 
     /* 3D slab position (like your example image) */
-    transform: KERALA_FIXED_TRANSFORM,
-
+    transform: isZoomed
+      ? "perspective(1200px) rotateX(22deg) rotateY(-8deg) rotateZ(0deg) translateZ(0px) translateY(0px)"
+      : "none",
+    transformOrigin: "0% 0%",
     /* keep parent clean so labels never get filtered */
     filter: "none",
   }}
+
 >
   <g
     style={{
@@ -528,7 +529,7 @@ const KeralaSVG = forwardRef(({ className, width, height, isZoomed = false }, re
     </g>
     <g style={LABEL_LAYER_STYLE(isZoomed)}>
         {KERALA_MAP_LABELS.map((label) => {
-          const fontSize = label.size ?? 20;
+          const fontSize = label.size ?? 18;
           const estimatedTextWidth = label.text.length * (fontSize * 0.56);
           const leftLineStart = label.x + estimatedTextWidth + 6;
           const leftLineEnd = (label.ax ?? label.x) - 6;

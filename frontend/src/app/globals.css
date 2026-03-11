@@ -41,8 +41,8 @@
     --india-svg-after-height: 55vh;
   }
   .KERALA_WIDTH_AFTER_PORTRAIT {
-    --kerala-svg-after-width: min(94vw, 800px);
-    --kerala-svg-after-height: 63vh;
+    --kerala-svg-after-width: min(94vw, 850px);
+    --kerala-svg-after-height: 73vh;
   }
 }
 
