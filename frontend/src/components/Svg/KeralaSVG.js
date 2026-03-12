@@ -47,7 +47,7 @@ const KeralaSVG = forwardRef(({ className, width, height, isZoomed = false }, re
 
     /* 3D slab position (like your example image) */
     transform: isZoomed
-      ? "perspective(1200px) rotateX(22deg) rotateY(-8deg) rotateZ(0deg) translateZ(0px) translateY(0px)"
+      ? "perspective(1200px) rotateX(0deg) rotateY(0deg) rotateZ(0deg) translateZ(0px) translateY(0px)"
       : "none",
     transformOrigin: "0% 0%",
     /* keep parent clean so labels never get filtered */

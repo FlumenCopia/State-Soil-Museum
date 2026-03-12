@@ -22,10 +22,10 @@ const OVERLAY_POSITION_X_BEFORE = 0;
 const OVERLAY_POSITION_Y_BEFORE = 0;
 const OVERLAY_POSITION_X_AFTER = 0;
 const OVERLAY_POSITION_Y_AFTER = 0;
-const KERALA_OVERLAY_POSITION_X_BEFORE_PORTRAIT = -100;
-const KERALA_OVERLAY_POSITION_Y_BEFORE_PORTRAIT = -90;
-const KERALA_OVERLAY_POSITION_X_AFTER_PORTRAIT = -180;
-const KERALA_OVERLAY_POSITION_Y_AFTER_PORTRAIT = -90;
+const KERALA_OVERLAY_POSITION_X_BEFORE_PORTRAIT = 0;
+const KERALA_OVERLAY_POSITION_Y_BEFORE_PORTRAIT = 0;
+const KERALA_OVERLAY_POSITION_X_AFTER_PORTRAIT = 0;
+const KERALA_OVERLAY_POSITION_Y_AFTER_PORTRAIT = 0;
 const OVERLAY_ROTATION_BEFORE = 0;
 const OVERLAY_ROTATION_AFTER = 0;
 // India-specific before/after positioning controls.
@@ -54,17 +54,15 @@ const INDIA_WIDTH_AFTER = "min(90vw, 980px)";
 const INDIA_HEIGHT_AFTER = "88vh";
 const INDIA_WIDTH_AFTER_PORTRAIT = "var(--india-svg-after-width, min(94vw, 980px))";
 const INDIA_HEIGHT_AFTER_PORTRAIT = "var(--india-svg-after-height, 88vh)";
-const KERALA_WIDTH_BEFORE = "min(72vw, 720px)";
-const KERALA_HEIGHT_BEFORE = "68vh";
-const KERALA_WIDTH_AFTER = "min(92vw, 920px)";
-const KERALA_HEIGHT_AFTER = "92vh";
+const KERALA_WIDTH_BEFORE = "min(80vw, 820px)";
+const KERALA_HEIGHT_BEFORE = "74vh";
+const KERALA_WIDTH_AFTER = "min(96vw, 1020px)";
+const KERALA_HEIGHT_AFTER = "94vh";
 
-
-
-const KERALA_WIDTH_BEFORE_PORTRAIT = "var(--kerala-svg-width, min(82vw, 860px))";
-const KERALA_HEIGHT_BEFORE_PORTRAIT = "var(--kerala-svg-height, 86vh)";
-const KERALA_WIDTH_AFTER_PORTRAIT = "var(--kerala-svg-after-width, min(86vw, 860px))";
-const KERALA_HEIGHT_AFTER_PORTRAIT = "var(--kerala-svg-after-height, 86vh)";
+const KERALA_WIDTH_BEFORE_PORTRAIT = "var(--kerala-svg-width, min(88vw, 900px))";
+const KERALA_HEIGHT_BEFORE_PORTRAIT = "var(--kerala-svg-height, 88vh)";
+const KERALA_WIDTH_AFTER_PORTRAIT = "var(--kerala-svg-after-width, min(94vw, 980px))";
+const KERALA_HEIGHT_AFTER_PORTRAIT = "var(--kerala-svg-after-height, 88vh)";
 const INDIA_PORTRAIT_PRESETS = Object.freeze({
   base: {
     widthBefore: INDIA_WIDTH_BEFORE_PORTRAIT,
