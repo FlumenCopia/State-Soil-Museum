@@ -1334,7 +1334,7 @@ export default function GobalMap() {
               left: isPortraitLayout ? 12 : "auto",
               transform: isPortraitLayout ? "none" : "translateY(-50%)",
               zIndex: 60,
-              width: isPortraitLayout ? "min(450px, calc(100vw - 24px))" : "min(340px, 32vw)",
+              width: isPortraitLayout ? "min(500px, calc(100vw - 24px))" : "min(340px, 32vw)",
               minWidth: isPortraitLayout ? 0 : 240,
               maxHeight: isPortraitLayout ? "22vh" : "none",
               overflowY: isPortraitLayout ? "auto" : "visible",
@@ -1389,7 +1389,7 @@ export default function GobalMap() {
                   />
                   <strong style={{ fontSize: 14 }}>{selectedColorDetails.label}</strong>
                 </div>
-                <div
+                {/* <div
                   style={{
                     width: "90%",
                     height: 135,
@@ -1416,7 +1416,7 @@ export default function GobalMap() {
                       cursor: isSoilImageZoomed ? "zoom-out" : "zoom-in",
                     }}
                   />
-                </div>
+                </div> */}
                 <div style={{ fontSize: 18, lineHeight: 1.45, opacity: 0.95 }}>
                   {selectedColorDetails.details}
                 </div>
