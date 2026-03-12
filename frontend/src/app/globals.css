@@ -258,7 +258,7 @@ rgb(31, 114, 247)
 
 
       body {
-        font-family: 'Inter', sans-serif;
+        font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
       }
       .font-serif-italic {
         font-style: italic;

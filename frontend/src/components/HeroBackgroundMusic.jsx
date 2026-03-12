@@ -4,9 +4,46 @@ import { useEffect, useRef, useState } from "react";
 
 const MUSIC_PATH = "/images/bg.mp3";
 
+function createBackgroundAudio(syncPlayingState) {
+  const audio = new Audio(MUSIC_PATH);
+  audio.loop = true;
+  audio.preload = "none";
+  audio.volume = 0.42;
+  audio.addEventListener("play", syncPlayingState);
+  audio.addEventListener("pause", syncPlayingState);
+  return audio;
+}
+
+function VolumeIcon({ isPlaying }) {
+  return (
+    <svg
+      width="16"
+      height="16"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.9"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-hidden="true"
+    >
+      <path d="M4 9v6h4l5 4V5L8 9H4Z" />
+      {isPlaying ? (
+        <>
+          <path d="M17 8.5a5.5 5.5 0 0 1 0 7" />
+          <path d="M19.5 6a9 9 0 0 1 0 12" />
+        </>
+      ) : (
+        <path d="m17 9 4 6M21 9l-4 6" />
+      )}
+    </svg>
+  );
+}
+
 export default function HeroBackgroundMusic() {
   const audioRef = useRef(null);
   const unlockedRef = useRef(false);
+  const ensureAudioRef = useRef(() => null);
   const [isPlaying, setIsPlaying] = useState(false);
 
   useEffect(() => {
@@ -14,19 +51,29 @@ export default function HeroBackgroundMusic() {
       return undefined;
     }
 
-    const audio = new Audio(MUSIC_PATH);
-    audioRef.current = audio;
-    audio.loop = true;
-    audio.preload = "auto";
-    audio.volume = 0.42;
+    const syncPlayingState = () => {
+      const audio = audioRef.current;
+      setIsPlaying(Boolean(audio && !audio.paused));
+    };
 
-    const syncPlayingState = () => setIsPlaying(!audio.paused);
+    const ensureAudio = () => {
+      if (audioRef.current) {
+        return audioRef.current;
+      }
+
+      const audio = createBackgroundAudio(syncPlayingState);
+      audioRef.current = audio;
+      return audio;
+    };
+
+    ensureAudioRef.current = ensureAudio;
 
     const startPlayback = () => {
       if (unlockedRef.current) {
         return;
       }
 
+      const audio = ensureAudio();
       const playPromise = audio.play();
       if (playPromise && typeof playPromise.then === "function") {
         playPromise
@@ -51,25 +98,25 @@ export default function HeroBackgroundMusic() {
       window.removeEventListener("keydown", startPlayback);
     };
 
-    audio.addEventListener("play", syncPlayingState);
-    audio.addEventListener("pause", syncPlayingState);
-
-    startPlayback();
     window.addEventListener("pointerdown", startPlayback, { once: true });
     window.addEventListener("keydown", startPlayback, { once: true });
 
     return () => {
       removeUnlockListeners();
-      audio.removeEventListener("play", syncPlayingState);
-      audio.removeEventListener("pause", syncPlayingState);
-      audio.pause();
-      audio.src = "";
+      const audio = audioRef.current;
+      if (audio) {
+        audio.removeEventListener("play", syncPlayingState);
+        audio.removeEventListener("pause", syncPlayingState);
+        audio.pause();
+        audio.src = "";
+      }
       audioRef.current = null;
+      ensureAudioRef.current = () => null;
     };
   }, []);
 
   const handleToggle = async () => {
-    const audio = audioRef.current;
+    const audio = ensureAudioRef.current();
     if (!audio) {
       return;
     }
@@ -99,7 +146,7 @@ export default function HeroBackgroundMusic() {
       title={isPlaying ? "Pause music" : "Play music"}
     >
       <span className="bg-music-toggle__icon" aria-hidden="true">
-        <i className={`fa-solid ${isPlaying ? "fa-volume-high" : "fa-volume-xmark"}`} />
+        <VolumeIcon isPlaying={isPlaying} />
       </span>
       <span className="bg-music-toggle__label">
         {isPlaying ? "Music On" : "Music Off"}

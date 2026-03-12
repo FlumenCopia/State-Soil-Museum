@@ -1,18 +1,8 @@
-import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import InteractionSound from "@/components/InteractionSound";
 import HeroBackgroundMusic from "@/components/HeroBackgroundMusic";
-
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
+import StartupLoader from "@/components/StartupLoader";
 
 export const metadata = {
   title: "State Soil Museum",
@@ -22,12 +12,14 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <link
+            <link
   rel="stylesheet"
   href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
 />
 
-      <body className={`${geistSans.variable} ${geistMono.variable}`}>
+      <body>
+
+        <StartupLoader />
         <InteractionSound />
         <HeroBackgroundMusic />
         {children}

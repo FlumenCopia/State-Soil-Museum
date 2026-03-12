@@ -24,7 +24,7 @@ const INTERACTIVE_SELECTOR = [
 function createAudioPool() {
   return Array.from({ length: AUDIO_POOL_SIZE }, () => {
     const audio = new Audio(SOUND_PATH);
-    audio.preload = "auto";
+    audio.preload = "none";
     audio.volume = 0.45;
     return audio;
   });
@@ -39,11 +39,9 @@ export default function InteractionSound() {
       return undefined;
     }
 
-    audioPoolRef.current = createAudioPool();
-
     const playInteractionSound = () => {
       if (audioPoolRef.current.length === 0) {
-        return;
+        audioPoolRef.current = createAudioPool();
       }
 
       const audio = audioPoolRef.current[nextAudioIndexRef.current];
