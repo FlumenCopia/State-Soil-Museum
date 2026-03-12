@@ -11,7 +11,7 @@
     --india-svg-width: min(64vw, 650px);
     --india-svg-height: 78vh;
     --kerala-svg-width: min(82vw, 840px);
-    --kerala-svg-height: 80vh;
+    --kerala-svg-height: 64vh;
   }
 }
 
@@ -31,8 +31,8 @@
     --india-svg-after-height: min(88vh, calc(var(--india-svg-after-width) * var(--india-svg-after-ratio)));
   }
   .KERALA_WIDTH_AFTER_PORTRAIT {
-    --kerala-svg-after-width: min(100vw, 1050px);
-    --kerala-svg-after-height: 86vh;
+    --kerala-svg-after-width: min(100vw, 1050px) ;
+    --kerala-svg-after-height: 64vh !important;
   }
 }
 

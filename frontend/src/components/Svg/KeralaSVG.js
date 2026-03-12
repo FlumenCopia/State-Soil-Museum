@@ -38,7 +38,7 @@ const KeralaSVG = forwardRef(({ className, width, height, isZoomed = false }, re
 <svg
   ref={ref}
   className={className}
-  viewBox="0 0 595.28 841.89"
+  viewBox="0 0 595.28 811.89"
   style={{
     width,
     maxHeight: height,
