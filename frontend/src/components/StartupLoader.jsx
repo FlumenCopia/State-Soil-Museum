@@ -14,7 +14,6 @@ const STATUS_STEPS = [
   {
     until: 26,
     headline: "Connecting to Kerala soil database...",
-    detail: "Authenticating museum archive nodes.",
   },
   {
     until: 54,
@@ -24,12 +23,10 @@ const STATUS_STEPS = [
   {
     until: 82,
     headline: "Preparing soil profiles and geochemical layers...",
-    detail: "Streaming map textures and section metadata.",
   },
   {
     until: 100,
     headline: "Finalizing museum interface...",
-    detail: "Stabilizing overlays and interaction controls.",
   },
 ];
 
@@ -153,6 +150,9 @@ export default function StartupLoader() {
           <div className={styles.planetGlow} />
           <div className={styles.planet}>
             <div className={styles.planetLabel}>
+              {/* <span className={styles.planetEyebrow}>Digital Soil Atlas</span> */}
+              {/* <strong className={styles.planetTitle}>SOIL ATLAS</strong> */}
+              {/* <span className={styles.planetCaption}>Interactive globe core</span> */}
             </div>
           </div>
         </div>
@@ -178,7 +178,7 @@ export default function StartupLoader() {
           </div>
           <div className={styles.statusCopy}>
             <p>{statusCopy.headline}</p>
-            <p>{roundedProgress === 100 ? "Museum interface online." : statusCopy.detail}</p>
+            {/* <p>{roundedProgress === 100 ? "Museum interface online." : statusCopy.detail}</p> */}
           </div>
         </div>
 
