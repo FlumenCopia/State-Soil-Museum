@@ -10,7 +10,7 @@ export default function CanvasWrapper({ children }) {
   return (
     <div style={{ width: "100vw", height: "100vh", pointerEvents: "none" }}>
       <Canvas
-        dpr={[1, 2]}
+        dpr={[1, 1.5]}
         gl={{ alpha: true }}
         camera={{ fov: 45, near: 0.1, far: 5000, position: [0, 0, 320] }}
         style={{ pointerEvents: "none", background: "transparent" }}

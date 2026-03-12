@@ -11,11 +11,15 @@ import { useAppStore } from "@/store/useAppStore";
 const INDIA_GLOBE_TARGET = Object.freeze({ lat: 22.59, lon: 78.96, tiltZ: 0 });
 const KERALA_GLOBE_TARGET = Object.freeze({ lat: 10.55, lon: 75.27, tiltZ: -0.15 });
 const GLOBE_IDLE_ROTATION_SPEED = 0.08;
-const GLOBE_FOCUS_DURATION = 4.2;
+const GLOBE_FOCUS_DURATION = 2.2;
 const GLOBE_FOCUS_EASE = "power3.inOut";
 const GLOBE_POINTER_TILT_X = 0.16;
 const GLOBE_POINTER_TILT_Z = 0.12;
 const GLOBE_POINTER_FOLLOW = 3.2;
+const GLOBE_TEXTURE_ANISOTROPY = 4;
+const GLOBE_SURFACE_SEGMENTS = 64;
+const GLOBE_CLOUD_SEGMENTS = 56;
+const GLOBE_AURA_SEGMENTS = 40;
 
 export default function GlobeScene() {
   const earthGroup = useRef();
@@ -42,11 +46,25 @@ export default function GlobeScene() {
   }, [sceneBackground, scene]);
 
   useEffect(() => {
-    [sceneBackground, earthColor, earthNormal, cloudsTexture].forEach((tex) => {
+    if (sceneBackground) {
+      sceneBackground.anisotropy = 1;
+      sceneBackground.generateMipmaps = false;
+      sceneBackground.minFilter = THREE.LinearFilter;
+      sceneBackground.magFilter = THREE.LinearFilter;
+      sceneBackground.needsUpdate = true;
+    }
+
+    const cappedAnisotropy = Math.min(
+      gl.capabilities.getMaxAnisotropy(),
+      GLOBE_TEXTURE_ANISOTROPY
+    );
+
+    [earthColor, earthNormal, cloudsTexture].forEach((tex) => {
       if (!tex) return;
-      tex.anisotropy = gl.capabilities.getMaxAnisotropy();
+      tex.anisotropy = cappedAnisotropy;
       tex.needsUpdate = true;
     });
+
     if (earthColor) earthColor.colorSpace = THREE.SRGBColorSpace;
   }, [sceneBackground, earthColor, earthNormal, cloudsTexture, gl]);
   useEffect(() => {
@@ -166,7 +184,7 @@ export default function GlobeScene() {
   return (
     <group ref={earthGroup} name="earth-group">
       {/* Main Earth */}
-      <Sphere args={[100, 128, 128]}>
+      <Sphere args={[100, GLOBE_SURFACE_SEGMENTS, GLOBE_SURFACE_SEGMENTS]}>
         <meshStandardMaterial
           map={earthColor}
           normalMap={earthNormal}
@@ -175,7 +193,7 @@ export default function GlobeScene() {
       </Sphere>
 
       {/* Clouds Layer */}
-      <Sphere ref={cloudsRef} args={[101.2, 128, 128]}>
+      <Sphere ref={cloudsRef} args={[101.2, GLOBE_CLOUD_SEGMENTS, GLOBE_CLOUD_SEGMENTS]}>
         <meshStandardMaterial
           map={cloudsTexture}
           transparent
@@ -185,8 +203,7 @@ export default function GlobeScene() {
       </Sphere>
 
 
-
-      <Sphere args={[102, 128, 128]}> 
+      <Sphere args={[102, GLOBE_AURA_SEGMENTS, GLOBE_AURA_SEGMENTS]}> 
   <meshBasicMaterial
     color="#4ea9ff"
     transparent

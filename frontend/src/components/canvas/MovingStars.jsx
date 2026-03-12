@@ -21,8 +21,8 @@ export default function MovingStars() {
       <Stars 
         radius={300} 
         depth={60} 
-        count={20000} 
-        factor={3}      
+        count={7000} 
+        factor={2.4}      
         saturation={0} 
         fade 
         speed={0} 
