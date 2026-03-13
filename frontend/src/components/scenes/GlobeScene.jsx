@@ -29,9 +29,9 @@ export default function GlobeScene() {
   const { gl, scene } = useThree();
   const { view } = useAppStore();
   const sceneBackground = useTexture("/images/g.png");
-  const earthColor = useTexture("/images/e4.webp");
+  const earthColor = useTexture("/images/e4-transformed.webp");
   const earthNormal = useTexture("/images/earth_normal.webp");
-  const cloudsTexture = useTexture("/images/e1.webp");
+  const cloudsTexture = useTexture("/images/e1-transformed.webp");
 
   useEffect(() => {
     if (!sceneBackground) return;

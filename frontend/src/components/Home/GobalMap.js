@@ -176,49 +176,51 @@ const MAP_BACKDROP_REPEAT_INDIA =
   "no-repeat, no-repeat, no-repeat, repeat, repeat, no-repeat";
 const INDIA_COLOR_CLASS_PATTERN = /^IndiaSVG-\d+$/;
 const KERALA_COLOR_CLASS_PATTERN = /^cls-(11|[1-9])$/;
+
 const KERALA_COLOR_DETAILS = Object.freeze({
   "cls-1": {
     label: "Black Cotton Soils",
     color: "#888888",
-    details: "Well-drained coarse-textured soil seen in selected Kerala regions.",
+    details: "Black cotton soil in Kerala is a deep, clayey, moisture-retaining soil found mainly in Chittur (Palakkad). It is suitable for crops like cotton and sugarcane but shows shrink–swell cracking behavior and can create challenges in agriculture and construction.",
     image: "/images/hill.jpg",
   },
   "cls-2": {
     label: "Red Soils",
     color: "#ff00fe",
-    details: "Balanced loamy red soil with moderate moisture-holding capacity.",
+    details: "Red soil is one of the major soil types in Kerala, mainly found in midland and highland regions. It is iron-rich, well drained, slightly acidic, and suitable for plantation crops like rubber, coconut, and cashew.",
     image: "/images/hill.jpg",
   },
   "cls-3": {
     label: "Coastal Alluvium Soils",
     color: "#96fffe",
-    details: "Mixed red-yellow profile typically requiring organic enrichment.",
+    details: "Coastal alluvium soils are fertile soils found along the coastal plains and backwaters of Kerala. They are formed from river and marine deposits and support crops like rice, coconut, and banana, especially in areas like Kuttanad.",
     image: "/images/hill.jpg",
   },
 
   "cls-5": {
     label: " Kari Soils",
     color: "#04b293",
-    details: "Hill-foot and slope soils with variable depth and gravel content.",
+    details: "Kari soil is a peat-rich marshy soil found mainly in Kuttanad and other lowland wetlands of Kerala. It is dark, acidic, and rich in organic matter, and is mainly used for paddy cultivation.",
     image: "/images/hill.jpg",
   },
+
   "cls-6": {
     label: "Forest Soils",
     color: "#009900",
-    details: "Light-textured low-organic soils represented by this mapped class.",
+    details: "Forest soils in Kerala are found mainly in the Western Ghats highlands. They are dark, humus-rich, and slightly acidic soils, supporting dense forests and plantation crops like tea, coffee, and spices.",
     image: "/images/hill.jpg",
   },
   "cls-7": {
     label: "Hill Soils",
     color: "#ceffc8",
-    details: "Fine to medium-textured soils with moderate nutrient status.",
+    details: "Hill soils in Kerala occur mainly in the Western Ghats highlands. They are brown, humus-rich, slightly acidic soils suitable for plantation crops like tea, coffee, and spices, but they are prone to erosion on steep slopes.",
     image: "/images/hill.jpg",
   },
 
   "cls-8": {
     label: "Alluvium Soils",
     color: "#ffff01",
-    details: "Freely draining sandy-loam profile suitable for multiple crops.",
+    details: "Alluvium soils in Kerala are fertile soils formed by river deposits, found mainly in river valleys and flood plains. They support crops like paddy, banana, coconut, and vegetables, making them important for agriculture in the state.",
     image: "/images/hill.jpg",
   },
 
@@ -226,26 +228,26 @@ const KERALA_COLOR_DETAILS = Object.freeze({
   "cls-9": {
     label: "Acid Soils",
     color: "#f7c4a2",
-    details: "Clay-rich darker soils with higher moisture retention.",
+    details: "Acid soils are widely found in Kerala due to heavy rainfall and tropical weathering. They have low pH and moderate fertility but can support plantation crops like tea, coffee, rubber, and spices when properly managed.",
     image: "/images/hill.jpg",
   },
 
   "cls-11": {
     label: "Lateritic Soils",
     color: "#cc0033",
-    details: "Highland soils influenced by slope, rainfall, and forest cover.",
+    details: "Lateritic soil is the most common soil type in Kerala, found mainly in midland and upland areas. It is iron-rich, reddish, acidic, and well drained, suitable for crops like coconut, cashew, rubber, and spices, though it requires fertilizers for good productivity.",
     image: "/images/hill.jpg",
   },
-  "cls-10": {
-    label: "District Boundary",
-    color: "#030304",
-    details: "Transition zones containing mixed red and black soil traits.",
-    image: "/images/hill.jpg",
-  },
+  // "cls-10": {
+  //   label: "District Boundary",
+  //   color: "#030304",
+  //   details: "Transition zones containing mixed red and black soil traits.",
+  //   image: "/images/hill.jpg",
+  // },
   "cls-4": {
     label: "Water Body",
     color: "#3c36bc",
-    details: "Leached lateritic soil common in high-rainfall and upland belts.",
+    details: "Kerala has abundant water bodies including 44 rivers, lakes, backwaters, wetlands, and reservoirs. These play a crucial role in agriculture, power generation, fisheries, and tourism, making them vital for the state’s economy and environment.",
     image: "/images/hill.jpg",
   },
 });

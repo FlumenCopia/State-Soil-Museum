@@ -4,21 +4,23 @@ import React, { forwardRef } from "react";
 
 
 const KERALA_MAP_LABELS = [
-  { text: "Kasaragod", x: -4, y: 130, side: "left", ax: 108, ay: 130 },
-  { text: "Wayanad", x: 260, y: 175, side: "right", ax: 226, ay: 175 },
-  { text: "kannur", x: 86, y: 240, side: "left", ax: 180, ay: 240 },
-    { text: "Kozhikode", x: 96, y: 310, side: "left", ax: 220, ay: 310 },
-  { text: "Palakkad", x: 410, y: 338, side: "right", ax: 360, ay: 338 },
-  { text: "Thrissur", x: 160, y: 438, side: "left", ax: 272, ay: 438 },
-  { text: "Ernakulam", x: 176, y: 536, side: "left", ax: 294, ay: 536 },
-  { text: "Idukki", x: 490, y: 548, side: "right", ax: 406, ay: 548 },
-  { text: "Alappuzha", x: 184, y: 610, side: "left", ax: 352, ay: 610 },
-  { text: "Pathanamthitta", x: 499, y: 600, side: "right", ax: 432, ay: 600 },
-  { text: "Kollam", x: 236, y: 674, side: "left", ax: 340, ay: 674 },
-  { text: "Trivandrum", x: 246, y: 774, side: "left", ax: 400, ay: 774 },
-  { text: "Wetland Soils", x: 492, y: 676, side: "right", ax: 432, ay: 676 },
-  { text: "(Kuttanad)", x: 494, y: 700, size: 13, side: "right", ax: 432, ay: 700 },
-  { text: "Forest & Hill Soils", x: 486, y: 726, side: "right", ax: 432, ay: 726 },
+  { text: "kannur", x: 86, y: 230, side: "left", ax: 180, ay: 230 },
+    { text: "Kozhikode", x: 106, y: 300, side: "left", ax: 230, ay: 300 },
+  { text: "Kasaragod", x: 200, y: 125, side: "right", ax: 156, ay: 125 },
+
+  { text: "Wayanad", x: 340, y: 225, side: "right", ax: 296, ay: 225 },
+  { text: "Malappuram", x: 370, y: 298, side: "right", ax: 330, ay: 298 },  
+  { text: "Palakkad", x: 410, y: 378, side: "right", ax: 380, ay: 378 },
+  { text: "Thrissur", x: 180, y: 458, side: "left", ax: 302, ay: 458 },
+  { text: "Ernakulam", x: 180, y: 526, side: "left", ax: 334, ay: 526 },
+  { text: "Kottayam", x: 204, y: 590, side: "left", ax: 382, ay: 590 },
+  { text: "Idukki", x: 490, y: 568, side: "right", ax: 446, ay: 568 },
+  { text: "Pathanamthitta", x: 489, y: 650, side: "right", ax: 452, ay: 650 },
+  { text: "Alappuzha", x: 206, y: 664, side: "left", ax: 340, ay: 664 },
+  { text: "Trivandrum", x: 256, y: 774, side: "left", ax: 400, ay: 774 },
+  // { text: "Wetland Soils", x: 492, y: 676, side: "right", ax: 432, ay: 676 },
+  { text: "Kollam", x: 474, y: 700, side: "right", ax: 442, ay: 700 },
+  // { text: "Forest & Hill Soils", x: 486, y: 726, side: "right", ax: 432, ay: 726 },
 ];
 
 const LABEL_LAYER_STYLE = (isVisible) => ({
