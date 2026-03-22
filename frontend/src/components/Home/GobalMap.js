@@ -50,10 +50,10 @@ const INDIA_HEIGHT_BEFORE = "var(--india-svg-height)";
 const INDIA_WIDTH_BEFORE_PORTRAIT = "var(--india-svg-width)";
 const INDIA_HEIGHT_BEFORE_PORTRAIT = "var(--india-svg-height)";
 
-const INDIA_WIDTH_AFTER = "min(90vw, 980px)";
-const INDIA_HEIGHT_AFTER = "88vh";
-const INDIA_WIDTH_AFTER_PORTRAIT = "var(--india-svg-after-width, min(94vw, 980px))";
-const INDIA_HEIGHT_AFTER_PORTRAIT = "var(--india-svg-after-height, 88vh)";
+const INDIA_WIDTH_AFTER = "min(68vw, 680px)";
+const INDIA_HEIGHT_AFTER = "68vh";
+const INDIA_WIDTH_AFTER_PORTRAIT = "var(--india-svg-after-width, min(68vw, 680px))";
+const INDIA_HEIGHT_AFTER_PORTRAIT = "var(--india-svg-after-height, 68vh)";
 const KERALA_WIDTH_BEFORE = "min(86vw, 900px)";
 const KERALA_HEIGHT_BEFORE = "80vh";
 const KERALA_WIDTH_AFTER = "min(100vw, 1120px)";

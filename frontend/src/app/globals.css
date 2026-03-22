@@ -1,6 +1,6 @@
 :root {
-  --india-svg-width: min(94vw, 980px);
-  --india-svg-height: 88vh;
+  --india-svg-width: min(68vw, 680px);
+  --india-svg-height: 68vh;
   --india-svg-after-ratio: 1.091;
   --kerala-svg-width: min(82vw, 980px);
   --kerala-svg-height: 74vh;
@@ -8,16 +8,16 @@
 
 @media (orientation: portrait) {
   :root {
-    --india-svg-width: min(64vw, 650px);
-    --india-svg-height: 78vh;
+    --india-svg-width: min(68vw, 680px);
+    --india-svg-height: 68vh;
     --kerala-svg-width: min(82vw, 840px);
     --kerala-svg-height: 64vh;
   }
 }
 
 .INDIA_WIDTH_AFTER_PORTRAIT {
-  --india-svg-after-width: min(94vw, 980px);
-  --india-svg-after-height: min(88vh, calc(var(--india-svg-after-width) * var(--india-svg-after-ratio)));
+  --india-svg-after-width: min(68vw, 680px);
+  --india-svg-after-height: min(68vh, calc(var(--india-svg-after-width) * var(--india-svg-after-ratio)));
 }
 
 .KERALA_WIDTH_AFTER_PORTRAIT {
@@ -27,8 +27,8 @@
 
 @media (max-width: 1080px) and (orientation: portrait) {
   .INDIA_WIDTH_AFTER_PORTRAIT {
-    --india-svg-after-width: min(94vw,980px);
-    --india-svg-after-height: min(88vh, calc(var(--india-svg-after-width) * var(--india-svg-after-ratio)));
+    --india-svg-after-width: min(68vw,680px);
+    --india-svg-after-height: min(68vh, calc(var(--india-svg-after-width) * var(--india-svg-after-ratio)));
   }
   .KERALA_WIDTH_AFTER_PORTRAIT {
     --kerala-svg-after-width: min(100vw, 1050px) ;
@@ -38,7 +38,7 @@
 
 @media (max-width: 1024px) and (orientation: portrait) {
   .INDIA_WIDTH_AFTER_PORTRAIT {
-    --india-svg-after-width: min(78vw,860px);
+    --india-svg-after-width: min(68vw,680px);
     --india-svg-after-height: min(82vh, calc(var(--india-svg-after-width) * var(--india-svg-after-ratio)));
   }
   .KERALA_WIDTH_AFTER_PORTRAIT {
@@ -51,7 +51,7 @@
 @media (max-width: 864px) and (orientation: portrait) {
 
   .INDIA_WIDTH_AFTER_PORTRAIT {
-    --india-svg-after-width: clamp(340px, 62vw, 760px);
+    --india-svg-after-width: clamp(340px, 68vw, 680px);
     --india-svg-after-height: min(60vh, min(650px, calc(var(--india-svg-after-width) * var(--india-svg-after-ratio))));
   }
 
