@@ -284,7 +284,7 @@ const INDIA_CLASS_ORDER = Object.keys(INDIA_COLOR_DETAILS)
 
 const SVG_FILL_ORDER_ATTR = "data-fill-order";
 const INDIA_OVERLAP_HIGHLIGHT_SELECTORS = Object.freeze({
-  "IndiaSVG-26": ".IndiaSVG-overlap-24-for-26",
+  "IndiaSVG-26": '[data-india-overlap-highlight-for="IndiaSVG-26"]',
   "IndiaSVG-29": ".lighting.IndiaSVG-21, .lighting.IndiaSVG-28",
 });
 
@@ -342,6 +342,13 @@ function getSvgElementsAtPoint({ event, container }) {
 
 function resolveIndiaColorClassAtPoint({ event, container, getColorClass }) {
   const elementsAtPoint = getSvgElementsAtPoint({ event, container });
+
+  const overlapPickClass = elementsAtPoint
+    .map((el) => el.getAttribute("data-india-pick-class"))
+    .find(Boolean);
+  if (overlapPickClass) {
+    return overlapPickClass;
+  }
 
   const overlapElement = elementsAtPoint.find(
     (el) => el.classList.contains("lighting") && Boolean(getColorClass(el))
@@ -458,6 +465,7 @@ function syncIndiaHighlightOverlay({ container, selectedClass, hoveredClass }) {
 
     const clone = el.cloneNode(true);
     if (!(clone instanceof SVGElement)) return;
+    clone.removeAttribute("data-india-pick-class");
     overlay.appendChild(clone);
   });
 }
