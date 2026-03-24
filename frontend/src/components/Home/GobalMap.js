@@ -410,16 +410,9 @@ function syncIndiaHighlightOverlay({ container, selectedClass, hoveredClass }) {
   overlapElements.forEach((el) => {
     const clone = el.cloneNode(true);
     if (!(clone instanceof SVGElement)) return;
-
-    clone.classList.remove("highlight");
-    clone.classList.remove("selected-highlight");
-
     if (isHovered) {
-      clone.classList.add("highlight");
     }
-
     if (isSelected) {
-      clone.classList.add("selected-highlight");
     }
     overlay.appendChild(clone);
   });
