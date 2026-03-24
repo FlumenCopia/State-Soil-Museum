@@ -284,8 +284,9 @@ const INDIA_CLASS_ORDER = Object.keys(INDIA_COLOR_DETAILS)
 
 const SVG_FILL_ORDER_ATTR = "data-fill-order";
 const INDIA_OVERLAP_HIGHLIGHT_SELECTORS = Object.freeze({
-  "IndiaSVG-26": '[data-india-overlap-highlight-for="IndiaSVG-26"]',
-  "IndiaSVG-29": ".lighting.IndiaSVG-21, .lighting.IndiaSVG-28",
+  "IndiaSVG-26": '[data-india-overlap-highlight-for~="IndiaSVG-26"]',
+  "IndiaSVG-29": '.lighting.IndiaSVG-21, .lighting.IndiaSVG-28, [data-india-overlap-highlight-for~="IndiaSVG-29"]',
+  "IndiaSVG-31": '[data-india-overlap-highlight-for~="IndiaSVG-31"]',
 });
 
 function groupElementsByParent(elements) {
