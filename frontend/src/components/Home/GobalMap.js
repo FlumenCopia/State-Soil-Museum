@@ -283,6 +283,8 @@ const INDIA_CLASS_ORDER = Object.keys(INDIA_COLOR_DETAILS)
   .sort((a, b) => Number(a.replace("IndiaSVG-", "")) - Number(b.replace("IndiaSVG-", "")));
 
 const SVG_FILL_ORDER_ATTR = "data-fill-order";
+const INDIA_OVERLAP_SELECTED_CLASS = "IndiaSVG-29";
+const INDIA_OVERLAP_HIGHLIGHT_SELECTOR = ".lighting.IndiaSVG-21, .lighting.IndiaSVG-28";
 
 function groupElementsByParent(elements) {
   return elements.reduce((groups, el) => {
@@ -388,6 +390,28 @@ function syncSvgHighlights({
   if (hoveredClass !== selectedClass) {
     raiseSvgFillPaths(elements, hoveredClass, fillClassName, drawAnchorSelector);
   }
+}
+
+function syncIndiaHighlightOverlay({ container, selectedClass }) {
+  const overlay = container?.querySelector(".IndiaSVG-highlight-overlay");
+  if (!overlay) return;
+
+  overlay.replaceChildren();
+
+  if (selectedClass !== INDIA_OVERLAP_SELECTED_CLASS) return;
+
+  const overlapElements = Array.from(
+    container.querySelectorAll(INDIA_OVERLAP_HIGHLIGHT_SELECTOR)
+  );
+
+  overlapElements.forEach((el) => {
+    const clone = el.cloneNode(true);
+    if (!(clone instanceof SVGElement)) return;
+
+    clone.classList.remove("highlight");
+    clone.classList.add("selected-highlight");
+    overlay.appendChild(clone);
+  });
 }
 
 
@@ -1094,6 +1118,10 @@ export default function GobalMap() {
         fillClassName: "IndiaSVG-fill-path",
         drawAnchorSelector: ".IndiaSVG-draw-path",
       });
+      syncIndiaHighlightOverlay({
+        container,
+        selectedClass: activeIndiaClassRef.current,
+      });
     };
 
     const handleClick = (e) => {
@@ -1169,6 +1197,10 @@ export default function GobalMap() {
         fillClassName: "IndiaSVG-fill-path",
         drawAnchorSelector: ".IndiaSVG-draw-path",
       });
+      syncIndiaHighlightOverlay({
+        container,
+        selectedClass: null,
+      });
       container.removeEventListener("pointermove", handlePointerMove);
       container.removeEventListener("pointerleave", handlePointerLeave);
       container.removeEventListener("click", handleContainerClick);
@@ -1188,6 +1220,10 @@ export default function GobalMap() {
         fillClassName: "IndiaSVG-fill-path",
         drawAnchorSelector: ".IndiaSVG-draw-path",
       });
+      syncIndiaHighlightOverlay({
+        container: indiaContainerRef.current,
+        selectedClass: null,
+      });
       return;
     }
 
@@ -1201,6 +1237,10 @@ export default function GobalMap() {
       hoveredClass,
       fillClassName: "IndiaSVG-fill-path",
       drawAnchorSelector: ".IndiaSVG-draw-path",
+    });
+    syncIndiaHighlightOverlay({
+      container: indiaContainerRef.current,
+      selectedClass,
     });
   }, [activeIndiaClass, hoverIndiaClass, indiaZoomComplete]);
 
