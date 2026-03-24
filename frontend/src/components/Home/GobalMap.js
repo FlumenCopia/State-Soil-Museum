@@ -282,6 +282,114 @@ const INDIA_CLASS_ORDER = Object.keys(INDIA_COLOR_DETAILS)
   .filter((className) => className !== "IndiaSVG-20")
   .sort((a, b) => Number(a.replace("IndiaSVG-", "")) - Number(b.replace("IndiaSVG-", "")));
 
+const SVG_FILL_ORDER_ATTR = "data-fill-order";
+
+function groupElementsByParent(elements) {
+  return elements.reduce((groups, el) => {
+    const parent = el.parentElement;
+    if (!parent) return groups;
+
+    if (!groups.has(parent)) {
+      groups.set(parent, []);
+    }
+
+    groups.get(parent).push(el);
+    return groups;
+  }, new Map());
+}
+
+function cacheSvgFillOrder(elements, fillClassName) {
+  let fillOrder = 0;
+
+  elements.forEach((el) => {
+    if (!el.classList.contains(fillClassName)) return;
+
+    if (!el.hasAttribute(SVG_FILL_ORDER_ATTR)) {
+      el.setAttribute(SVG_FILL_ORDER_ATTR, String(fillOrder));
+    }
+
+    fillOrder += 1;
+  });
+}
+
+function restoreSvgFillOrder(elements, fillClassName, drawAnchorSelector) {
+  const fillElements = elements.filter((el) => el.classList.contains(fillClassName));
+
+  groupElementsByParent(fillElements).forEach((nodes, parent) => {
+    const anchor = drawAnchorSelector ? parent.querySelector(drawAnchorSelector) : null;
+
+    nodes
+      .slice()
+      .sort(
+        (a, b) =>
+          Number(a.getAttribute(SVG_FILL_ORDER_ATTR) ?? 0) -
+          Number(b.getAttribute(SVG_FILL_ORDER_ATTR) ?? 0)
+      )
+      .forEach((el) => {
+        if (anchor && anchor.parentElement === parent) {
+          parent.insertBefore(el, anchor);
+          return;
+        }
+
+        parent.appendChild(el);
+      });
+  });
+}
+
+function raiseSvgFillPaths(elements, className, fillClassName, drawAnchorSelector) {
+  if (!className) return;
+
+  const matchingFillElements = elements.filter(
+    (el) => el.classList.contains(fillClassName) && el.classList.contains(className)
+  );
+
+  groupElementsByParent(matchingFillElements).forEach((nodes, parent) => {
+    const anchor = drawAnchorSelector ? parent.querySelector(drawAnchorSelector) : null;
+
+    nodes.forEach((el) => {
+      if (anchor && anchor.parentElement === parent) {
+        parent.insertBefore(el, anchor);
+        return;
+      }
+
+      parent.appendChild(el);
+    });
+  });
+}
+
+function syncSvgHighlights({
+  container,
+  elements,
+  focusClass,
+  selectedClass,
+  hoveredClass,
+  fillClassName,
+  drawAnchorSelector,
+}) {
+  container?.classList.toggle(focusClass, Boolean(selectedClass || hoveredClass));
+
+  restoreSvgFillOrder(elements, fillClassName, drawAnchorSelector);
+
+  elements.forEach((el) => {
+    el.classList.remove("highlight");
+    el.classList.remove("selected-highlight");
+
+    if (selectedClass && el.classList.contains(selectedClass)) {
+      el.classList.add("selected-highlight");
+    }
+
+    if (hoveredClass && el.classList.contains(hoveredClass)) {
+      el.classList.add("highlight");
+    }
+  });
+
+  raiseSvgFillPaths(elements, selectedClass, fillClassName, drawAnchorSelector);
+
+  if (hoveredClass !== selectedClass) {
+    raiseSvgFillPaths(elements, hoveredClass, fillClassName, drawAnchorSelector);
+  }
+}
+
 
 
 export default function GobalMap() {
@@ -851,33 +959,18 @@ export default function GobalMap() {
       Array.from(el.classList).find((name) => KERALA_COLOR_CLASS_PATTERN.test(name)) ?? null;
     const colorElements = elements.filter((el) => getColorClass(el));
     colorElementsRef.current = colorElements;
+    cacheSvgFillOrder(colorElements, "fill-path");
 
     const paintHighlights = () => {
-      const hoverClass = hoverColorClassRef.current;
-      const clickedClass = activeColorClassRef.current;
-      const hasFocusedSection = Boolean(hoverClass || clickedClass);
-
-      container.classList.toggle("kerala-has-focus", hasFocusedSection);
-      colorElementsRef.current.forEach((el) => {
-        el.classList.remove("highlight");
-        el.classList.remove("selected-highlight");
+      syncSvgHighlights({
+        container,
+        elements: colorElementsRef.current,
+        focusClass: "kerala-has-focus",
+        selectedClass: activeColorClassRef.current,
+        hoveredClass: hoverColorClassRef.current,
+        fillClassName: "fill-path",
+        drawAnchorSelector: ".draw-path",
       });
-
-      if (clickedClass) {
-        colorElementsRef.current.forEach((el) => {
-          if (el.classList.contains(clickedClass)) {
-            el.classList.add("selected-highlight");
-          }
-        });
-      }
-
-      if (hoverClass) {
-        colorElementsRef.current.forEach((el) => {
-          if (el.classList.contains(hoverClass)) {
-            el.classList.add("highlight");
-          }
-        });
-      }
     };
 
     const handleClick = (e) => {
@@ -944,7 +1037,15 @@ export default function GobalMap() {
     paintHighlights();
 
     return () => {
-      container.classList.remove("kerala-has-focus");
+      syncSvgHighlights({
+        container,
+        elements: colorElementsRef.current,
+        focusClass: "kerala-has-focus",
+        selectedClass: null,
+        hoveredClass: null,
+        fillClassName: "fill-path",
+        drawAnchorSelector: ".draw-path",
+      });
       container.removeEventListener("pointermove", handlePointerMove);
       container.removeEventListener("pointerleave", handlePointerLeave);
       container.removeEventListener("click", handleContainerClick);
@@ -956,20 +1057,14 @@ export default function GobalMap() {
   useEffect(() => {
     const selectedClass = activeColorClassRef.current;
     const hoveredClass = hoverColorClassRef.current;
-    const container = keralaContainerRef.current;
-    if (container) {
-      container.classList.toggle("kerala-has-focus", Boolean(selectedClass || hoveredClass));
-    }
-
-    colorElementsRef.current.forEach((el) => {
-      el.classList.remove("highlight");
-      el.classList.remove("selected-highlight");
-      if (selectedClass && el.classList.contains(selectedClass)) {
-        el.classList.add("selected-highlight");
-      }
-      if (hoveredClass && el.classList.contains(hoveredClass)) {
-        el.classList.add("highlight");
-      }
+    syncSvgHighlights({
+      container: keralaContainerRef.current,
+      elements: colorElementsRef.current,
+      focusClass: "kerala-has-focus",
+      selectedClass,
+      hoveredClass,
+      fillClassName: "fill-path",
+      drawAnchorSelector: ".draw-path",
     });
   }, [activeColorClass, hoverColorClass]);
 
@@ -987,33 +1082,18 @@ export default function GobalMap() {
       Array.from(el.classList).find((name) => INDIA_COLOR_CLASS_PATTERN.test(name)) ?? null;
     const colorElements = elements.filter((el) => getColorClass(el));
     indiaColorElementsRef.current = colorElements;
+    cacheSvgFillOrder(colorElements, "IndiaSVG-fill-path");
 
     const paintHighlights = () => {
-      const hoverClass = hoverIndiaClassRef.current;
-      const clickedClass = activeIndiaClassRef.current;
-      const hasFocusedSection = Boolean(hoverClass || clickedClass);
-
-      container.classList.toggle("india-has-focus", hasFocusedSection);
-      indiaColorElementsRef.current.forEach((el) => {
-        el.classList.remove("highlight");
-        el.classList.remove("selected-highlight");
+      syncSvgHighlights({
+        container,
+        elements: indiaColorElementsRef.current,
+        focusClass: "india-has-focus",
+        selectedClass: activeIndiaClassRef.current,
+        hoveredClass: hoverIndiaClassRef.current,
+        fillClassName: "IndiaSVG-fill-path",
+        drawAnchorSelector: ".IndiaSVG-draw-path",
       });
-
-      if (clickedClass) {
-        indiaColorElementsRef.current.forEach((el) => {
-          if (el.classList.contains(clickedClass)) {
-            el.classList.add("selected-highlight");
-          }
-        });
-      }
-
-      if (hoverClass) {
-        indiaColorElementsRef.current.forEach((el) => {
-          if (el.classList.contains(hoverClass)) {
-            el.classList.add("highlight");
-          }
-        });
-      }
     };
 
     const handleClick = (e) => {
@@ -1080,7 +1160,15 @@ export default function GobalMap() {
     paintHighlights();
 
     return () => {
-      container.classList.remove("india-has-focus");
+      syncSvgHighlights({
+        container,
+        elements: indiaColorElementsRef.current,
+        focusClass: "india-has-focus",
+        selectedClass: null,
+        hoveredClass: null,
+        fillClassName: "IndiaSVG-fill-path",
+        drawAnchorSelector: ".IndiaSVG-draw-path",
+      });
       container.removeEventListener("pointermove", handlePointerMove);
       container.removeEventListener("pointerleave", handlePointerLeave);
       container.removeEventListener("click", handleContainerClick);
@@ -1091,33 +1179,28 @@ export default function GobalMap() {
 
   useEffect(() => {
     if (!indiaZoomComplete) {
-      const container = indiaContainerRef.current;
-      if (container) {
-        container.classList.remove("india-has-focus");
-      }
-      indiaColorElementsRef.current.forEach((el) => {
-        el.classList.remove("highlight");
-        el.classList.remove("selected-highlight");
+      syncSvgHighlights({
+        container: indiaContainerRef.current,
+        elements: indiaColorElementsRef.current,
+        focusClass: "india-has-focus",
+        selectedClass: null,
+        hoveredClass: null,
+        fillClassName: "IndiaSVG-fill-path",
+        drawAnchorSelector: ".IndiaSVG-draw-path",
       });
       return;
     }
 
     const selectedClass = activeIndiaClassRef.current;
     const hoveredClass = hoverIndiaClassRef.current;
-    const container = indiaContainerRef.current;
-    if (container) {
-      container.classList.toggle("india-has-focus", Boolean(selectedClass || hoveredClass));
-    }
-
-    indiaColorElementsRef.current.forEach((el) => {
-      el.classList.remove("highlight");
-      el.classList.remove("selected-highlight");
-      if (selectedClass && el.classList.contains(selectedClass)) {
-        el.classList.add("selected-highlight");
-      }
-      if (hoveredClass && el.classList.contains(hoveredClass)) {
-        el.classList.add("highlight");
-      }
+    syncSvgHighlights({
+      container: indiaContainerRef.current,
+      elements: indiaColorElementsRef.current,
+      focusClass: "india-has-focus",
+      selectedClass,
+      hoveredClass,
+      fillClassName: "IndiaSVG-fill-path",
+      drawAnchorSelector: ".IndiaSVG-draw-path",
     });
   }, [activeIndiaClass, hoverIndiaClass, indiaZoomComplete]);
 
