@@ -119,8 +119,8 @@ const IndiaSVG = forwardRef(({ width, height, showLabels = true, showFilter = tr
   drop-shadow(0 1px 0 #d6d6d6)
     drop-shadow(0 2px 0 #c2c2c2)
     drop-shadow(0 3px 0 #adadad)
-    drop-shadow(0 4px 0 #999999)
-        drop-shadow(0 5px 0 #999999)
+     drop-shadow(0 4px 0 #999999)
+
 
     drop-shadow(-10px -12px 18px rgba(255,255,255,0.22))
     drop-shadow(14px 18px 30px rgba(0,0,0,0.65))
