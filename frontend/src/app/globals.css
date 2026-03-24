@@ -665,7 +665,7 @@ svg rect.selected-highlight {
 .map-preview-switch {
   --holo-speed: 5.2s;
   width: min(300px, 30vw);
-  min-width: 230px;
+  min-width: 350px;
   border: none;
   border-radius: 16px;
   padding: 10px;
@@ -1005,8 +1005,8 @@ svg rect.selected-highlight {
     gap: 7px;
   }
   .map-preview-switch__media {
-    width: 86px;
-    height: 64px;
+    width:86px;
+    height:84px;
   }
   .see-all-section-btn {
     min-width: 110px;
