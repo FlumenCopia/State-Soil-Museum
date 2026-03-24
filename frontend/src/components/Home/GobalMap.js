@@ -283,8 +283,10 @@ const INDIA_CLASS_ORDER = Object.keys(INDIA_COLOR_DETAILS)
   .sort((a, b) => Number(a.replace("IndiaSVG-", "")) - Number(b.replace("IndiaSVG-", "")));
 
 const SVG_FILL_ORDER_ATTR = "data-fill-order";
-const INDIA_OVERLAP_SELECTED_CLASS = "IndiaSVG-29";
-const INDIA_OVERLAP_HIGHLIGHT_SELECTOR = ".lighting.IndiaSVG-21, .lighting.IndiaSVG-28";
+const INDIA_OVERLAP_HIGHLIGHT_SELECTORS = Object.freeze({
+  "IndiaSVG-26": ".IndiaSVG-overlap-24-for-26",
+  "IndiaSVG-29": ".lighting.IndiaSVG-21, .lighting.IndiaSVG-28",
+});
 
 function groupElementsByParent(elements) {
   return elements.reduce((groups, el) => {
@@ -436,22 +438,26 @@ function syncIndiaHighlightOverlay({ container, selectedClass, hoveredClass }) {
 
   overlay.replaceChildren();
 
-  const isSelected = selectedClass === INDIA_OVERLAP_SELECTED_CLASS;
-  const isHovered = hoveredClass === INDIA_OVERLAP_SELECTED_CLASS;
+  const overlapSelectors = Array.from(
+    new Set(
+      [selectedClass, hoveredClass]
+        .map((className) => INDIA_OVERLAP_HIGHLIGHT_SELECTORS[className])
+        .filter(Boolean)
+    )
+  );
+  if (!overlapSelectors.length) return;
 
-  if (!isSelected && !isHovered) return;
-
-  const overlapElements = Array.from(
-    container.querySelectorAll(INDIA_OVERLAP_HIGHLIGHT_SELECTOR)
+  const seen = new Set();
+  const overlapElements = overlapSelectors.flatMap((selector) =>
+    Array.from(container.querySelectorAll(selector))
   );
 
   overlapElements.forEach((el) => {
+    if (seen.has(el)) return;
+    seen.add(el);
+
     const clone = el.cloneNode(true);
     if (!(clone instanceof SVGElement)) return;
-    if (isHovered) {
-    }
-    if (isSelected) {
-    }
     overlay.appendChild(clone);
   });
 }
