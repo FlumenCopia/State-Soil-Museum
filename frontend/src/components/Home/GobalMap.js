@@ -392,13 +392,16 @@ function syncSvgHighlights({
   }
 }
 
-function syncIndiaHighlightOverlay({ container, selectedClass }) {
+function syncIndiaHighlightOverlay({ container, selectedClass, hoveredClass }) {
   const overlay = container?.querySelector(".IndiaSVG-highlight-overlay");
   if (!overlay) return;
 
   overlay.replaceChildren();
 
-  if (selectedClass !== INDIA_OVERLAP_SELECTED_CLASS) return;
+  const isSelected = selectedClass === INDIA_OVERLAP_SELECTED_CLASS;
+  const isHovered = hoveredClass === INDIA_OVERLAP_SELECTED_CLASS;
+
+  if (!isSelected && !isHovered) return;
 
   const overlapElements = Array.from(
     container.querySelectorAll(INDIA_OVERLAP_HIGHLIGHT_SELECTOR)
@@ -409,7 +412,15 @@ function syncIndiaHighlightOverlay({ container, selectedClass }) {
     if (!(clone instanceof SVGElement)) return;
 
     clone.classList.remove("highlight");
-    clone.classList.add("selected-highlight");
+    clone.classList.remove("selected-highlight");
+
+    if (isHovered) {
+      clone.classList.add("highlight");
+    }
+
+    if (isSelected) {
+      clone.classList.add("selected-highlight");
+    }
     overlay.appendChild(clone);
   });
 }
@@ -1121,6 +1132,7 @@ export default function GobalMap() {
       syncIndiaHighlightOverlay({
         container,
         selectedClass: activeIndiaClassRef.current,
+        hoveredClass: hoverIndiaClassRef.current,
       });
     };
 
@@ -1200,6 +1212,7 @@ export default function GobalMap() {
       syncIndiaHighlightOverlay({
         container,
         selectedClass: null,
+        hoveredClass: null,
       });
       container.removeEventListener("pointermove", handlePointerMove);
       container.removeEventListener("pointerleave", handlePointerLeave);
@@ -1223,6 +1236,7 @@ export default function GobalMap() {
       syncIndiaHighlightOverlay({
         container: indiaContainerRef.current,
         selectedClass: null,
+        hoveredClass: null,
       });
       return;
     }
@@ -1241,6 +1255,7 @@ export default function GobalMap() {
     syncIndiaHighlightOverlay({
       container: indiaContainerRef.current,
       selectedClass,
+      hoveredClass,
     });
   }, [activeIndiaClass, hoverIndiaClass, indiaZoomComplete]);
 
