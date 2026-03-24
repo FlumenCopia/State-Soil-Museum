@@ -314,6 +314,44 @@ function cacheSvgFillOrder(elements, fillClassName) {
   });
 }
 
+function getSvgElementsAtPoint({ event, container }) {
+  if (
+    !container ||
+    typeof document === "undefined" ||
+    typeof event?.clientX !== "number" ||
+    typeof event?.clientY !== "number"
+  ) {
+    return [];
+  }
+
+  const seen = new Set();
+
+  return document
+    .elementsFromPoint(event.clientX, event.clientY)
+    .filter((el) => el instanceof Element)
+    .map((el) => el.closest("path, polygon, rect"))
+    .filter((el) => el instanceof Element && container.contains(el))
+    .filter((el) => {
+      if (seen.has(el)) return false;
+      seen.add(el);
+      return true;
+    });
+}
+
+function resolveIndiaColorClassAtPoint({ event, container, getColorClass }) {
+  const elementsAtPoint = getSvgElementsAtPoint({ event, container });
+
+  const overlapElement = elementsAtPoint.find(
+    (el) => el.classList.contains("lighting") && Boolean(getColorClass(el))
+  );
+  if (overlapElement) {
+    return getColorClass(overlapElement);
+  }
+
+  const colorElement = elementsAtPoint.find((el) => Boolean(getColorClass(el)));
+  return colorElement ? getColorClass(colorElement) : null;
+}
+
 function restoreSvgFillOrder(elements, fillClassName, drawAnchorSelector) {
   const fillElements = elements.filter((el) => el.classList.contains(fillClassName));
 
@@ -1111,6 +1149,21 @@ export default function GobalMap() {
     const colorElements = elements.filter((el) => getColorClass(el));
     indiaColorElementsRef.current = colorElements;
     cacheSvgFillOrder(colorElements, "IndiaSVG-fill-path");
+    const getIndiaColorClassFromEvent = (event) => {
+      const stackedColorClass = resolveIndiaColorClassAtPoint({
+        event,
+        container,
+        getColorClass,
+      });
+      if (stackedColorClass) return stackedColorClass;
+
+      const target = event.target;
+      if (!(target instanceof Element)) return null;
+      const clickableElement = target.closest("path, polygon, rect");
+      if (!clickableElement || !container.contains(clickableElement)) return null;
+
+      return getColorClass(clickableElement);
+    };
 
     const paintHighlights = () => {
       syncSvgHighlights({
@@ -1130,12 +1183,7 @@ export default function GobalMap() {
     };
 
     const handleClick = (e) => {
-      const target = e.target;
-      if (!(target instanceof Element)) return;
-      const clickableElement = target.closest("path, polygon, rect");
-      if (!clickableElement || !container.contains(clickableElement)) return;
-
-      const colorClass = getColorClass(clickableElement);
+      const colorClass = getIndiaColorClassFromEvent(e);
       if (!colorClass) return;
       if (activeIndiaClassRef.current === colorClass) {
         activeIndiaClassRef.current = null;
@@ -1149,29 +1197,14 @@ export default function GobalMap() {
     };
 
     const handleContainerClick = (e) => {
-      const target = e.target;
-      if (!(target instanceof Element)) return;
-      const clickedColorClass = getColorClass(target);
+      const clickedColorClass = getIndiaColorClassFromEvent(e);
       if (clickedColorClass) return;
     };
 
     const handlePointerMove = (e) => {
       if (e.pointerType === "touch") return;
 
-      const target = e.target;
-      if (!(target instanceof Element)) return;
-      const hoveredElement = target.closest("path, polygon, rect");
-
-      if (!hoveredElement || !container.contains(hoveredElement)) {
-        if (hoverIndiaClassRef.current !== null) {
-          hoverIndiaClassRef.current = null;
-          setHoverIndiaClass(null);
-          paintHighlights();
-        }
-        return;
-      }
-
-      const colorClass = getColorClass(hoveredElement);
+      const colorClass = getIndiaColorClassFromEvent(e);
       if (hoverIndiaClassRef.current === colorClass) return;
 
       hoverIndiaClassRef.current = colorClass;
