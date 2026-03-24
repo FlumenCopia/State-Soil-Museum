@@ -1315,6 +1315,7 @@ export default function GobalMap() {
 
   useEffect(() => {
     if (!isKerala) return;
+    setIndiaZoomComplete(false);
     setActiveIndiaClass(null);
     setHoverIndiaClass(null);
     activeIndiaClassRef.current = null;
