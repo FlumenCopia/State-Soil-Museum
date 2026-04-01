@@ -423,16 +423,25 @@ function syncSvgHighlights({
   restoreSvgFillOrder(elements, fillClassName, drawAnchorSelector);
 
   elements.forEach((el) => {
+    const isSelected = Boolean(selectedClass && el.classList.contains(selectedClass));
+    const isHovered = Boolean(hoveredClass && el.classList.contains(hoveredClass));
+
+    el.classList.remove("map-region-muted");
     el.classList.remove("highlight");
     el.classList.remove("selected-highlight");
 
-    if (selectedClass && el.classList.contains(selectedClass)) {
+    if (isSelected) {
       el.classList.add("selected-highlight");
     }
 
-    if (hoveredClass && el.classList.contains(hoveredClass)) {
+    if (isHovered) {
       el.classList.add("highlight");
     }
+
+    el.classList.toggle(
+      "map-region-muted",
+      Boolean(selectedClass || hoveredClass) && !isSelected && !isHovered
+    );
   });
 
   raiseSvgFillPaths(elements, selectedClass, fillClassName, drawAnchorSelector);

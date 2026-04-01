@@ -319,7 +319,7 @@ rgb(31, 114, 247)
 svg path,
 svg polygon,
 svg rect {
-  transition: fill 0.3s ease, stroke 0.3s ease, stroke-width 0.3s ease, filter 0.3s ease;
+  transition: fill 0.3s ease, stroke 0.3s ease, stroke-width 0.3s ease, filter 0.3s ease, opacity 0.3s ease;
   cursor: pointer;
 }
 
@@ -331,7 +331,8 @@ svg rect {
 svg path.highlight,
 svg polygon.highlight,
 svg rect.highlight {
-    stroke: #9ce37c !important;
+  stroke: #9ce37c !important;
+  opacity: 1 !important;
 
   stroke-width: 1 !important;
   vector-effect: non-scaling-stroke;
@@ -352,6 +353,7 @@ svg path.selected-highlight,
 svg polygon.selected-highlight,
 svg rect.selected-highlight {
   /* stroke: #fff1dc !important; */
+  opacity: 1 !important;
   stroke-width: 1.8 !important;
   vector-effect: non-scaling-stroke;
   paint-order: stroke fill markers;
@@ -371,16 +373,11 @@ svg rect.selected-highlight {
     /* drop-shadow(0 22px 28px rgba(0, 0, 0, 0.9));  */
 }
 
-.kerala-has-focus svg path:not(.highlight):not(.selected-highlight),
-.kerala-has-focus svg polygon:not(.highlight):not(.selected-highlight),
-.kerala-has-focus svg rect:not(.highlight):not(.selected-highlight) {
-  opacity: 0.9 !important;
-}
-
-.india-has-focus svg path:not(.highlight):not(.selected-highlight),
-.india-has-focus svg polygon:not(.highlight):not(.selected-highlight),
-.india-has-focus svg rect:not(.highlight):not(.selected-highlight) {
-  opacity: 0.9 !important;
+svg path.map-region-muted,
+svg polygon.map-region-muted,
+svg rect.map-region-muted {
+  opacity: 0.32 !important;
+  filter: grayscale(1) saturate(0) brightness(0.72) blur(1px);
 }
 
 @keyframes keralaZigzagMotion {
