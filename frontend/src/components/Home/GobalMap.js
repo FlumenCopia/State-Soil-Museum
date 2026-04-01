@@ -1396,7 +1396,11 @@ export default function GobalMap() {
             )}
           </div>
 
-          <div ref={keralaContainerRef} style={{ gridArea: "1 / 1", opacity: 0 }}>
+          <div
+            ref={keralaContainerRef}
+            className="kerala-map-container"
+            style={{ gridArea: "1 / 1", opacity: 0 }}
+          >
               {shouldRenderKeralaSvg && (
                 <KeralaSVG
                   ref={keralaSvgRef}
