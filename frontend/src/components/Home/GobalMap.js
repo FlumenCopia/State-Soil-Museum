@@ -418,7 +418,7 @@ function syncSvgHighlights({
   fillClassName,
   drawAnchorSelector,
 }) {
-  container?.classList.toggle(focusClass, Boolean(selectedClass || hoveredClass));
+  container?.classList.toggle(focusClass, Boolean(selectedClass));
 
   restoreSvgFillOrder(elements, fillClassName, drawAnchorSelector);
 
@@ -440,7 +440,7 @@ function syncSvgHighlights({
 
     el.classList.toggle(
       "map-region-muted",
-      Boolean(selectedClass || hoveredClass) && !isSelected && !isHovered
+      Boolean(selectedClass) && !isSelected && !isHovered
     );
   });
 
