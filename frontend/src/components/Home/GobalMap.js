@@ -180,7 +180,7 @@ const KERALA_COLOR_CLASS_PATTERN = /^cls-(11|[1-9])$/;
 const KERALA_COLOR_DETAILS = Object.freeze({
   "cls-1": {
     label: "Black Cotton Soils",
-    color: "#888888",
+    color: "#ff7700",
     details: "Black cotton soil in Kerala is a deep, clayey, moisture-retaining soil found mainly in Chittur (Palakkad). It is suitable for crops like cotton and sugarcane but shows shrink–swell cracking behavior and can create challenges in agriculture and construction.",
     image: "/images/hill.jpg",
   },

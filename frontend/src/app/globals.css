@@ -358,8 +358,6 @@ svg rect.selected-highlight {
   vector-effect: non-scaling-stroke;
   paint-order: stroke fill markers;
   stroke: #9ce37c !important;
-
-  
   filter:
     brightness(1.2)
     drop-shadow(0 1px 0 #d7aa61)
