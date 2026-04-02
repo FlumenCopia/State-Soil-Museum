@@ -319,7 +319,12 @@ rgb(31, 114, 247)
 svg path,
 svg polygon,
 svg rect {
-  transition: fill 0.3s ease, stroke 0.3s ease, stroke-width 0.3s ease, filter 0.3s ease, opacity 0.3s ease;
+  transition:
+    fill 0.2s cubic-bezier(0.22, 1, 0.36, 1),
+    stroke 0.2s cubic-bezier(0.22, 1, 0.36, 1),
+    stroke-width 0.24s cubic-bezier(0.22, 1, 0.36, 1),
+    filter 0.24s cubic-bezier(0.22, 1, 0.36, 1),
+    opacity 0.2s ease-out;
   cursor: pointer;
 }
 
@@ -333,18 +338,14 @@ svg polygon.highlight,
 svg rect.highlight {
   stroke: #9ce37c !important;
   opacity: 1 !important;
-
   stroke-width: 1 !important;
   vector-effect: non-scaling-stroke;
   paint-order: stroke fill markers;
   filter:
-    brightness(1)
-    drop-shadow(0 1px 0 #51733f)
-    drop-shadow(0 2px 0 #3e582f)
-    drop-shadow(0 3px 0 #2e4522)
-     /* drop-shadow(0 0 10px rgba(255, 237, 188, 0.44)) */
-    /* drop-shadow(0 16px 12px rgba(0, 0, 0, 0.7)) */
-    /* drop-shadow(0 22px 28px rgba(0, 0, 0, 0.9));  */
+    brightness(1.04)
+    saturate(1.04)
+    drop-shadow(0 1px 0 rgba(81, 115, 63, 0.92))
+    drop-shadow(0 3px 8px rgba(46, 69, 34, 0.34));
 }
 
 
@@ -352,38 +353,35 @@ svg rect.highlight {
 svg path.selected-highlight,
 svg polygon.selected-highlight,
 svg rect.selected-highlight {
-  /* stroke: #fff1dc !important; */
   opacity: 1 !important;
-  stroke-width: 1.8 !important;
+  stroke-width: 1.65 !important;
   vector-effect: non-scaling-stroke;
   paint-order: stroke fill markers;
   stroke: #9ce37c !important;
   filter:
-    brightness(1.2)
-    drop-shadow(0 1px 0 #d7aa61)
+    brightness(1.12)
+    saturate(1.08)
+
+       drop-shadow(0 1px 0 #d7aa61)
     drop-shadow(0 2px 0 #854c06)
     drop-shadow(0 3px 0 #914c0c)
     drop-shadow(0 4px 0 #49280f)
     drop-shadow(0 5px 0 #673309)
         drop-shadow(0 4px 0 #1a1009)
-        /* drop-shadow(0 10px 0 #160e08) */
 
-     /* drop-shadow(0 0 10px rgba(255, 237, 188, 0.44)) */
-     /* drop-shadow(0 16px 12px rgba(0, 0, 0, 0.7)) */
-    /* drop-shadow(0 22px 28px rgba(0, 0, 0, 0.9));  */
 }
 
 .kerala-map-container svg path.selected-highlight,
 .kerala-map-container svg polygon.selected-highlight,
 .kerala-map-container svg rect.selected-highlight {
   opacity: 1 !important;
-  stroke-width: 1.8 !important;
+  stroke-width: 1.65 !important;
   vector-effect: non-scaling-stroke;
   paint-order: stroke fill markers;
   stroke: #9ce37c !important;
   filter:
-    brightness(1.2)
-    drop-shadow(0 1px 0 #d7aa61)
+    brightness(1.12)
+        drop-shadow(0 1px 0 #d7aa61)
     drop-shadow(0 2px 0 #854c06)
     drop-shadow(0 3px 0 #914c0c)
     drop-shadow(0 5px 0 #49280f)

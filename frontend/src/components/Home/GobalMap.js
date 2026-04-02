@@ -409,6 +409,21 @@ function raiseSvgFillPaths(elements, className, fillClassName, drawAnchorSelecto
   });
 }
 
+function syncHighlightPaintState(stateRef, nextState, paint) {
+  const previousState = stateRef.current;
+
+  if (
+    previousState &&
+    previousState.selectedClass === nextState.selectedClass &&
+    previousState.hoveredClass === nextState.hoveredClass
+  ) {
+    return;
+  }
+
+  stateRef.current = nextState;
+  paint(nextState);
+}
+
 function syncSvgHighlights({
   container,
   elements,
@@ -425,23 +440,9 @@ function syncSvgHighlights({
   elements.forEach((el) => {
     const isSelected = Boolean(selectedClass && el.classList.contains(selectedClass));
     const isHovered = Boolean(hoveredClass && el.classList.contains(hoveredClass));
-
-    el.classList.remove("map-region-muted");
-    el.classList.remove("highlight");
-    el.classList.remove("selected-highlight");
-
-    if (isSelected) {
-      el.classList.add("selected-highlight");
-    }
-
-    if (isHovered) {
-      el.classList.add("highlight");
-    }
-
-    el.classList.toggle(
-      "map-region-muted",
-      Boolean(selectedClass) && !isSelected && !isHovered
-    );
+    el.classList.toggle("selected-highlight", isSelected);
+    el.classList.toggle("highlight", isHovered);
+    el.classList.toggle("map-region-muted", Boolean(selectedClass) && !isSelected && !isHovered);
   });
 
   raiseSvgFillPaths(elements, selectedClass, fillClassName, drawAnchorSelector);
@@ -508,6 +509,8 @@ export default function GobalMap() {
   const hoverColorClassRef = useRef(null);
   const activeIndiaClassRef = useRef(null);
   const hoverIndiaClassRef = useRef(null);
+  const keralaHighlightStateRef = useRef(null);
+  const indiaHighlightStateRef = useRef(null);
   const [activeColorClass, setActiveColorClass] = useState(null);
   const [hoverColorClass, setHoverColorClass] = useState(null);
   const [activeIndiaClass, setActiveIndiaClass] = useState(null);
@@ -1052,17 +1055,27 @@ export default function GobalMap() {
     const colorElements = elements.filter((el) => getColorClass(el));
     colorElementsRef.current = colorElements;
     cacheSvgFillOrder(colorElements, "fill-path");
+    keralaHighlightStateRef.current = null;
 
     const paintHighlights = () => {
-      syncSvgHighlights({
-        container,
-        elements: colorElementsRef.current,
-        focusClass: "kerala-has-focus",
-        selectedClass: activeColorClassRef.current,
-        hoveredClass: hoverColorClassRef.current,
-        fillClassName: "fill-path",
-        drawAnchorSelector: ".draw-path",
-      });
+      syncHighlightPaintState(
+        keralaHighlightStateRef,
+        {
+          selectedClass: activeColorClassRef.current,
+          hoveredClass: hoverColorClassRef.current,
+        },
+        ({ selectedClass, hoveredClass }) => {
+          syncSvgHighlights({
+            container,
+            elements: colorElementsRef.current,
+            focusClass: "kerala-has-focus",
+            selectedClass,
+            hoveredClass,
+            fillClassName: "fill-path",
+            drawAnchorSelector: ".draw-path",
+          });
+        }
+      );
     };
 
     const handleClick = (e) => {
@@ -1143,21 +1156,29 @@ export default function GobalMap() {
       container.removeEventListener("click", handleContainerClick);
       container.removeEventListener("click", handleClick);
       colorElementsRef.current = [];
+      keralaHighlightStateRef.current = null;
     };
   }, [isKerala, showOverlay]);
 
   useEffect(() => {
-    const selectedClass = activeColorClassRef.current;
-    const hoveredClass = hoverColorClassRef.current;
-    syncSvgHighlights({
-      container: keralaContainerRef.current,
-      elements: colorElementsRef.current,
-      focusClass: "kerala-has-focus",
-      selectedClass,
-      hoveredClass,
-      fillClassName: "fill-path",
-      drawAnchorSelector: ".draw-path",
-    });
+    syncHighlightPaintState(
+      keralaHighlightStateRef,
+      {
+        selectedClass: activeColorClassRef.current,
+        hoveredClass: hoverColorClassRef.current,
+      },
+      ({ selectedClass, hoveredClass }) => {
+        syncSvgHighlights({
+          container: keralaContainerRef.current,
+          elements: colorElementsRef.current,
+          focusClass: "kerala-has-focus",
+          selectedClass,
+          hoveredClass,
+          fillClassName: "fill-path",
+          drawAnchorSelector: ".draw-path",
+        });
+      }
+    );
   }, [activeColorClass, hoverColorClass]);
 
   useEffect(() => {
@@ -1175,6 +1196,7 @@ export default function GobalMap() {
     const colorElements = elements.filter((el) => getColorClass(el));
     indiaColorElementsRef.current = colorElements;
     cacheSvgFillOrder(colorElements, "IndiaSVG-fill-path");
+    indiaHighlightStateRef.current = null;
     const getIndiaColorClassFromEvent = (event) => {
       const stackedColorClass = resolveIndiaColorClassAtPoint({
         event,
@@ -1192,20 +1214,29 @@ export default function GobalMap() {
     };
 
     const paintHighlights = () => {
-      syncSvgHighlights({
-        container,
-        elements: indiaColorElementsRef.current,
-        focusClass: "india-has-focus",
-        selectedClass: activeIndiaClassRef.current,
-        hoveredClass: hoverIndiaClassRef.current,
-        fillClassName: "IndiaSVG-fill-path",
-        drawAnchorSelector: ".IndiaSVG-draw-path",
-      });
-      syncIndiaHighlightOverlay({
-        container,
-        selectedClass: activeIndiaClassRef.current,
-        hoveredClass: hoverIndiaClassRef.current,
-      });
+      syncHighlightPaintState(
+        indiaHighlightStateRef,
+        {
+          selectedClass: activeIndiaClassRef.current,
+          hoveredClass: hoverIndiaClassRef.current,
+        },
+        ({ selectedClass, hoveredClass }) => {
+          syncSvgHighlights({
+            container,
+            elements: indiaColorElementsRef.current,
+            focusClass: "india-has-focus",
+            selectedClass,
+            hoveredClass,
+            fillClassName: "IndiaSVG-fill-path",
+            drawAnchorSelector: ".IndiaSVG-draw-path",
+          });
+          syncIndiaHighlightOverlay({
+            container,
+            selectedClass,
+            hoveredClass,
+          });
+        }
+      );
     };
 
     const handleClick = (e) => {
@@ -1271,11 +1302,13 @@ export default function GobalMap() {
       container.removeEventListener("click", handleContainerClick);
       container.removeEventListener("click", handleClick);
       indiaColorElementsRef.current = [];
+      indiaHighlightStateRef.current = null;
     };
   }, [isKerala, showOverlay, indiaZoomComplete]);
 
   useEffect(() => {
     if (!indiaZoomComplete) {
+      indiaHighlightStateRef.current = null;
       syncSvgHighlights({
         container: indiaContainerRef.current,
         elements: indiaColorElementsRef.current,
@@ -1293,22 +1326,29 @@ export default function GobalMap() {
       return;
     }
 
-    const selectedClass = activeIndiaClassRef.current;
-    const hoveredClass = hoverIndiaClassRef.current;
-    syncSvgHighlights({
-      container: indiaContainerRef.current,
-      elements: indiaColorElementsRef.current,
-      focusClass: "india-has-focus",
-      selectedClass,
-      hoveredClass,
-      fillClassName: "IndiaSVG-fill-path",
-      drawAnchorSelector: ".IndiaSVG-draw-path",
-    });
-    syncIndiaHighlightOverlay({
-      container: indiaContainerRef.current,
-      selectedClass,
-      hoveredClass,
-    });
+    syncHighlightPaintState(
+      indiaHighlightStateRef,
+      {
+        selectedClass: activeIndiaClassRef.current,
+        hoveredClass: hoverIndiaClassRef.current,
+      },
+      ({ selectedClass, hoveredClass }) => {
+        syncSvgHighlights({
+          container: indiaContainerRef.current,
+          elements: indiaColorElementsRef.current,
+          focusClass: "india-has-focus",
+          selectedClass,
+          hoveredClass,
+          fillClassName: "IndiaSVG-fill-path",
+          drawAnchorSelector: ".IndiaSVG-draw-path",
+        });
+        syncIndiaHighlightOverlay({
+          container: indiaContainerRef.current,
+          selectedClass,
+          hoveredClass,
+        });
+      }
+    );
   }, [activeIndiaClass, hoverIndiaClass, indiaZoomComplete]);
 
   useEffect(() => {
