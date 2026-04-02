@@ -653,6 +653,7 @@ export default function GobalMap() {
     setActiveIndiaClass(className);
   };
   const toggleKeralaSelection = (className) => {
+    if (!keralaZoomComplete) return;
     if (activeColorClassRef.current === className) {
       clearKeralaSelection();
       return;
@@ -1047,7 +1048,12 @@ export default function GobalMap() {
 
   useEffect(() => {
     const container = keralaContainerRef.current;
-    if (!container || !showOverlay || !isKerala) return;
+    if (!container || !showOverlay || !isKerala || !keralaZoomComplete) {
+      if (container) {
+        container.classList.remove("kerala-has-focus");
+      }
+      return;
+    }
 
     const elements = Array.from(container.querySelectorAll("path, polygon, rect"));
     const getColorClass = (el) =>
@@ -1158,9 +1164,23 @@ export default function GobalMap() {
       colorElementsRef.current = [];
       keralaHighlightStateRef.current = null;
     };
-  }, [isKerala, showOverlay]);
+  }, [isKerala, showOverlay, keralaZoomComplete]);
 
   useEffect(() => {
+    if (!keralaZoomComplete) {
+      keralaHighlightStateRef.current = null;
+      syncSvgHighlights({
+        container: keralaContainerRef.current,
+        elements: colorElementsRef.current,
+        focusClass: "kerala-has-focus",
+        selectedClass: null,
+        hoveredClass: null,
+        fillClassName: "fill-path",
+        drawAnchorSelector: ".draw-path",
+      });
+      return;
+    }
+
     syncHighlightPaintState(
       keralaHighlightStateRef,
       {
@@ -1179,7 +1199,7 @@ export default function GobalMap() {
         });
       }
     );
-  }, [activeColorClass, hoverColorClass]);
+  }, [activeColorClass, hoverColorClass, keralaZoomComplete]);
 
   useEffect(() => {
     const container = indiaContainerRef.current;
@@ -1439,7 +1459,11 @@ export default function GobalMap() {
           <div
             ref={keralaContainerRef}
             className="kerala-map-container"
-            style={{ gridArea: "1 / 1", opacity: 0 }}
+            style={{
+              gridArea: "1 / 1",
+              opacity: 0,
+              pointerEvents: keralaZoomComplete ? "auto" : "none",
+            }}
           >
               {shouldRenderKeralaSvg && (
                 <KeralaSVG
@@ -1454,7 +1478,7 @@ export default function GobalMap() {
         </div>
       </div>
 
-      {isKerala && showOverlay && (
+      {isKerala && showOverlay && keralaZoomComplete && (
         <>
           {isPortraitLayout ? (
             <KeralaPortraitPanel
