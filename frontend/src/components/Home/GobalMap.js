@@ -181,61 +181,65 @@ const KERALA_COLOR_DETAILS = Object.freeze({
   "cls-1": {
     label: "Black Cotton Soils",
     color: "#ff7700",
-    details: "Black cotton soil in Kerala is a deep, clayey, moisture-retaining soil found mainly in Chittur (Palakkad). It is suitable for crops like cotton and sugarcane but shows shrink–swell cracking behavior and can create challenges in agriculture and construction.",
+    details: "These soils occur in patches in the alluvial plains and terraces of Chittur taluk, Palakkad district. They are very deep, black, calcareous, alkaline soils with clay loam to clay texture, high CEC, high moisture-holding capacity, and high shrink-swell potential, resulting in deep cracks during dry periods. The soils are generally rich in Ca and Mg but deficient in N, P, and Zn. Coconut, sugarcane, cotton, chilli, pulses, and vegetables are commonly cultivated. Soil productivity can be improved through organic matter addition and balanced fertilization.",
     image: "/images/hill.jpg",
   },
   "cls-2": {
     label: "Red Soils",
     color: "#ff00fe",
-    details: "Red soil is one of the major soil types in Kerala, mainly found in midland and highland regions. It is iron-rich, well drained, slightly acidic, and suitable for plantation crops like rubber, coconut, and cashew.",
-    image: "/images/hill.jpg",
-  },
-  "cls-3": {
-    label: "Coastal Alluvium Soils",
-    color: "#96fffe",
-    details: "Coastal alluvium soils are fertile soils found along the coastal plains and backwaters of Kerala. They are formed from river and marine deposits and support crops like rice, coconut, and banana, especially in areas like Kuttanad.",
+    details: "These soils occur mainly in the Thiruvananthapuram and Neyyattinkara taluks and along the foot slopes of laterite hills. They are red to dark red in colour, with sandy clay loam to clay loam texture, and are generally acidic with low CEC, low base saturation, and deficiencies of N, P, K, Ca, Mg, Zn, and B. The red to dark red colour is due to the presence of iron oxides, particularly hematite, and increases with the degree of weathering and iron accumulation. Coconut, pepper, arecanut, banana, pineapple, vegetables, yams, and fruit trees are commonly grown. Soil productivity can be improved through liming, organic matter addition, and balanced fertilization.",
     image: "/images/hill.jpg",
   },
 
+
+  "cls-3": {
+    label: "Coastal Alluvium Soils",
+    color: "#96fffe",
+    details: "These marine-origin soils occur as a narrow strip along coastal plains and basin lands near mean sea level (MSL). They are very deep, sandy to loamy sand in texture, contain over 80% sand, and have low organic carbon and nutrient-holding capacity. The soils are generally deficient in N, K, Zn, and B, with variable P levels. Coconut, cashew, and other fruit trees are commonly grown. Soil productivity can be improved through addition of organic matter, coir pith, mulching, husk burial, balanced-split fertilization, and drip irrigation due to low water-holding capacity.",
+    image: "/images/hill.jpg",
+  },
+
+
+
   "cls-5": {
-    label: " Kari Soils",
+    label: "Kari Soils",
     color: "#04b293",
-    details: "Kari soil is a peat-rich marshy soil found mainly in Kuttanad and other lowland wetlands of Kerala. It is dark, acidic, and rich in organic matter, and is mainly used for paddy cultivation.",
+    details: "These soils occur in the marshy lowlands of Alappuzha and Kottayam districts, often below mean sea level. They are poorly drained, highly acidic, with substantial decomposed organic matter and wood debris in the subsoil. The texture ranges from sandy clay to clay, with pockets of sand occurring within the profile. The soils are generally deficient in phosphorus (P) and calcium (Ca). Proper drainage, liming, and balanced nutrient management are essential for sustainable crop production.",
     image: "/images/hill.jpg",
   },
 
   "cls-6": {
     label: "Forest Soils",
     color: "#009900",
-    details: "Forest soils in Kerala are found mainly in the Western Ghats highlands. They are dark, humus-rich, and slightly acidic soils, supporting dense forests and plantation crops like tea, coffee, and spices.",
+    details: "These soils are developed from Archaean crystalline rocks under forest cover and occur in the eastern highlands, generally above 300 m MSL. Found on steep hills and mountains with escarpments, elongated rocky summits and narrow V-shaped valleys, they are typically deep, well-drained, and high to moderately fertile, with sandy clay loam to clay texture and reddish brown to very dark brown colour. The soils are acidic and prone to erosion on steep slopes, with deficiencies of N, P, Ca, Mg, Zn, and B due to leaching. Forest trees, shrubs, and grasses are the dominant vegetation. Maintenance of forest cover and soil conservation measures are essential for sustaining soil productivity.",
     image: "/images/hill.jpg",
   },
   "cls-7": {
     label: "Hill Soils",
     color: "#ceffc8",
-    details: "Hill soils in Kerala occur mainly in the Western Ghats highlands. They are brown, humus-rich, slightly acidic soils suitable for plantation crops like tea, coffee, and spices, but they are prone to erosion on steep slopes.",
+    details: "These soils occur mainly above 80 m MSL on dissected hills, ridges, and narrow valleys with slopes generally exceeding 10%. They are reddish brown to yellowish red in colour, with loam to clay loam texture and moderate amounts of rounded gravels, generally less gravelly than lateritic soils. The soils are acidic, well-drained, and prone to erosion, with deficiencies of N, P, K, Ca, Mg, Zn, and B. Rubber, coconut, arecanut, and fruit trees are the major crops, while banana, pepper, pineapple, and vegetables are grown on foot slopes. Soil productivity can be improved through soil and water conservation measures, liming, organic matter addition, and balanced fertilization.",
     image: "/images/hill.jpg",
   },
 
   "cls-8": {
     label: "Alluvium Soils",
     color: "#ffff01",
-    details: "Alluvium soils in Kerala are fertile soils formed by river deposits, found mainly in river valleys and flood plains. They support crops like paddy, banana, coconut, and vegetables, making them important for agriculture in the state.",
+    details: "These soils, formed from marine, lacustrine, and riverine sediments, occur below 20 m MSL in lowland plains, valleys, and riverbanks, especially in Kuttanad and Kole lands. They are frequently flooded, with textures ranging from sandy loam to clay and colours from light grey to dark brown. Paddy, banana, tapioca, vegetables, and other seasonal crops are commonly grown. They are generally low to medium in organic carbon, deficient in nitrogen (N), with low to moderate phosphorus (P) and potassium (K) levels. Zinc (Zn) and boron (B) deficiencies may occur in intensively cultivated areas. Productivity can be improved through proper drainage, balanced fertilization, organic matter addition, and effective water management.",
     image: "/images/hill.jpg",
   },
 
 
   "cls-9": {
-    label: "Acid Soils",
+    label: "Acid Saline",
     color: "#f7c4a2",
-    details: "Acid soils are widely found in Kerala due to heavy rainfall and tropical weathering. They have low pH and moderate fertility but can support plantation crops like tea, coffee, rubber, and spices when properly managed.",
+    details: "These soils occur in small patches along the coastal tracts of Ernakulam, Thrissur, and Kannur districts, mainly in low-lying, poorly drained, waterlogged areas influenced by tidal action. Sea and backwater tides make these soils saline. They range from sandy loam to clay in texture, are dark grey to black in colour, and nutrient availability is often constrained by acidity and salinity. Paddy is the principal crop cultivated. The soils are generally high in organic matter but deficient in available N, P, Ca, Mg, Zn, and B, while Fe and Mn may occur in excess. Soil productivity can be improved through drainage and water management, liming, organic matter addition, balanced fertilization, and cultivation of salt-tolerant paddy varieties.",
     image: "/images/hill.jpg",
   },
 
   "cls-11": {
     label: "Lateritic Soils",
     color: "#cc0033",
-    details: "Lateritic soil is the most common soil type in Kerala, found mainly in midland and upland areas. It is iron-rich, reddish, acidic, and well drained, suitable for crops like coconut, cashew, rubber, and spices, though it requires fertilizers for good productivity.",
+    details: "These soils are formed through intense weathering and leaching of rocks, resulting in the removal of bases and silica. They occur mainly in the midlands and adjoining lowlands at elevations of 10-100 m above MSL. The soils are acidic, often gravelly, rich in iron and aluminium oxides or hydroxides, and characterized by low cation exchange capacity (CEC), low base saturation, poor nutrient retention, and deficiencies of N, P, K, Ca, Mg, Zn, and B. Coconut, arecanut, banana, tapioca, pepper, pineapple, vegetables, yams, and fruit trees are commonly cultivated. Soil productivity can be improved through liming, organic matter addition, mulching, soil conservation measures, and balanced fertilization.",
     image: "/images/hill.jpg",
   },
   // "cls-10": {
