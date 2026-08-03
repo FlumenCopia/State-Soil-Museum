@@ -146,6 +146,10 @@ export default function StartupLoader() {
       <div className={styles.scanline} aria-hidden="true" />
 
       <section className={styles.panel}>
+        <div className={styles.logo}>
+          <img src="/images/logo.png" alt="State Soil Museum logo" />
+        </div>
+
         <div className={styles.planetShell} aria-hidden="true">
           <div className={styles.planetGlow} />
           <div className={styles.planet}>

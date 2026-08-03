@@ -67,12 +67,27 @@
   pointer-events: none;
 }
 
+.logo {
+  position: relative;
+  z-index: 1;
+  width: clamp(92px, 30vw, 132px);
+  margin: 0 auto 18px;
+}
+
+.logo img {
+  display: block;
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+  filter: drop-shadow(0 10px 22px rgba(0, 0, 0, 0.36));
+}
+
 .planetShell {
   position: relative;
   width: clamp(176px, 48vw, 214px);
   aspect-ratio: 1;
   align-self: center;
-  margin: 22px auto 40px;
+  margin: 6px auto 34px;
   display: grid;
   place-items: center;
   animation: floatOrb 4.8s ease-in-out infinite;
@@ -306,6 +321,11 @@
 @media (max-width: 480px) {
   .panel {
     padding: 34px 20px 22px;
+  }
+
+  .logo {
+    width: 84px;
+    margin-bottom: 14px;
   }
 
   .eyebrow {
