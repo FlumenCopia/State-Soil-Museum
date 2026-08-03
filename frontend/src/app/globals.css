@@ -138,6 +138,24 @@ rgb(31, 114, 247)
   transform: translateY(-1px);
 }
 
+.hero-top-logo {
+  position: absolute;
+  top: clamp(18px, 4vh, 36px);
+  left: 50%;
+  z-index: 4;
+  width: clamp(92px, 11vw, 142px);
+  transform: translateX(-50%);
+  pointer-events: none;
+}
+
+.hero-top-logo img {
+  display: block;
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+  filter: drop-shadow(0 12px 26px rgba(1, 6, 20, 0.42));
+}
+
 .bg-music-toggle {
   position: fixed;
   right: 18px;
@@ -191,6 +209,11 @@ rgb(31, 114, 247)
 }
 
 @media (max-width: 640px) {
+  .hero-top-logo {
+    top: 16px;
+    width: 82px;
+  }
+
   .bg-music-toggle {
     right: 12px;
     bottom: 12px;

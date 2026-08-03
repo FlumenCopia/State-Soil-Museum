@@ -88,6 +88,10 @@ const Herosection = () => {
 
       <GridTrailEffect />
 
+      <div className="hero-top-logo" aria-label="State Soil Museum">
+        <img src="/images/logo.png" alt="State Soil Museum logo" />
+      </div>
+
       <div
         ref={contentRef}
         className="position-relative z-3  text-center"
