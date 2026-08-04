@@ -88,8 +88,8 @@ const Herosection = () => {
 
       <GridTrailEffect />
 
-      <div className="hero-top-logo" aria-label="State Soil Museum">
-        <img src="/images/logo.png" alt="State Soil Museum logo" />
+      <div className="hero-top-logo" aria-label="Department of Soil Survey and Soil Conservation">
+        <img src="/images/logo.png" alt="Department of Soil Survey and Soil Conservation logo" />
       </div>
 
       <div
@@ -134,14 +134,14 @@ const Herosection = () => {
           data-hero-item
           className="text-white mb-4"
           style={{
-            fontSize: "clamp(3rem, 7.2vw, 5.6rem)",
+            fontSize: "clamp(3rem, 5.2vw, 4rem)",
             lineHeight: 0.96,
             letterSpacing: "0.03em",
             textTransform: "uppercase",
             textShadow: "0 20px 48px rgba(1, 6, 20, 0.62)",
           }}
         >
-          State Soil Museum
+Department of Soil Survey and Soil Conservation
         </h1>
 
         <p

@@ -5,8 +5,8 @@ import HeroBackgroundMusic from "@/components/HeroBackgroundMusic";
 import StartupLoader from "@/components/StartupLoader";
 
 export const metadata = {
-  title: "State Soil Museum",
-  description: "State Soil Museum",
+  title: "Department of Soil Survey and Soil Conservation",
+  description: "Department of Soil Survey and Soil Conservation",
   icons: {
     icon: "/images/logo.png",
     shortcut: "/images/logo.png",

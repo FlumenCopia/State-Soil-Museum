@@ -147,7 +147,7 @@ export default function StartupLoader() {
 
       <section className={styles.panel}>
         <div className={styles.logo}>
-          <img src="/images/logo.png" alt="State Soil Museum logo" />
+          <img src="/images/logo.png" alt="Department of Soil Survey and Soil Conservation logo" />
         </div>
 
         <div className={styles.planetShell} aria-hidden="true">
@@ -163,7 +163,7 @@ export default function StartupLoader() {
 
         <div className={styles.copy}>
           <p className={styles.eyebrow}>Digital Soil </p>
-          <h1 className={styles.title}>State Soil Museum</h1>
+          <h1 className={styles.title}>Department of Soil Survey and Soil Conservation</h1>
           <p className={styles.description}>
             Initializing interactive geochemical layers and soil profiles...
           </p>

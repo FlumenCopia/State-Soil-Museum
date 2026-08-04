@@ -202,9 +202,9 @@
 
 .title {
   margin: 12px 0 10px;
-  font-size: clamp(2rem, 8.4vw, 2.7rem);
-  line-height: 1.05;
-  letter-spacing: 0.12em;
+  font-size: clamp(1.28rem, 5vw, 1.8rem);
+  line-height: 1.16;
+  letter-spacing: 0.06em;
   text-transform: uppercase;
   font-weight: 300;
   color: #fbfdff;
@@ -333,7 +333,7 @@
   }
 
   .title {
-    font-size: 2.45rem;
+    font-size: 1.42rem;
   }
 
   .description {
