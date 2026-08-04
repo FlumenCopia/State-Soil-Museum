@@ -118,7 +118,7 @@ const Herosection = () => {
               color: "rgba(240, 247, 255, 0.92)",
             }}
           >
-            DIGITAL SOIL ATLAS
+            DIGITAL SOIL 
           </span>
           <span
             aria-hidden="true"

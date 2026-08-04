@@ -162,7 +162,7 @@ export default function StartupLoader() {
         </div>
 
         <div className={styles.copy}>
-          <p className={styles.eyebrow}>Digital Soil Atlas</p>
+          <p className={styles.eyebrow}>Digital Soil </p>
           <h1 className={styles.title}>State Soil Museum</h1>
           <p className={styles.description}>
             Initializing interactive geochemical layers and soil profiles...
